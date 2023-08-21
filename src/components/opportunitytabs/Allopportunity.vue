@@ -18,21 +18,20 @@
           </th>
         </tr>
       </thead>
-
       <tbody>
         <tr v-for="(i, id) in tableData" :key="id" class="border-b">
           <td
-            class="pl-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
           >
             {{ i.SNO }}
           </td>
           <td
-            class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
           >
             {{ i.CustomerName }}
           </td>
           <td
-            class="pr-3 flex py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center align-center justify-center"
+            class="flex py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center items-center justify-center"
           >
             <!-- <img
               class="w-4 mr-2 text-right h-6 mb-1"
@@ -40,7 +39,7 @@
               alt="star"
             /> -->
             <img
-              class="w-4 mr-2 text-right h-6 mb-1"
+              class="w-4 mr-2 text-right h-6"
               :src="
                 i.Status == 'In Progress'
                   ? Progress
@@ -52,11 +51,11 @@
             {{ i.Status }}
           </td>
           <td
-            class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
           >
             <button
               depressed
-              class="tracking-[0.4px] px-3 min-h-[26px] text-[10px] font-semibold rounded min-w-[140px] cursor-default"
+              class="tracking-[0.4px] px-3 min-h-[26px] text-[13px] rounded min-w-[140px] cursor-default"
               :class="
                 i.Currentphases == 'Mobile Verification'
                   ? 'mv-clr'
@@ -91,7 +90,7 @@
             </button>
           </td>
           <td
-            class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center flex items-center justify-center"
           >
             <div class="w-full h-4 flex bg-gray-200 dark:bg-gray-700">
               <div
@@ -106,31 +105,30 @@
             {{ i.Progress }}
           </td>
           <td
-            class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative items-center justify-center"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative items-center justify-center"
           >
             <div class="flex items-center justify-center">
               <img
-                class="w-3 text-right h-5 mb-1"
+                class="w-3 text-right h-5"
                 :class="{ 'color-green-500': i.Phases }"
                 src="../assets/image/Chevron.svg"
                 alt="star"
-                v-for="(n, nId) in 13"
+                v-for="nId in 13"
                 :key="nId"
               />
-              {{ n }}
             </div>
           </td>
           <td
-            class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
           >
             {{ i.Hoursconsumed }}
           </td>
           <td
-            class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
           >
             <button
               depressed
-              class="tracking-[0.4px] px-3 min-h-[26px] text-[10px] font-semibold rounded min-w-[100px] cursor-default"
+              class="tracking-[0.4px] px-3 min-h-[26px] text-[13px] rounded min-w-[100px] cursor-default"
               :class="
                 i.Inferredprogress == 'On Track'
                   ? 'nom-clr'
@@ -143,7 +141,7 @@
             </button>
           </td>
           <td
-            class="pr-3 py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
+            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center"
           >
             {{ i.Owner }}
           </td>
@@ -161,7 +159,7 @@ export default {
       Progress,
       completed,
       tableHeads: [
-        { name: "SNO", class: "text-left" },
+        { name: "SNO", class: "text-center" },
         { name: "Customer Name", class: "text-center" },
         { name: "Status.", class: "text-center" },
         { name: "Current phases", class: "text-center" },
