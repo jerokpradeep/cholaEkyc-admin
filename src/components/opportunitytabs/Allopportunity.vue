@@ -55,7 +55,7 @@
           >
             <button
               depressed
-              class="tracking-[0.4px] px-3 min-h-[26px] text-[13px] rounded min-w-[140px] cursor-default"
+              class="tracking-[0.4px] px-3 min-h-[1.625rem] text-[0.813rem] rounded min-w-[140px] cursor-default"
               :class="
                 i.Currentphases == 'Mobile Verification'
                   ? 'mv-clr'
@@ -89,16 +89,14 @@
               {{ i.Currentphases }}
             </button>
           </td>
-          <td
-            class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center flex items-center justify-center"
-          >
+          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative">
             <div class="w-full h-4 flex bg-gray-200 dark:bg-gray-700">
               <div
-                class="bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none"
+                class="bg-green-600 text-xs font-medium text-blue-100 text-center leading-none"
                 style="width: 45%"
               ></div>
               <div
-                class="bg-green-400 text-xs font-medium text-blue-100 text-center p-0.5 leading-none"
+                class="bg-green-400 text-xs font-medium text-blue-100 text-center leading-none"
                 style="width: 30%"
               ></div>
             </div>
@@ -128,7 +126,7 @@
           >
             <button
               depressed
-              class="tracking-[0.4px] px-3 min-h-[26px] text-[13px] rounded min-w-[100px] cursor-default"
+              class="tracking-[0.4px] px-3 min-h-[1.625rem] text-[0.813rem] rounded min-w-[100px] cursor-default"
               :class="
                 i.Inferredprogress == 'On Track'
                   ? 'nom-clr'
