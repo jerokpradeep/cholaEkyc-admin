@@ -1,9 +1,6 @@
 <template>
   <div class="secondary-violet-bg rounded-t">
-    <ul
-      class="flex flex-wrap -mb-px text-sm font-medium text-center"
-      id="myTab"
-    >
+    <ul class="flex flex-wrap mb-px text-sm font-medium text-center" id="myTab">
       <li
         class="mr-2"
         role="presentation"
@@ -41,7 +38,7 @@ export default {
       tabheaders: [
         {
           active: true,
-          name: "All opportunity",
+          name: "Allopportunity",
           id: "head_dashboard",
           route: "/Alllopportunity.vue",
         },
@@ -62,6 +59,7 @@ export default {
       });
       this.currentTab = tab;
       console.log(this.currentTab, "this.currentTab");
+      console.log("currentTab");
     },
   },
 };
