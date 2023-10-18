@@ -1,5 +1,5 @@
 <template>
-  <div>Alllopportunity</div>
+  <div class=" m-2">Alllopportunity</div>
 </template>
   
   
