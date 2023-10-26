@@ -1,59 +1,73 @@
+
 <style scoped>
 .header {
-  @apply bg-white h-12 left-0 right-0 py-[5px] px-[10px] font-medium w-full border-b-[1px] my-0 mx-auto
-  dark:bg-[#181818] dark:text-[#94A3B8] dark:border-[#232325];
+  @apply bg-white h-12 left-0 right-0 py-[5px] px-[10px] font-medium w-full border-b-[1px] my-0 mx-auto dark:bg-[#181818] dark:text-[#94A3B8] dark:border-[#232325];
 }
+
 .menu-list {
   @apply text-xs leading-5 self-center flex;
 }
+
 .menu-list ul li {
   @apply inline-block py-[3px];
 }
+
 .user-details {
   @apply border-l-[1px] text-lg leading-6 flex;
 }
+
 .user-details img,
 .user-details span {
   @apply inline-block self-center;
 }
+
 .router-link-exact-active,
 .router-link-active {
   @apply font-semibold text-[#753ED7];
 }
+
 .dropdown:focus-within .dropdown-menu {
   opacity: 1;
   transform: translate(0) scale(1);
   visibility: visible;
 }
+
 .headerMobile .active {
   fill: #753ed7 !important;
   stroke: #753ed7 !important;
 }
+
 .pinned-ins.shake {
   animation: shake 0.15s ease;
   /* animation: shake 0.5s ease; */
 }
+
 @keyframes shake {
   0% {
     -webkit-transform: translate(0);
     transform: translate(0);
   }
+
   20% {
     -webkit-transform: translate(1em);
     transform: translate(1em);
   }
+
   40% {
     -webkit-transform: translate(-1em);
     transform: translate(-1em);
   }
+
   60% {
     -webkit-transform: translate(0.5em);
     transform: translate(0.5em);
   }
+
   80% {
     -webkit-transform: translate(-0.5em);
     transform: translate(-0.5em);
   }
+
   100% {
     -webkit-transform: translate(0);
     transform: translate(0);
@@ -61,53 +75,40 @@
 }
 </style>
 <template>
-  <div class="relative top-0 z-[9]">
-    <div class="flex header items-center justify-between py-[50px]">
-      <div class="flex items-center z-50 w-full">
-        <div class="-pointer logo mr-auto flex items-center">
+    <!-- <div class="w-full">
+    <div class="imgHeight flex items-center justify-between p-4">
+      <div class="-pointer logo mr-auto flex items-center">
           <img :src="clientLogo" class="h-6 px-4" alt="logo" />
         </div>
-        <div class="menu-list items-center">
-          <ul class="py-0 pl-0 pr-4">
-            <li class="primary-color" v-for="(head, id) in headers" :key="id">
-              <router-link :id="head.id" :to="head.route"
-                ><span class="pb-[4px] px-[20px]">{{
-                  head.name
-                }}</span></router-link
-              >
+      <div class="">
+        <p class="text-blue-500 cursor-pointer" @click="">Logout</p>
+      </div>
+    </div>
+  </div> -->
+  <div>
+  <div class="flex flex-col lg:flex-row bg-[#f7f5f5]"
+        style="height: calc(100vh - 72px)">
+    <div   class="border-r w-[80px] hidden lg:block lg:h-[calc(100vh-83px)] h-[calc(100vh-98px)] overflow-y-auto overflow-x-hidden">
+        <!-- <div class="-pointer logo mr-auto flex items-center">
+          <img :src="clientLogo" class="h-6 px-4" alt="logo" />
+        </div> -->
+          <ul role="list" class="space-y-2">
+            <li   class="md:flex-1 py-2 hover:bg-[#f9fdff] border-l-4" v-for="(head, id) in headers" :key="id" :class="{ ' border-[#0081B8] bg-[#f9fdff]': head.active }"
+>
+              <router-link :id="head.id" :to="head.route"><span >{{
+                head.name
+              }}</span></router-link>
             </li>
           </ul>
-          <Menu as="div" class="relative inline-block text-left">
+          <!-- <Menu as="div" class="relative inline-block text-left">
             <MenuButton>
               <button class="user-details dropdown">
-                <span
-                  class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f5f3ff] ml-4 mr-2"
-                >
-                  <span
-                    class="text-[10px] font-medium leading-none violet-color uppercase"
-                    v-if="userRole !== 'GUEST_USER'"
-                    >{{ "S" }}</span
-                  >
-                  <span
-                    class="text-[10px] font-medium leading-none violet-color uppercase"
-                    v-if="userRole == 'GUEST_USER'"
-                    >G</span
-                  >
+                <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f5f3ff] ml-4 mr-2">
+                  <span class="text-[10px] font-medium leading-none violet-color uppercase">{{ "S" }}</span>
                 </span>
-                <span
-                  id="head_dropdown_userid"
-                  class="mr-[20px] text-xs primary-color"
-                  v-if="userRole != 'GUEST_USER'"
-                  >{{ "724380" }}</span
-                >
-                <span
-                  id="head_dropdown_userid"
-                  class="mr-[20px] text-xs primary-color"
-                  v-if="userRole == 'GUEST_USER'"
-                  >Guest</span
-                >
+                <span id="head_dropdown_userid" class="mr-[20px] text-xs primary-color">{{"724380" }}</span>
               </button>
-            </MenuButton>
+            </MenuButton> -->
 
             <!-- <transition
               enter-active-class="transition ease-out duration-100"
@@ -130,8 +131,7 @@
                         'block px-4 py-2 text-sm',
                       ]"
                       @click="navigateToMyAcc()"
->My Account</a
->
+>My Account</a>
 </MenuItem>
 </div> -->
             <!-- <div class="py-1">
@@ -195,25 +195,29 @@
 </div>
 </MenuItems>
 </transition> -->
-          </Menu>
+          <!-- </Menu> -->
         </div>
       </div>
-    </div>
-  </div>
+      </div>
 </template>
 
 <script>
 import clientLogo from "../assets/image/nidhi-logo.svg";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 export default {
   data() {
     return {
       clientLogo,
-      // userRole: "NORMAL_USER",
       headers: [
         {
           name: "Dashboard",
           id: "head_dashboard",
           route: "/dashboard",
+        },
+        {
+          name: "Lead",
+          id: "head_profile",
+          route: "/lead",
         },
         {
           name: "Opportunity",
@@ -230,15 +234,11 @@ export default {
           id: "head_action",
           route: "/re",
         },
-        {
-          name: "Lead",
-          id: "head_profile",
-          route: "/lead",
-        },
+
       ],
     };
   },
-  // components: { Menu, MenuButton, MenuItems, MenuItem },
+  components: { Menu, MenuButton, MenuItems, MenuItem },
   // methods: {
   //   navigateToMyAcc() {
   //     sessionStorage.setItem("profileTab", JSON.stringify("0"));
@@ -254,4 +254,3 @@ export default {
     >
       Welcome to <span class="text-[#F9682A]"> Reloop</span>
     </div> -->
-
