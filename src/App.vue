@@ -1,5 +1,6 @@
 <template>
-  <router-view></router-view>
+  <div class="h-[100vh] bg-[#f7f5f5]">
+  <router-view></router-view></div>
 </template>
 
 <style>
@@ -107,9 +108,9 @@ body {
   @apply !bg-[#753ED7];
 }
 
-.secondary-violet-bg {
+/* .secondary-violet-bg {
   @apply !bg-[#F0F6FD] dark:!bg-[#27272A];
-}
+} */
 
 .z-index-full {
   z-index: 99 !important;
@@ -156,5 +157,7 @@ input[type="text"] {
   box-shadow: inset 0 -1px 0 #ededed;
   @apply bg-white;
 }
+
+
 </style>
 
