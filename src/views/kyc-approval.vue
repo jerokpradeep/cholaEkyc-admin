@@ -1,5 +1,5 @@
 <template>
-  <div>pro</div>
+  <div class="p-3">pro</div>
 </template>
   
   <script>

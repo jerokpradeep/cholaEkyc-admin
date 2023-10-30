@@ -84,7 +84,7 @@ export default {
           svg: "orders",
         },
         {
-          name: "KYC approval",
+          name: "KYC approv",
           route: "/kycapproval",
           icon: "Reports",
           status: "active",
@@ -92,7 +92,7 @@ export default {
           svg: "upload",
         },
         {
-          name: "Reconcellation",
+          name: "Recon",
           route: "/re",
           icon: "Reports",
           status: "active",

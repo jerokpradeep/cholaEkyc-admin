@@ -75,7 +75,7 @@
 }
 </style>
 <template>
-    <div class="w-full">
+    <div class="w-full ">
     <div class="imgHeight flex items-center justify-between p-4">
       <div class="-pointer logo mr-auto flex items-center">
           <img :src="clientLogo" class="h-6 " alt="logo" />

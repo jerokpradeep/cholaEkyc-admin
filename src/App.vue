@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[100vh] bg-[#f7f5f5]">
+  <div class="h-[100vh]">
   <router-view></router-view></div>
 </template>
 

@@ -1,3 +1,3 @@
 <template>
-  <div>reconcellation</div>
+  <div class="p-3">reconcellation</div>
 </template>
