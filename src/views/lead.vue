@@ -1,5 +1,5 @@
 <template>
-  <div>lead</div>
+  <div class="p-3">lead</div>
 </template>
   
   <script>
