@@ -4,7 +4,7 @@
     <div class="h-screen !overflow-hidden">
       <headerComp />
       <div class="flex flex-col lg:flex-row bg-[#f7f5f5]"
-        style="height: calc(100vh - 72px)">
+        style="height: calc(100vh - 56px)">
     <div  class="border-r w-[80px] hidden lg:block lg:h-[calc(100vh-83px)] h-[calc(100vh-98px)] overflow-y-auto overflow-x-hidden">
           <ul role="list" class="space-y-2 ">
             <li   class="md:flex-1 py-2  hover:bg-[#f9fdff] border-l-4" v-for="(step, index) in steps" :key="index" 
@@ -42,7 +42,7 @@
           </ul>
         </div>
         <div
-          class="w-full lg:h-[calc(100vh-83px)] h-[calc(100vh-98px)] overflow-y-auto"
+          class="w-full lg:h-[calc(100vh-83px)] h-[calc(100vh-60px)] overflow-y-auto"
         >
         <router-view />
         </div>
@@ -84,7 +84,7 @@ export default {
           svg: "orders",
         },
         {
-          name: "KYC approv",
+          name: "Approval",
           route: "/kycapproval",
           icon: "Reports",
           status: "active",
@@ -104,7 +104,6 @@ export default {
   },
   methods: {
     activeTab(val) {
-      console.log('sdsds');
       router.push(val.route);
       this.setActiveTab(val);
       localStorage.setItem("sidebarTab", val.name);

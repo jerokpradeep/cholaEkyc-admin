@@ -75,20 +75,20 @@
 }
 </style>
 <template>
-    <div class="w-full ">
-    <div class="imgHeight flex items-center justify-between p-4">
-      <div class="-pointer logo mr-auto flex items-center">
-          <img :src="clientLogo" class="h-6 " alt="logo" />
+    <div class="w-full">
+      <div class="imgHeight flex items-center justify-between p-4">
+        <div class="-pointer logo mr-auto flex items-center">
+            <img :src="clientLogo" class="h-6 " alt="logo" />
         </div>
-      <div class="">
-        <p class="text-blue-500 cursor-pointer" @click="">Logout</p>
+        <div>
+          <p class="text-blue-500 cursor-pointer text-xs" @click="">Logout</p>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
-import clientLogo from "../assets/image/nidhi-logo.svg";
+import clientLogo from "../assets/image/chola_head.png";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 export default {
   data() {
@@ -97,18 +97,5 @@ export default {
     };
   },
   components: { Menu, MenuButton, MenuItems, MenuItem },
-  // methods: {
-  //   navigateToMyAcc() {
-  //     sessionStorage.setItem("profileTab", JSON.stringify("0"));
-  //     this.$router.push("/profile");
-  //   },
-  // },
 };
 </script>
-
-
-   <!-- <div
-      class="flex align-center justify-center text-[70px] font-bold text-white"
-    >
-      Welcome to <span class="text-[#F9682A]"> Reloop</span>
-    </div> -->

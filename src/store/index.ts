@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import opportunity from "./modules/opportunity";
+import tabs from "./modules/tabs";
 export default createStore({
   state: {
     brokerName: "gopocket",
@@ -9,5 +10,5 @@ export default createStore({
   mutations: {},
   actions: {},
   getters: {},
-  modules: { opportunity },
+  modules: { opportunity, tabs },
 });

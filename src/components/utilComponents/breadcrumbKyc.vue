@@ -19,16 +19,16 @@ export default {
   components: { HomeIcon },
   data() {
     return {
-      pages :  [
-        { name: 'All Opportunities', href: '#', current: false },
-        { name: 'Stage Details', href: '#', current: true },
+     pages :  [
+        { name: 'Approval', href: '#', current: false },
+        { name: 'Raghu Ram Rajamani', href: '#', current: true },
       ]
     }
   },
   methods: {
     handleClick(page) {
-      if(page.name == 'All Opportunities') {
-        this.$store.commit('opportunity/setIsStageDetails', false)
+      if(page.name == 'Approval') {
+        this.$router.push('/kycapproval').catch(() => { })
       }
     }
   },
