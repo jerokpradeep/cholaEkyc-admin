@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 import store from "./store";
 import './assets/tailwind/tailwind.css';
-
+import { default as notification } from './notification/index.js';
 const app = createApp(App)
 
 app.use(router)
