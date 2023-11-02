@@ -5,7 +5,7 @@
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
           <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class"
-            class="py-3.5 px-3 text-xs font-semibold secondary-color whitespace-nowrap" id="positions_th_instrument">
+            class="py-3.5 px-3 text-sm font-medium text-center  primaryColor whitespace-nowrap" id="positions_th_instrument">
             {{ head.name }}
           </th>
         </tr>
@@ -61,7 +61,7 @@
               {{ i.Currentphases }}
             </button>
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative">
+          <!-- <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative">
             <div class="w-full h-4 flex bg-gray-200 dark:bg-gray-700">
               <div class="bg-green-600 text-xs font-medium text-blue-100 text-center leading-none" style="width: 45%">
               </div>
@@ -69,7 +69,7 @@
               </div>
             </div>
             {{ i.Progress }}
-          </td>
+          </td> -->
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative items-center justify-center">
             <div class="flex items-center justify-center">
               <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="chevronSvg"
@@ -118,7 +118,6 @@ export default {
         { name: "Customer Name", class: "text-center" },
         { name: "Status.", class: "text-center" },
         { name: "Current phases", class: "text-center" },
-        { name: "Progress", class: "text-center" },
         { name: "Phases", class: "text-center" },
         { name: "Hours consumed", class: "text-center" },
         { name: "Inferred progress", class: "text-center" },

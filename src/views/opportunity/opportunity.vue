@@ -2,10 +2,10 @@
   <div class="secondary-violet-bg rounded-t">
     <ul class="flex flex-wrap mb-px text-sm font-medium text-center" id="myTab">
       <li class="mr-2" role="presentation" v-for="(b, id) in tabheaders" :key="id" @click="changeActive(b.name)" :id="`${$route.name}_${id}_${b.name}`">
-        <button class="inline-block p-3 rounded-t-lg" type="button" :class="{
+        <button class="inline-block p-3 rounded-t-lg primaryColor" type="button" :class="{
           'border-b-2 violet-color hover:violet-color dark:text-[#753ED7] dark:hover:text-[#753ED7] border-[#753ED7] dark:border-[#753ED7]':
             b.active,
-          'secondary-color hover:text-gray-600 dark:text-[#94A3B8] border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300':
+          'primaryColor hover:text-gray-600 dark:text-[#94A3B8] border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300':
             !b.active,
         }">
           {{ b.name }}

@@ -14,9 +14,10 @@ const router = createRouter({
         { path: '/kycapproval', component: () => import('../views/kyc-approval.vue') },
         { path: '/re', component: () => import('../views/reconcellation.vue') },
         { path: '/lead', component: () => import('../views/lead.vue') },
+        { path: '/approvepanel', component: () => import('../views/approve-panel/approve-panel.vue') },
       ],
     },
   ]
-})
+});
 
 export default router
