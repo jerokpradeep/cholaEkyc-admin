@@ -1,5 +1,6 @@
 <template>
-    <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-gray-900/10 pb-12 md:grid-cols-3">
+    <div class="grid grid-cols-12">
+      <div class="col-span-6">
         <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
             <div class="sm:col-span-3">
             <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Account Holder Name</label>
@@ -60,8 +61,8 @@
           
 
         </div>
-
-        <div>
+      </div>
+        <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="rounded-lg bg-white border h-[200px] my-4">
 
