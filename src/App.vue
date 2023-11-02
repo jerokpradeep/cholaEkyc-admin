@@ -157,7 +157,13 @@ input[type="text"] {
   box-shadow: inset 0 -1px 0 #ededed;
   @apply bg-white;
 }
+.secondaryColor {
+  @apply !text-[#56585A]
+}
 
+.primaryColor {
+  @apply text-[#000000]
+}
 
 </style>
 
