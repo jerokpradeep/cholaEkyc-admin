@@ -1,31 +1,32 @@
 <template>
     <div class="grid grid-cols-12">
-       <div class="col-span-6">
-        <div class="grid max-w-2xl grid-cols-1 gap-x-6 sm:grid-cols-6 md:col-span-2">
-          <div class="sm:col-span-3">
-            <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Capture Date & Time</label>
-            <div class="mt-2">
-                <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="capturedDate"/>
+        <div class="col-span-6">
+          <div class="grid max-w-2xl grid-cols-1 gap-x-6 sm:grid-cols-6 md:col-span-2">
+            <div class="sm:col-span-3">
+              <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Capture Date & Time</label>
+              <div class="mt-2">
+                  <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="capturedDate"/>
+              </div>
             </div>
-          </div>
 
-          <div class="sm:col-span-3">
-            <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Latitude</label>
-            <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="latitude"/>
+            <div class="sm:col-span-3">
+              <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Latitude</label>
+              <div class="mt-2">
+                <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="latitude"/>
+              </div>
             </div>
-          </div>
 
-          <div class="sm:col-span-3">
-            <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Longitude</label>
-            <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="longitude"/>
+            <div class="sm:col-span-3">
+              <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Longitude</label>
+              <div class="mt-2">
+                <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="longitude"/>
+              </div>
             </div>
+
           </div>
 
         </div>
-
-       </div>
+        
         <div class="col-span-6">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="rounded-lg bg-white border h-[200px] my-4">

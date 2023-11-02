@@ -1,6 +1,6 @@
 <template>
   <div class="secondary-violet-bg rounded-t">
-    <ul class="flex flex-wrap mb-px text-sm font-medium text-center" id="myTab">
+    <!-- <ul class="flex flex-wrap mb-px text-sm font-medium text-center" id="myTab">
       <li class="mr-2" role="presentation" v-for="(b, id) in tabheaders" :key="id" @click="changeActive(b.name)" :id="`${$route.name}_${id}_${b.name}`">
         <button class="inline-block p-3 rounded-t-lg primaryColor" type="button" :class="{
           'border-b-2 violet-color hover:violet-color dark:text-[#753ED7] dark:hover:text-[#753ED7] border-[#753ED7] dark:border-[#753ED7]':
@@ -11,11 +11,14 @@
           {{ b.name }}
         </button>
       </li>
-    </ul>
+    </ul> -->
+    <tabs class="mx-4" @activeTab="changeTab"/>
   </div>
-  <breadcrumb v-if="getIsStageDetails"/>
-  <Allopportunity v-if="currentTab == 'All Opportunities'" />
-  <myOpportunity v-if="currentTab == 'My Opportunity'"/>
+  <div class="p-4">
+    <breadcrumb v-if="getIsStageDetails"/>
+    <Allopportunity v-if="currentTab == 'All Opportunities'" />
+    <myOpportunity v-if="currentTab == 'My Opportunity'"/>
+  </div>
 </template>
 
 <script>
@@ -23,8 +26,9 @@ import Allopportunity from "./Allopportunity.vue";
 import breadcrumb from "../../components/utilComponents/breadcrumb.vue"
 import myOpportunity from "./myOpportunity.vue";
 import { mapGetters } from "vuex"
+import tabs from "../../components/utilComponents/tabs.vue"
 export default {
-  components: { Allopportunity, breadcrumb, myOpportunity },
+  components: { Allopportunity, breadcrumb, myOpportunity, tabs },
   data() {
     return {
       tabheaders: [
@@ -60,6 +64,9 @@ export default {
       });
       this.currentTab = tab;
     },
+    changeTab(id) {
+
+    }
   },
 };
 </script>

@@ -15,6 +15,11 @@ const state = {
         { name: 'Reports', id: 0, active: true, count: '0' },
         { name: 'All Approvals', id: 1, active: false, count: '0' },
         { name: 'My Approvals', id: 2, active: false, count: '0' },
+    ],
+    opportunityTabs: [
+        { name: 'Reports', id: 0, active: true, count: '0' },
+        { name: 'All Opportunities', id: 1, active: false, count: '0' },
+        { name: 'My Opportunities', id: 2, active: false, count: '0' },
     ]
 }
 
@@ -25,6 +30,8 @@ const actions = {
             data = state.kycApprovalTabs
         } else if(payload.path == '/kycapproval') {
             data = state.kycPanelTabs
+        } else if(payload.path == '/opportunity') {
+            data = state.opportunityTabs
         }
 
         if(data) {
@@ -41,6 +48,8 @@ const actions = {
             state.kycApprovalTabs = data
         } else if(payload.path == '/kycapproval') {
             state.kycPanelTabs = data
+        } else if(payload.path == '/opportunity') {
+            state.opportunityTabs = data
         }
     },
 };
@@ -50,7 +59,8 @@ const mutations = {
 
 const getters = {
     getKycApprovalTabs: state => state.kycApprovalTabs,
-    getKycPanelTabs: state => state.kycPanelTabs
+    getKycPanelTabs: state => state.kycPanelTabs,
+    getOpportunityTabs: state => state.opportunityTabs
 };
 
 const tabs = {

@@ -34,6 +34,8 @@ export default {
         return this.getKycApprovalTabs;
       } else if (this.$route.path == "/kycapproval") {
         return this.getKycPanelTabs;
+      } else if(this.$route.path == "/opportunity") {
+        return this.getOpportunityTabs
       }
     },
   },
@@ -41,7 +43,8 @@ export default {
   computed: {
     ...mapGetters("tabs", [
       "getKycApprovalTabs",
-      "getKycPanelTabs"
+      "getKycPanelTabs",
+      "getOpportunityTabs"
     ]),
     ...mapGetters(["getWindowWidth"]),
   },

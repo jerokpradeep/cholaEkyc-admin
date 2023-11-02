@@ -53,9 +53,8 @@
 
 <script>
 import headerComp from "./header.vue";
-import router from "../router"
 export default {
-  components: { headerComp , router },
+  components: { headerComp  },
   data(){
     return{ 
       steps: [
@@ -104,7 +103,7 @@ export default {
   },
   methods: {
     activeTab(val) {
-      router.push(val.route);
+      this.$router.push(val.route);
       this.setActiveTab(val);
       localStorage.setItem("sidebarTab", val.name);
     },
