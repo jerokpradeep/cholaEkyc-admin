@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[#F4F5F6] h-screen flex justify-center items-center">
+    <div class="bg-[#F4F5F6] h-screen flex justify-center items-center overflow-y-auto py-10">
         <div class="bg-white rounded-lg p-8 w-[400px] mx-auto">
             <div class="flex flex-col gap-4 items-center justify-center pb-7">
                 <img :src="client_logo" alt="client_logo" class="max-w-[65%] h-auto">
@@ -12,7 +12,7 @@
                 <div>
                     <label class="form-label sr-only" for="login_email">Email</label>
                     <div class="relative ">
-                        <input type="text" id="login_email" class="bg-gray-100 py-2 px-4 h-8 rounded-lg min-w-[320px]" placeholder="jane@example.com" required="" autofocus="" autocomplete="username">
+                        <input type="text" id="login_email" maxlength="50" class="bg-gray-100 text-sm py-2 px-4 h-8 rounded-lg min-w-[320px]" placeholder="jane@example.com" required="" autofocus="" autocomplete="username">
 
                         <!-- <svg class="absolute left-[9px] top-[8px] z-[2]" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.5 7.65149V15.0757C2.5 15.4374 2.64367 15.7842 2.8994 16.04C3.15513 16.2957 3.50198 16.4394 3.86364 16.4394H16.1364C16.498 16.4394 16.8449 16.2957 17.1006 16.04C17.3563 15.7842 17.5 15.4374 17.5 15.0757V7.65149" stroke="#74808B" stroke-miterlimit="10" stroke-linecap="square"></path>
@@ -24,7 +24,7 @@
                 <div>
                     <label class="form-label sr-only" for="login_password">Password</label>
                     <div class="relative">
-                        <input type="password" id="login_password" class="bg-gray-100 py-2 px-4 h-8 rounded-lg min-w-[320px]" placeholder="•••••" autocomplete="current-password" required="">
+                        <input type="password" id="login_password" maxlength="50" class="bg-gray-100 text-sm py-2 px-4 h-8 rounded-lg min-w-[320px]" placeholder="•••••" autocomplete="current-password" required="">
 
                         <!-- <svg class="field-icon password-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0961 1.93768H10.0264C8.94806 1.92763 7.90976 2.34591 7.13951 3.10075C6.36866 3.85619 5.9294 4.88687 5.91833 5.96612L5.91831 5.96612V5.97124V6.52695H4.3125C3.20793 6.52695 2.3125 7.42238 2.3125 8.52695V16.0165C2.3125 17.121 3.20793 18.0165 4.3125 18.0165H15.7356C16.8401 18.0165 17.7356 17.121 17.7356 16.0165V8.52695C17.7356 7.42238 16.8401 6.52695 15.7356 6.52695H14.1297V6.04576C14.1397 4.96742 13.7214 3.92913 12.9666 3.15888C12.2112 2.38803 11.1805 1.94877 10.1012 1.9377V1.93768H10.0961ZM13.1297 6.52695V6.04336V6.03838H13.1297C13.1378 5.22428 12.8222 4.44029 12.2524 3.85881C11.6831 3.27793 10.9067 2.94667 10.0934 2.93768H10.024H10.019V2.93765C9.20491 2.92955 8.42092 3.24512 7.83944 3.81497C7.25856 4.38423 6.9273 5.1607 6.91831 5.9739V6.52695H13.1297ZM4.3125 7.52695C3.76022 7.52695 3.3125 7.97467 3.3125 8.52695V16.0165C3.3125 16.5687 3.76022 17.0165 4.3125 17.0165H15.7356C16.2879 17.0165 16.7356 16.5687 16.7356 16.0165V8.52695C16.7356 7.97467 16.2879 7.52695 15.7356 7.52695H4.3125ZM10.0242 13.2384C10.5581 13.2384 10.9909 12.8056 10.9909 12.2717C10.9909 11.7377 10.5581 11.3049 10.0242 11.3049C9.49023 11.3049 9.05738 11.7377 9.05738 12.2717C9.05738 12.8056 9.49023 13.2384 10.0242 13.2384ZM11.9909 12.2717C11.9909 13.3579 11.1104 14.2384 10.0242 14.2384C8.93794 14.2384 8.05738 13.3579 8.05738 12.2717C8.05738 11.1854 8.93794 10.3049 10.0242 10.3049C11.1104 10.3049 11.9909 11.1854 11.9909 12.2717Z" fill="#74808B"></path>
@@ -34,21 +34,21 @@
                 </div>
 
                 <div class="mt-4">
-                    <button type="button" class="bg-[#2490EF] font-semibold text-white text-xs w-full h-7 rounded-lg min-w-[320px] shadow">Login</button>
+                    <button type="submit" class="bg-[#2490EF] font-semibold text-white text-xs w-full h-7 rounded-lg min-w-[320px] shadow">Login</button>
                 </div>
 
-                <div class="text-[13px]">
+                <div class="text-[13px] text-[#70848B]">
                     or
                 </div>
 
                 <div>
-                    <button type="button" class="bg-[#F4F5F6] text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With chola</button>
+                    <button type="button" class="bg-[#F4F5F6] transition-all duration-200 hover:bg-[#dddee0] flex justify-center items-center text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With chola</button>
                 </div>
                 <div>
-                    <button type="button" class="bg-[#F4F5F6] text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With employee</button>
+                    <button type="button" class="bg-[#F4F5F6] transition-all duration-200 hover:bg-[#dddee0] flex justify-center items-center text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With employee</button>
                 </div>
                 <div>
-                    <button type="button" class="bg-[#F4F5F6] text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With user</button>
+                    <button type="button" class="bg-[#F4F5F6] transition-all duration-200 hover:bg-[#dddee0] flex justify-center items-center text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With user</button>
                 </div>
             </div>
         </div>
