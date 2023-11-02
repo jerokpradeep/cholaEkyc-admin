@@ -54,8 +54,8 @@ const actions = {
     },
 };
 
-const mutations = {
-};
+// const mutations = {
+// };
 
 const getters = {
     getKycApprovalTabs: state => state.kycApprovalTabs,
@@ -66,7 +66,7 @@ const getters = {
 const tabs = {
     namespaced: true,
     state: state,
-    mutations: mutations,
+    // mutations: mutations,
     actions: actions,
     getters: getters,
 }

@@ -1,25 +1,17 @@
-// import service from '../httpService'
-// import errorHandle from '../../handleError/errorHandling'
-
+import httpService from "../../services/httpservices";
 const state = {
     isStageDetails: false
 }
 
 const actions = {
-    // async getBankDataFromApi({ commit }) {
-    //     commit('setLoader', true, { root:true })
-    //     service.getBankDetails().then(resp => {
-    //         if(resp.data?.message?.data?.fsl_bank_details) {
-    //             commit('setBankDetails',resp.data.message.data?.fsl_bank_details)
-    //         } else {
-    //             commit('setBankDetails', [])
-    //         }
-    //     }).catch((error) => {
-    //         errorHandle.handleError(error)
-    //     }).finally(() => {
-    //         commit('setLoader', false, { root: true })
-    //     })
-    // },
+   getOpportunityList({state,commit,dispatch}, payload){
+    httpService.getOpportunityList().then(resp =>{
+        console.log(resp , 'dasfc adsfcasdv sadfcasdv');
+    }, (err) => {
+        dispatch('errorLog/checkRouter', err, { root: true })
+
+    }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
+   }
 };
 
 const mutations = {
@@ -32,7 +24,7 @@ const getters = {
     getIsStageDetails: state => state.isStageDetails
 };
 
-const bankDetails = {
+const opportunity = {
     namespaced: true,
     state: state,
     mutations: mutations,
@@ -40,4 +32,4 @@ const bankDetails = {
     getters: getters,
 }
 
-export default bankDetails
+export default opportunity
