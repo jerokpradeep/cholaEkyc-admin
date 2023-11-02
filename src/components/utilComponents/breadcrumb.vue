@@ -20,14 +20,14 @@ export default {
   data() {
     return {
       pages :  [
-        { name: 'All Opportunities', href: '#', current: false },
+        { name: 'My Opportunity', href: '#', current: false },
         { name: 'Stage Details', href: '#', current: true },
       ]
     }
   },
   methods: {
     handleClick(page) {
-      if(page.name == 'All Opportunities') {
+      if(page.name == 'My Opportunity') {
         this.$store.commit('opportunity/setIsStageDetails', false)
       }
     }

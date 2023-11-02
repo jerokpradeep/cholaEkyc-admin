@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(i, id) in tableData" :key="id" class="border-b cursor-pointer hover:bg-gray-50" @click="goToStageDetails(i)">
+        <tr v-for="(i, id) in tableData" :key="id" class="border-b cursor-pointer hover:bg-gray-50">
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.SNO }}
           </td>
@@ -20,13 +20,8 @@
           </td>
           <td
             class="flex py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
-            <img class="w-4 mr-2 text-right h-6" :src="i.Status == 'In Progress'
-              ? Progress
-              : i.Status == 'Completed'
-                ? completed
-                : ''
-              " />
-            {{ i.Status }}
+            
+            {{ i.pan }}
           </td>
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             <button depressed class="tracking-[0.4px] px-3 min-h-[1.625rem] text-xs rounded min-w-[140px] cursor-default"
@@ -61,15 +56,6 @@
               {{ i.Currentphases }}
             </button>
           </td>
-          <!-- <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative">
-            <div class="w-full h-4 flex bg-gray-200 dark:bg-gray-700">
-              <div class="bg-green-600 text-xs font-medium text-blue-100 text-center leading-none" style="width: 45%">
-              </div>
-              <div class="bg-green-400 text-xs font-medium text-blue-100 text-center leading-none" style="width: 30%">
-              </div>
-            </div>
-            {{ i.Progress }}
-          </td> -->
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative items-center justify-center">
             <div class="flex items-center justify-center">
               <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="chevronSvg"
@@ -90,24 +76,19 @@
               {{ i.Inferredprogress }}
             </button>
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.Owner }}
-          </td>
         </tr>
       </tbody>
     </table>
 
-    <StageDetails v-if="getIsStageDetails"/>
   </div>
 </template>
 <script>
 import Progress from "../../assets/image/process.svg";
 import completed from "../../assets/image/100percent.svg";
 import chevronSvg from "../../assets/image/Chevron.svg"
-import StageDetails from "./stage-details.vue";
 import { mapGetters } from "vuex"
 export default {
-  components: { StageDetails },
+  components: {  },
   data() {
     return {
       Progress,
@@ -116,157 +97,73 @@ export default {
       tableHeads: [
         { name: "SNO", class: "text-center" },
         { name: "Customer Name", class: "text-center" },
-        { name: "Status.", class: "text-center" },
+        { name: "PAN", class: "text-center" },
         { name: "Current phases", class: "text-center" },
         { name: "Phases", class: "text-center" },
         { name: "Hours consumed", class: "text-center" },
-        { name: "Inferred progress", class: "text-center" },
-        { name: "Owner", class: "text-center" },
+        { name: "Progress State", class: "text-center" },
       ],
       tableData: [
         {
           SNO: "1",
           CustomerName: "Akash",
-          Status: "In Progress",
+          pan: "AMDPV9160F",
           Currentphases: "Mobile Verification",
           Progress: "",
           Phases: "3",
           Hoursconsumed: "8.24 Hr ",
-          Inferredprogress: "On Track",
-          Owner: "Akash",
+          Inferredprogress: "On Track"
         },
         {
           SNO: "2",
           CustomerName: "Akash",
-          Status: "In Progress",
+          pan: "AMDPV9160F",
           Currentphases: "Email Verification",
           Progress: "",
           Phases: "3",
           Hoursconsumed: "8.24 Hr",
-          Inferredprogress: "Running Late",
-          Owner: "Akash",
+          Inferredprogress: "Running Late"
         },
         {
           SNO: "3",
           CustomerName: "Akash",
-          Status: "In Progress",
+          pan: "AMDPV9160F",
           Currentphases: "PAN Verification",
           Progress: "",
           Phases: "5",
           Hoursconsumed: "8.24 Hr",
-          Inferredprogress: "On Track",
-          Owner: "Akash",
+          Inferredprogress: "On Track"
         },
         {
           SNO: "4",
           CustomerName: "Akash",
-          Status: "In Progress",
+          pan: "AMDPV9160F",
           Currentphases: "Address",
           Progress: "",
           Phases: "8",
           Hoursconsumed: "8.24 Hr",
-          Inferredprogress: "Running Late",
-          Owner: "Akash",
+          Inferredprogress: "Running Late"
         },
         {
           SNO: "5",
           CustomerName: "Akash",
-          Status: "In Progress",
+          pan: "AMDPV9160F",
           Currentphases: "Personal Profile",
           Progress: "",
           Phases: "3",
           Hoursconsumed: "8.24 Hr",
-          Inferredprogress: "On Track",
-          Owner: "Akash",
+          Inferredprogress: "On Track"
         },
         {
           SNO: "6",
           CustomerName: "Akash",
-          Status: "In Progress",
+          pan: "AMDPV9160F",
           Currentphases: "Bank Account",
           Progress: "",
           Phases: "5",
           Hoursconsumed: "8.24 Hr",
-          Inferredprogress: "Running Late",
-          Owner: "Akash",
-        },
-        // {
-        //   SNO: "7",
-        //   CustomerName: "Akash",
-        //   Status: "In Progress",
-        //   Currentphases: "Segment Selection",
-        //   Progress: "",
-        //   Phases: "6",
-        //   Hoursconsumed: "8.24 Hr",
-        //   Inferredprogress: "On Track",
-        //   Owner: "Akash",
-        // },
-        // {
-        //   SNO: "8",
-        //   CustomerName: "Akash",
-        //   Status: "In Progress",
-        //   Currentphases: "Payment",
-        //   Progress: "",
-        //   Phases: "7",
-        //   Hoursconsumed: "8.24 Hr",
-        //   Inferredprogress: "Running Late",
-        //   Owner: "Akash",
-        // },
-        // {
-        //   SNO: "9",
-        //   CustomerName: "Akash",
-        //   Status: "In Progress",
-        //   Currentphases: "Nominee",
-        //   Progress: "",
-        //   Phases: "8",
-        //   Hoursconsumed: "8.24 Hr",
-        //   Inferredprogress: "On Track",
-        //   Owner: "Akash",
-        // },
-        // {
-        //   SNO: "10",
-        //   CustomerName: "Akash",
-        //   Status: "In Progress",
-        //   Currentphases: "Document Upload",
-        //   Progress: "",
-        //   Phases: "9",
-        //   Hoursconsumed: "8.24 Hr",
-        //   Inferredprogress: "Running Late",
-        //   Owner: "Akash",
-        // },
-        // {
-        //   SNO: "11",
-        //   CustomerName: "Akash",
-        //   Status: "In Progress",
-        //   Currentphases: "IPV",
-        //   Progress: "",
-        //   Phases: "4",
-        //   Hoursconsumed: "8.24 Hr",
-        //   Inferredprogress: "On Track",
-        //   Owner: "Akash",
-        // },
-        // {
-        //   SNO: "12",
-        //   CustomerName: "Akash",
-        //   Status: "In Progress",
-        //   Currentphases: "PDF Generation",
-        //   Progress: "",
-        //   Phases: "6",
-        //   Hoursconsumed: "8.24 Hr",
-        //   Inferredprogress: "Running Late",
-        //   Owner: "Akash",
-        // },
-        // {
-        //   SNO: "13",
-        //   CustomerName: "Akash",
-        //   Status: "In Progress",
-        //   Currentphases: "ESIGN",
-        //   Progress: "",
-        //   Phases: "7",
-        //   Hoursconsumed: "8.24 Hr",
-        //   Inferredprogress: "On Track",
-        //   Owner: "Akash",
-        // },
+          Inferredprogress: "Running Late"
+        }
       ],
     };
   },
@@ -274,10 +171,6 @@ export default {
     ...mapGetters('opportunity', ['getIsStageDetails'])
   },
   methods: {
-    goToStageDetails(data) {
-      this.$store.commit('opportunity/setIsStageDetails', true)
-      // this.$router.push(`/stage-details/${data?.SNO}`)
-    }
   },
 };
 </script>
