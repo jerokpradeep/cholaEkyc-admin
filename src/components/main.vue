@@ -59,22 +59,22 @@ export default {
   data(){
     return{ 
       steps: [
-      {
-          name: "Dashboard",
-          route: "/dashboard",
-          icon: "Reports",
-          status: "active",
-          active: true,
-          svg: "home",
-        },
-        {
-          name: "Lead",
-          route: "/lead",
-          icon: "Reports",
-          status: "active",
-          active: false,
-          svg: "orders",
-        },
+      // {
+      //     name: "Dashboard",
+      //     route: "/dashboard",
+      //     icon: "Reports",
+      //     status: "active",
+      //     active: true,
+      //     svg: "home",
+      //   },
+        // {
+        //   name: "Lead",
+        //   route: "/lead",
+        //   icon: "Reports",
+        //   status: "active",
+        //   active: false,
+        //   svg: "orders",
+        // },
         {
           name: "Opportunity",
           route: "/opportunity",
@@ -91,14 +91,14 @@ export default {
           active: false,
           svg: "upload",
         },
-        {
-          name: "Recon",
-          route: "/re",
-          icon: "Reports",
-          status: "active",
-          active: false,
-          svg: "newsIcon",
-        },
+        // {
+        //   name: "Recon",
+        //   route: "/re",
+        //   icon: "Reports",
+        //   status: "active",
+        //   active: false,
+        //   svg: "newsIcon",
+        // },
       ],
     }
   },

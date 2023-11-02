@@ -15,14 +15,16 @@
   </div>
   <breadcrumb v-if="getIsStageDetails"/>
   <Allopportunity v-if="currentTab == 'All Opportunities'" />
+  <myOpportunity v-if="currentTab == 'My Opportunity'"/>
 </template>
 
 <script>
 import Allopportunity from "./Allopportunity.vue";
 import breadcrumb from "../../components/utilComponents/breadcrumb.vue"
+import myOpportunity from "./myOpportunity.vue";
 import { mapGetters } from "vuex"
 export default {
-  components: { Allopportunity, breadcrumb,  },
+  components: { Allopportunity, breadcrumb, myOpportunity },
   data() {
     return {
       tabheaders: [
