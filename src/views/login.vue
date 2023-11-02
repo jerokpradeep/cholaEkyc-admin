@@ -66,35 +66,17 @@ export default {
     },
     methods: {
         handleSubmit() {
-            debugger
             if(this.validateForm()) {
                 let json = {
                     emailId: this.emailId,
                     password: this.password
                 }
                 this.$store.dispatch('login/getUserSession', json)
-            }else {
-                this.$notify({
-                        "title": "Login Failed",
-                        "type": "danger",
-                        "message": '',
-                        "duration": 4500
-                    }, '')
             }
         },
         validateForm() {
             return this.emailId && this.password
         }
-    },
-    created() {
-        this.$store.dispatch("errorLog/toaster" , {
-                    data: {
-                        "title": "Login Failed",
-                        "type": "danger",
-                        "message": '',
-                        "duration": 45000
-                    }, position: ''
-                }, { root: true })
-    },
+    }
 }
 </script>

@@ -1,8 +1,8 @@
-import { createApp,defineComponent } from "vue";
+import { createApp,defineComponent, ref } from "vue";
 import Notification from "./Notification.vue";
 // Track all instances of notifications currently open
-const notificationState = [];
-let position  ="top-right"
+const notificationState =ref([]);
+const position  =ref("top-right")
 // Set default values
 const durationDefault = 4500;
 const typeDefault = "primary";
@@ -16,9 +16,9 @@ const app = defineComponent({
   methods:{
     // Remove the notification from state
  closeNotification(key) {
-  const index = notificationState.findIndex((n) => key === n.key);
-  clearTimeout(notificationState[index]._timer);
-  notificationState.splice(index, 1);
+  const index = notificationState.value.findIndex((n) => key === n.key);
+  clearTimeout(notificationState.value[index]._timer);
+  notificationState.value.splice(index, 1);
 }
   },
 })
@@ -28,6 +28,7 @@ notificationContainer.id = "notification-container";
 document.body.appendChild(notificationContainer);
 createApp(app).mount(notificationContainer)
 function newNotification(args, where) {
+  
   if (typeof args === "string") {
     args = {
       message: args,
@@ -37,8 +38,8 @@ function newNotification(args, where) {
   args.duration = args.duration || durationDefault;
   args.type = args.type || typeDefault;
   args._timer = setTimer(args.key, args.duration);
-  where ? position = where : ''
-  notificationState.push(args) 
+  where ? position.value = where : ''
+  notificationState.value.push(args) 
   
 }
 
@@ -49,9 +50,9 @@ function setTimer(key, duration) {
   }, duration);
 }
 function closeNotificationtest(key) {
-  const index = notificationState.findIndex((n) => key === n.key);
-  clearTimeout(notificationState[index]._timer);
-  notificationState.splice(index, 1);
+  const index = notificationState.value.findIndex((n) => key === n.key);
+  clearTimeout(notificationState.value[index]._timer);
+  notificationState.value.splice(index, 1);
 }
 
 
