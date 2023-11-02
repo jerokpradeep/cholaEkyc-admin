@@ -1,10 +1,10 @@
 <template>
-    <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-gray-900/10 pb-12 md:grid-cols-3">
-        <div class="max-w-[800px]">
+    <div class="">
+        <div class="">
             <div class="my-4 flex flex-col gap-4 ">
                 <div v-for="(i, id) in nomineeList" :key="id" class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full" @click="expantion(id)">
                     <div class="flex justify-between gap-3">
-                        <div class="text-sm">
+                        <div class="text-sm font-semibold">
                             Nominee {{ id + 1 }}
                         </div>
                         <div>
@@ -13,44 +13,66 @@
                         </div>
                     </div>
                     <div class="" v-if="i.isOpen">
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">Name</div>
-                            <div class="text-sm">{{ i.name }}</div>
-                        </div>
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-gray-900/10 pb-12 md:grid-cols-2 my-4">
+                            <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 md:col-span-2">
 
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">DOB</div>
-                            <div class="text-sm">{{ i.dob }}</div>
-                        </div>
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.name"/>
+                                    </div>
+                                </div>
 
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">Mobile No.</div>
-                            <div class="text-sm">{{ i.mobNo }}</div>
-                        </div>
+                                <div class="sm:col-span-3">
+                                    <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">DOB</label>
+                                    <div class="mt-2">
+                                    <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.dob"/>
+                                    </div>
+                                </div>
 
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">Email ID</div>
-                            <div class="text-sm">{{ i.emailId }}</div>
-                        </div>
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Mobile No.</label>
+                                    <div class="mt-2">
+                                    <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.mobNo"/>
+                                    </div>
+                                </div>
 
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">Proof Type</div>
-                            <div class="text-sm">{{ i.proofType }}</div>
-                        </div>
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Email ID</label>
+                                    <div class="mt-2">
+                                    <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.emailId"/>
+                                    </div>
+                                </div>
 
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">Proof ID</div>
-                            <div class="text-sm">{{ i.proofId }}</div>
-                        </div>
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Proof Type</label>
+                                    <div class="mt-2">
+                                    <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.proofType"/>
+                                    </div>
+                                </div>
 
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">Relation OF Nominee</div>
-                            <div class="text-sm">{{ i.relationOfNominee }}</div>
-                        </div>
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Proof ID</label>
+                                    <div class="mt-2">
+                                    <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.proofId"/>
+                                    </div>
+                                </div>
 
-                        <div class="my-2">
-                            <div class="text-xs secondaryColor mb-1">Address</div>
-                            <div class="text-sm">{{ i.address }}</div>
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Relation OF Nominee</label>
+                                    <div class="mt-2">
+                                    <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.relationOfNominee"/>
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                                    <div class="mt-2">
+                                    <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="i.address"/>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

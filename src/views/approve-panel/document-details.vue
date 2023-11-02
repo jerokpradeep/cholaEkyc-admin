@@ -50,38 +50,38 @@ export default {
                 { name: "Preview", class: "text-left" },
                 { name: "Download", class: "text-left" }
             ],
-          tableData: [
-            {
-              sno: "1",
-              docName: 'PAN',
-              type: 'jpg'
-            },
-            {
-              sno: "2",
-              docName: 'CANCELLED_CHEQUE_OR_STATEMENT',
-              type: 'jpg'
-            },
-            {
-              sno: "3",
-              docName: 'SIGNATURE',
-              type: 'jpg'
-            },
-            {
-              sno: "4",
-              docName: 'IPV',
-              type: 'jpg'
-            },
-            {
-              sno: "5",
-              docName: 'ESIGN_DOCUMENT',
-              type: 'jpg'
-            },
-            {
-              sno: "6",
-              docName: 'PROTECTED_ESIGN_DOCUMENT',
-              type: 'jpg'
-            }
-          ],
+            tableData: [
+                {
+                sno: "1",
+                docName: 'PAN',
+                type: 'jpg'
+                },
+                {
+                sno: "2",
+                docName: 'CANCELLED_CHEQUE_OR_STATEMENT',
+                type: 'jpg'
+                },
+                {
+                sno: "3",
+                docName: 'SIGNATURE',
+                type: 'jpg'
+                },
+                {
+                sno: "4",
+                docName: 'IPV',
+                type: 'jpg'
+                },
+                {
+                sno: "5",
+                docName: 'ESIGN_DOCUMENT',
+                type: 'jpg'
+                },
+                {
+                sno: "6",
+                docName: 'PROTECTED_ESIGN_DOCUMENT',
+                type: 'jpg'
+                }
+            ],
         }
     },
 }

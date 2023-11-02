@@ -11,6 +11,11 @@ const state = {
         { name: 'IPV', id: 8, active: false, count: '0' },
         { name: 'ESign', id: 9, active: false, count: '0' },
     ],
+    kycPanelTabs : [
+        { name: 'Reports', id: 0, active: true, count: '0' },
+        { name: 'All Approvals', id: 1, active: false, count: '0' },
+        { name: 'My Approvals', id: 2, active: false, count: '0' },
+    ]
 }
 
 const actions = {
@@ -18,7 +23,9 @@ const actions = {
         let data = []
         if(payload.path == '/approvepanel') {
             data = state.kycApprovalTabs
-        } 
+        } else if(payload.path == '/kycapproval') {
+            data = state.kycPanelTabs
+        }
 
         if(data) {
             data.forEach(el => {
@@ -32,7 +39,9 @@ const actions = {
 
         if (payload.path == '/approvepanel') {
             state.kycApprovalTabs = data
-        } 
+        } else if(payload.path == '/kycapproval') {
+            state.kycPanelTabs = data
+        }
     },
 };
 
@@ -41,6 +50,7 @@ const mutations = {
 
 const getters = {
     getKycApprovalTabs: state => state.kycApprovalTabs,
+    getKycPanelTabs: state => state.kycPanelTabs
 };
 
 const tabs = {

@@ -1,4 +1,5 @@
 <template>
+  <tabs class="mx-4" @activeTab="changeTab"/>
   <div class="p-4">
     <div class="flex gap-3 flex-wrap">
       <input type="date" v-model="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8">
@@ -121,8 +122,9 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 import Progress from "../assets/image/process.svg";
 import completed from "../assets/image/100percent.svg";
 import chevronSvg from "../assets/image/Chevron.svg"
+import tabs from "../components/utilComponents/tabs.vue"
 export default {
-  components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon },
+  components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs },
   data() {
       return {
           fromDate: '',
@@ -214,6 +216,9 @@ export default {
   methods: {
     goToApprovalPage() {
       this.$router.push('/approvepanel').catch(() => { })
+    },
+    changeTab(id) {
+
     }
   },
 }

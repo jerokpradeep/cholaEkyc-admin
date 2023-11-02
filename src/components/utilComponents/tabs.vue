@@ -30,30 +30,18 @@ export default {
       this.$emit("activeTab", id);
     },
     getTabs() {
-      if (this.$route.path == "/opportunity") {
-        return this.getReportTabs;
-      } else if (this.$route.path == "/kycapproval") {
-        return this.getHoldingsTabs;
-      } else if (this.$route.path == "/re") {
-        return this.getActionTabs;
-      } else if (this.$route.path == "/lead") {
-        return this.getProfileTabs;
-      } else if (this.$route.path == "/dashboard") {
-        return this.getDashboardTabs;
-      }  else if (this.$route.path == "/approvepanel") {
+      if (this.$route.path == "/approvepanel") {
         return this.getKycApprovalTabs;
+      } else if (this.$route.path == "/kycapproval") {
+        return this.getKycPanelTabs;
       }
     },
   },
   mounted() { },
   computed: {
     ...mapGetters("tabs", [
-      "getReportTabs",
-      "getHoldingsTabs",
-      "getActionTabs",
-      "getProfileTabs",
-      "getDashboardTabs",
-      "getKycApprovalTabs"
+      "getKycApprovalTabs",
+      "getKycPanelTabs"
     ]),
     ...mapGetters(["getWindowWidth"]),
   },

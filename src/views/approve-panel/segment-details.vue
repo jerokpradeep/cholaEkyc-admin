@@ -3,9 +3,9 @@
         <table class="bg-white w-[800px] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
-                <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
-                    {{ head.name }}
-                </th>
+                  <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
+                      {{ head.name }}
+                  </th>
                 </tr>
             </thead>
             <tbody>
@@ -49,90 +49,90 @@ export default {
     data() {
         return {
             tableHeads: [
-            { name: "S.No", class: "text-center" },
-            { name: "Field", class: "text-left" },
-            { name: "Value", class: "text-left" }
-          ],
-          tableData: [
-            {
-              sno: "1",
-              field: 'Equity Cash - NSE',
-              value: "Yes",
-            },
-            {
-              sno: "2",
-              field: 'Equity Cash - BSE',
-              value: "Yes",
-            },
-            {
-              sno: "3",
-              field: 'Equity Derivaties - NSE',
-              value: "No",
-            },
-            {
-              sno: "4",
-              field: 'Equity Funds - NSE',
-              value: "Yes",
-            },
-            {
-              sno: "5",
-              field: 'Equity Funds - BSE',
-              value: "Yes",
-            },
-            {
-              sno: "6",
-              field: 'SLB - NSE',
-              value: "Yes",
-            },
-            {
-              sno: "7",
-              field: 'SLB - BSE',
-              value: "Yes",
-            },
-            {
-              sno: "8",
-              field: 'Currency Derivatives - NSE',
-              value: "No",
-            },
-            {
-              sno: "9",
-              field: 'Category',
-              value: "Others",
-            },
-            {
-              sno: "10",
-              field: 'Mutual Funds Depository',
-              value: "No",
-            },
-            {
-              sno: "11",
-              field: 'Consent',
-              value: "Yes",
-            },
-            {
-              sno: "12",
-              field: 'DDPI',
-              value: "No",
-            },
-            {
-              sno: "13",
-              field: 'Trading Scheme',
-              value: "Standard Scheme",
-            },
-            {
-              sno: "14",
-              field: 'DP Scheme',
-              value: "Normal Scheme",
-            },
-            {
-              sno: "15",
-              field: 'Amount',
-              value: "",
-            },
-            
+              { name: "S.No", class: "text-center" },
+              { name: "Field", class: "text-left" },
+              { name: "Value", class: "text-left" }
+            ],
+            tableData: [
+              {
+                sno: "1",
+                field: 'Equity Cash - NSE',
+                value: "Yes",
+              },
+              {
+                sno: "2",
+                field: 'Equity Cash - BSE',
+                value: "Yes",
+              },
+              {
+                sno: "3",
+                field: 'Equity Derivaties - NSE',
+                value: "No",
+              },
+              {
+                sno: "4",
+                field: 'Equity Funds - NSE',
+                value: "Yes",
+              },
+              {
+                sno: "5",
+                field: 'Equity Funds - BSE',
+                value: "Yes",
+              },
+              {
+                sno: "6",
+                field: 'SLB - NSE',
+                value: "Yes",
+              },
+              {
+                sno: "7",
+                field: 'SLB - BSE',
+                value: "Yes",
+              },
+              {
+                sno: "8",
+                field: 'Currency Derivatives - NSE',
+                value: "No",
+              },
+              {
+                sno: "9",
+                field: 'Category',
+                value: "Others",
+              },
+              {
+                sno: "10",
+                field: 'Mutual Funds Depository',
+                value: "No",
+              },
+              {
+                sno: "11",
+                field: 'Consent',
+                value: "Yes",
+              },
+              {
+                sno: "12",
+                field: 'DDPI',
+                value: "No",
+              },
+              {
+                sno: "13",
+                field: 'Trading Scheme',
+                value: "Standard Scheme",
+              },
+              {
+                sno: "14",
+                field: 'DP Scheme',
+                value: "Normal Scheme",
+              },
+              {
+                sno: "15",
+                field: 'Amount',
+                value: "",
+              },
+              
 
-          ],
-          tickSvg, cancelSvg
+            ],
+            tickSvg, cancelSvg
         }
     },
 }

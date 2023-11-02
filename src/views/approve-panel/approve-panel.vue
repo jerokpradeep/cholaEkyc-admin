@@ -15,10 +15,10 @@
 
             <div>
                 <div class="text-xs mb-2 secondaryColor">
-                    Email
+                    Status
                 </div>
                 <div class="text-sm">
-                    {{ i.emailId }}
+                    {{ i.status }}
                 </div>
             </div>
 
@@ -61,6 +61,7 @@
 
         <tabs class="mx-4" @activeTab="changeTab"/>
         <div class="p-4">
+            <user_details v-if="currentTab == 0"/>
             <pan_details v-if="currentTab == 1"/>
             <address_details v-if="currentTab == 2"/>
             <profile_details v-if="currentTab == 3"/>
@@ -71,7 +72,7 @@
             <ipv_details v-if="currentTab == 8"/>
         </div>
 
-        <div class="flex gap-4 my-4 justify-end absolute right-4 bottom-2">
+        <div class="flex gap-4 my-4 justify-end absolute right-4 bottom-2" v-if="currentTab != 0 && currentTab != 7">
             <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Approve</button>
             <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Reject</button>
         </div>
@@ -89,8 +90,9 @@ import segment_details from "./segment-details.vue"
 import nominee_details from "./nominee-details.vue"
 import document_details from "./document-details.vue"
 import ipv_details from "./ipv-details.vue"
+import user_details from "./details.vue"
 export default {
-    components: { breadcrumbKyc, tabs, pan_details, address_details, profile_details, bank_details, segment_details, nominee_details, document_details, ipv_details },
+    components: { breadcrumbKyc, tabs, user_details, pan_details, address_details, profile_details, bank_details, segment_details, nominee_details, document_details, ipv_details },
     data() {
         return {
             steps: [
@@ -105,7 +107,7 @@ export default {
                 { name: 'ESign' }
             ],
             userDetails: [
-                { name: 'THAVAMANI VINOTH KUMAR', emailId: 'vinothkumardhavamani@yahoo.co.in', dob: '18-01-1989', gender: 'Male', mobileNo: '9884986649', panNo: 'AMDPV9160F' }
+                { name: 'THAVAMANI VINOTH KUMAR', status: 'Pending for approval', dob: '18-01-1989', gender: 'Male', mobileNo: '9884986649', panNo: 'AMDPV9160F' }
             ],
             currentTab : 0
         }
@@ -114,6 +116,9 @@ export default {
         changeTab(id) {
             this.currentTab = id
         }
+    },
+    mounted() {
+        
     },
 }
 </script>
