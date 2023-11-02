@@ -167,3 +167,14 @@ input[type="text"] {
 
 </style>
 
+<script>
+export default {
+  mounted() {
+    let userData = JSON.parse(sessionStorage.getItem('userData'))
+    if(userData) {
+      this.$store.commit('login/setUserData', userData)
+    }
+  },
+}
+</script>
+
