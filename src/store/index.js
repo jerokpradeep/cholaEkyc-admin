@@ -6,7 +6,7 @@ import login from "./modules/login.js"
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '02_11_2023_14_30'
+    buildDate: '03_11_2023_11_15'
   },
   mutations: {},
   actions: {},
