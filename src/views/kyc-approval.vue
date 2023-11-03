@@ -43,7 +43,6 @@
           </div>
       </div>
   </div>
-
   <div>
     <table class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
@@ -54,60 +53,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(i, id) in tableData" :key="id" class="border-b cursor-pointer hover:bg-gray-50" @click="goToApprovalPage(i)">
+        <tr v-for="(i, id) in getApprovalList" :key="id" class="border-b cursor-pointer hover:bg-gray-50" @click="goToApprovalPage(i)">
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.SNO }}
+            {{ id + 1 }}
           </td>
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.CustomerName }}
+            {{ i.customer_name ? i.customer_name : 'NA' }}
           </td>
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.applicationId }}
+            {{ i.opportunity_id ? i.opportunity_id : 'NA' }}
           </td>
           <td class="flex py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
-            {{ i.panNo }}
+            {{ i.fsl_pan_no ? i.fsl_pan_no : 'NA' }}
           </td>
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            <button depressed class="tracking-[0.4px] px-3 min-h-[1.625rem] text-xs rounded min-w-[140px] cursor-default"
-              :class="i.Currentphases == 'Mobile Verification'
-                ? 'mv-clr'
-                : i.Currentphases == 'Email Verification'
-                  ? 'ev-clr'
-                  : i.Currentphases == 'PAN Verification'
-                    ? 'pan-clr'
-                    : i.Currentphases == 'Address'
-                      ? 'ad-clr'
-                      : i.Currentphases == 'Personal Profile'
-                        ? 'pp-clr'
-                        : i.Currentphases == 'Bank Account'
-                          ? 'ba-clr'
-                          : i.Currentphases == 'Segment Selection'
-                            ? 'ss-clr'
-                            : i.Currentphases == 'Payment'
-                              ? 'pay-clr'
-                              : i.Currentphases == 'Nominee'
-                                ? 'nom-clr'
-                                : i.Currentphases == 'Document Upload'
-                                  ? 'du-clr'
-                                  : i.Currentphases == 'IPV'
-                                    ? 'ipv-clr'
-                                    : i.Currentphases == 'PDF Generation'
-                                      ? 'pdf-clr'
-                                      : i.Currentphases == 'ESIGN'
-                                        ? 'esign-clr'
-                                        : 'nrml'
-                ">
-              {{ i.Currentphases }}
-            </button>
+            {{ i['current phase'] ? i['current phase'] : 'NA' }}
           </td>
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.mobileNo  }}
+            {{ i.fsl_mobile_num ? i.fsl_mobile_num : 'NA'  }}
           </td>
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.assignedTo }}
+            {{ i.fsl_assign_to ? i.fsl_assign_to : 'NA' }}
           </td>
           <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.Hoursconsumed }}
+            {{ i.time && i.time != " "  ? i.time : 'NA' }}
           </td>
         </tr>
       </tbody>
@@ -123,6 +92,7 @@ import Progress from "../assets/image/process.svg";
 import completed from "../assets/image/100percent.svg";
 import chevronSvg from "../assets/image/Chevron.svg"
 import tabs from "../components/utilComponents/tabs.vue"
+import { mapGetters } from 'vuex';
 export default {
   components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs },
   data() {
@@ -213,6 +183,9 @@ export default {
           Progress, completed, chevronSvg
       }
   },
+  computed: {
+        ...mapGetters('approval', ['getApprovalList'])
+    },
   methods: {
     goToApprovalPage() {
       this.$router.push('/approvepanel').catch(() => { })
@@ -220,6 +193,9 @@ export default {
     changeTab(id) {
 
     }
+  },
+  created() {
+    this.$store.dispatch('approval/getApprovalList', '')
   },
 }
 </script>

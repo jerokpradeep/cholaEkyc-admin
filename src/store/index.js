@@ -3,6 +3,7 @@ import opportunity from "./modules/opportunity.js";
 import tabs from "./modules/tabs.js";
 import errorLog from './errorHandle/index.js'
 import login from "./modules/login.js"
+import approval from "./modules/approval.js"
 const store = createStore({
   state: {
     version: "1.0.0",
@@ -11,6 +12,6 @@ const store = createStore({
   mutations: {},
   actions: {},
   getters: {},
-  modules: { opportunity, tabs, errorLog, login },
+  modules: { opportunity, tabs, errorLog, login, approval },
 });
 export default store

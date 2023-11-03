@@ -74,8 +74,8 @@
         </div>
 
         <div class="flex gap-4 my-4 justify-end absolute right-4 bottom-2" v-if="currentTab != 0 && currentTab != 7">
-            <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Approve</button>
-            <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Reject</button>
+            <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">Approve</button>
+            <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Rejected')">Reject</button>
         </div>
         
 </template>
@@ -92,6 +92,7 @@ import nominee_details from "./nominee-details.vue"
 import document_details from "./document-details.vue"
 import ipv_details from "./ipv-details.vue"
 import user_details from "./details.vue"
+import { mapGetters } from 'vuex';
 export default {
     components: { breadcrumbKyc, tabs, user_details, pan_details, address_details, profile_details, bank_details, segment_details, nominee_details, document_details, ipv_details },
     data() {
@@ -110,16 +111,43 @@ export default {
             userDetails: [
                 { name: 'THAVAMANI VINOTH KUMAR', status: 'Pending for approval', dob: '18-01-1989', gender: 'Male', mobileNo: '9884986649', panNo: 'AMDPV9160F' }
             ],
-            currentTab : 0
+            currentTab : 0,
+            remarks: ''
         }
+    },
+    computed: {
+        ...mapGetters('approval', ['getApprovalList'])
     },
     methods: {
         changeTab(id) {
             this.currentTab = id
+        },
+        approveOrRejectDoc(status) {
+            let json = {
+                id: '',
+                status: status,
+                document_type : this.getDocmentType(),
+                remarks : status == 'Rejected' ? undefined : this.remarks
+            }
+            this.$store.dispatch('approval/updateDocStatus', json)
+        },
+        getDocmentType() {
+            let docType = ''
+            switch (this.currentTab) {
+                case 1:
+                    docType = 'Pan'
+                    break;
+                case 2:
+                    docType = 'Address'
+                    break;
+                case 3:
+                    docType = 'Profile'
+                    break;
+                default:
+                    break;
+            }
         }
     },
-    mounted() {
-        
-    },
+    
 }
 </script>
