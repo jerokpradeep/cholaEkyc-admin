@@ -21,9 +21,11 @@ export default {
     return {
      pages :  [
         { name: 'Approval', href: '#', current: false },
-        { name: 'Raghu Ram Rajamani', href: '#', current: true },
       ]
     }
+  },
+  props: {
+    cutomerName: {type:String}
   },
   methods: {
     handleClick(page) {
@@ -31,6 +33,9 @@ export default {
         this.$router.push('/kycapproval').catch(() => { })
       }
     }
+  },
+  mounted() {
+    this.pages.push({ name: `${this.cutomerName}`, href: '#', current: true })
   },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     
         <div>
-            <breadcrumbKyc />
+            <breadcrumbKyc :cutomerName="getCustomerData?.fsl_user_name" />
         </div>
 
         <div class="bg-white py-6 px-8 my-2 rounded-lg flex flex-wrap gap-4 justify-between mx-4" v-for="(i, id) in userDetails" :key="id">
@@ -10,7 +10,7 @@
                     Name
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.name }}
+                    {{ getCustomerData?.fsl_user_name }}
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
                     DOB
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.dob }}
+                    {{ getCustomerData?.fsl_dob }}
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
                     Mobile
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.mobileNo }}
+                    {{ getCustomerData?.fsl_mobile_num }}
                 </div>
             </div>
 
@@ -55,14 +55,14 @@
                     PAN
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.panNo }}
+                    {{ getCustomerData?.fsl_pan_no }}
                 </div>
             </div>
         </div>
 
         <tabs class="mx-4" @activeTab="changeTab"/>
         <div class="p-4">
-            <user_details v-if="currentTab == 0"/>
+            <user_details :cutomerData="getCustomerData" v-if="currentTab == 0"/>
             <pan_details v-if="currentTab == 1"/>
             <address_details v-if="currentTab == 2"/>
             <profile_details v-if="currentTab == 3"/>
@@ -118,6 +118,11 @@ export default {
     computed: {
         ...mapGetters('approval', ['getCustomerData'])
     },
+
+    props: {
+        cutomerName: {type:String}
+    },
+
     methods: {
         changeTab(id) {
             this.currentTab = id
@@ -174,6 +179,10 @@ export default {
         getAttachmentType() {
 
         }
+    },
+
+    mounted() {
+        
     },
     
 }
