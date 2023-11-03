@@ -189,10 +189,12 @@ export default {
   methods: {
     async goToApprovalPage(data) {
       if(data?.opportunity_id) {
-        this.$store.dispatch('approval/getCustomerData', data?.opportunity_id)
-        this.$router.push('/approvepanel').catch(() => { })
+        await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
+          this.$router.push('/approvepanel').catch(() => { })
+        })
       }
     },
+
     changeTab(id) {
 
     }

@@ -5,8 +5,8 @@ const state = {
 }
 
 const actions = {
-    getApprovalList({ commit, dispatch }, payload) {
-        httpService.getApprovalList(payload).then(resp => {
+    async getApprovalList({ commit, dispatch }, payload) {
+        await httpService.getApprovalList(payload).then(resp => {
             if(resp.status == 200 && resp.data?.message?.success_key == 1 && resp.data?.message?.Data?.length) {
                 commit('setApprovalList', resp.data.message.Data)
             } else {
@@ -17,8 +17,8 @@ const actions = {
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
     },
 
-    updateDocStatus({ commit, dispatch }, payload) {
-        httpService.updateDocStatus(payload).then(resp => {
+    async updateDocStatus({ commit, dispatch }, payload) {
+        await httpService.updateDocStatus(payload).then(resp => {
             console.log(resp, 'updateDocStatus');
             if(resp.status == 200) {
                 
@@ -30,8 +30,8 @@ const actions = {
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
     },
 
-    getCustomerData({ commit, dispatch }, payload) {
-        httpService.getCustomerData(payload).then(resp => {
+    async getCustomerData({ commit, dispatch }, payload) {
+        await httpService.getCustomerData(payload).then(resp => {
             if(resp.status == 200 && resp.data?.data) {
                 commit('setCustomerData', resp.data?.data)
             } else {
@@ -49,6 +49,7 @@ const mutations = {
     }, 
     setCustomerData(state, payload) {
         state.customerData = payload
+        localStorage.setItem('customerData', JSON.stringify(payload))
     }
 };
 

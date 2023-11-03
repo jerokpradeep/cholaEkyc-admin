@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div>
+    <!-- <div>
         <table class="bg-white w-[800px] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
@@ -68,11 +68,14 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
+    <stage_table />
 </template>
 
 <script>
+import stage_table from "./stage-table.vue"
 export default {
+    components: { stage_table },
     data() {
         return {
             mobileNo: '',
@@ -149,7 +152,7 @@ export default {
         cutomerData: {type:Object}
     },
     mounted() {
-        
+        console.log(this.cutomerData, 'this.cutomerData');
         this.mobileNo = this.cutomerData.fsl_mobile_num
         this.emailId = this.cutomerData.fsl_email_id
         this.startDate = this.cutomerData.creation

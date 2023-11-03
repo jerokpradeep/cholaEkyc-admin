@@ -15,6 +15,7 @@
   
 <script>
 import { HomeIcon } from '@heroicons/vue/20/solid'
+import { mapGetters } from 'vuex'
 export default {
   components: { HomeIcon },
   data() {
@@ -24,6 +25,9 @@ export default {
       ]
     }
   },
+  computed: {
+        ...mapGetters('approval', ['getCustomerData'])
+    },
   props: {
     cutomerName: {type:String}
   },
@@ -35,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    this.pages.push({ name: `${this.cutomerName}`, href: '#', current: true })
+    this.pages.push({ name: `${this.getCustomerData.fsl_user_name}`, href: '#', current: true })
   },
 }
 </script>

@@ -1,10 +1,9 @@
 <template>
-    
         <div>
             <breadcrumbKyc :cutomerName="getCustomerData?.fsl_user_name" />
         </div>
 
-        <div class="bg-white py-6 px-8 my-2 rounded-lg flex flex-wrap gap-4 justify-between mx-4" v-for="(i, id) in userDetails" :key="id">
+        <div class="bg-white py-6 px-8 my-2 rounded-lg flex flex-wrap gap-4 justify-between mx-4">
             <div>
                 <div class="text-xs mb-2 secondaryColor">
                     Name
@@ -77,7 +76,6 @@
             <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">Approve</button>
             <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Rejected')">Reject</button>
         </div>
-        
 </template>
 
 <script>
@@ -95,6 +93,7 @@ import user_details from "./details.vue"
 import { mapGetters } from 'vuex';
 export default {
     components: { breadcrumbKyc, tabs, user_details, pan_details, address_details, profile_details, bank_details, segment_details, nominee_details, document_details, ipv_details },
+    
     data() {
         return {
             steps: [
@@ -115,6 +114,7 @@ export default {
             remarks: ''
         }
     },
+
     computed: {
         ...mapGetters('approval', ['getCustomerData'])
     },
