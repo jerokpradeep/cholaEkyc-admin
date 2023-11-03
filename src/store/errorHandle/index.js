@@ -53,8 +53,8 @@ const actions = {
     },
 
     resetLocal({dispatch, commit,rootGetters}, payload){
-        localStorage.clear()
-      
+        // localStorage.clear()
+        // router.push('/').catch(() =>{})      
     },
     checkRouter({ dispatch} , payload){
        let path = router.currentRoute.value.path

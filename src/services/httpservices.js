@@ -1,4 +1,4 @@
-import { getUrl,authHeader } from './index.js';
+import { getUrl, authHeader } from './index.js';
 import axios from 'axios';
 
 const AXIOS = axios.create({
@@ -10,6 +10,18 @@ const httpService = {
 }
 
 export default httpService
+
+function getHeader() {
+    let userData = JSON.parse(localStorage.getItem('userData'));
+    let header = { }
+    if (userData && userData?.token) {
+      header = { 'Authorization': `${userData?.token}` };
+    }
+    const requestOptions = {
+      headers: header,
+    };
+  return requestOptions
+}
 
 function getOpportunityList() {
     return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_admin.get_oppr_details`)

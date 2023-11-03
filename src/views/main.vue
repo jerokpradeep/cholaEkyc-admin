@@ -132,7 +132,8 @@ export default {
   },
   created(){
     let item = this.steps.filter((el)=> el.route == this.$router.currentRoute.value.path)
-    this.setActiveTab(item[0])
+    console.log(item , 'item item');
+    item.length > 0 ? this.setActiveTab(item[0]) : ''
   }
 };
 </script>

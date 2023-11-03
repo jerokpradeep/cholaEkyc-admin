@@ -8,17 +8,14 @@ export function getUrl(){
 
 export function authHeader() {
   let userToken = store.state.login.userData.token;
-  let headers;
+  let header = { }
   if (userToken) {
-    headers = {
-      Authorization: userToken,
-    };
-  } else {
-    headers = {
-      'Content-Type': 'application/json',
-    };
+    header = { 'Authorization': `${userToken}` };
   }
-  return headers;
+  const requestOptions = {
+    headers: header,
+  };
+  return requestOptions
 }
 
 export function resetAuthHeader() {

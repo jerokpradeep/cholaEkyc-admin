@@ -10,7 +10,7 @@
                     Name
                 </div>
                 <div class="text-sm">
-                    {{ i.name }}
+                    {{ getCustomerData?.name }}
                 </div>
             </div>
 
@@ -19,7 +19,7 @@
                     Status
                 </div>
                 <div class="text-sm">
-                    {{ i.status }}
+                    {{ getCustomerData?.status }}
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
                     DOB
                 </div>
                 <div class="text-sm">
-                    {{ i.dob }}
+                    {{ getCustomerData?.dob }}
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                     Gender
                 </div>
                 <div class="text-sm">
-                    {{ i.gender }}
+                    {{ getCustomerData?.gender }}
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
                     Mobile
                 </div>
                 <div class="text-sm">
-                    {{ i.mobileNo }}
+                    {{ getCustomerData?.mobileNo }}
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                     PAN
                 </div>
                 <div class="text-sm">
-                    {{ i.panNo }}
+                    {{ getCustomerData?.panNo }}
                 </div>
             </div>
         </div>
