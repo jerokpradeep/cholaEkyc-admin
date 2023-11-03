@@ -1,4 +1,4 @@
-import { getUrl } from './index.js';
+import { getUrl,authHeader } from './index.js';
 import axios from 'axios';
 
 const AXIOS = axios.create({
@@ -10,18 +10,6 @@ const httpService = {
 }
 
 export default httpService
-
-function getHeader() {
-    let userData = JSON.parse(sessionStorage.getItem('userData'));
-    let header = { }
-    if (userData && userData?.token) {
-      header = { 'Authorization': `token 9f09a108aabf91a:3b3fa6fc6d99b1a` };
-    }
-    let requestOptions = {
-      headers: header,
-    };
-  return requestOptions
-}
 
 function getOpportunityList() {
     return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_admin.get_oppr_details`)
@@ -40,5 +28,5 @@ function updateDocStatus(payload) {
 }
 
 function getCustomerData(customer_id) {
-  return AXIOS.get(`api/resource/Opportunity/${customer_id}`, getHeader())
+  return AXIOS.get(`api/resource/Opportunity/${customer_id}`, authHeader())
 }
