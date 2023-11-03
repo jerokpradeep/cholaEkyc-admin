@@ -154,7 +154,7 @@ export default {
         this.startDate = this.cutomerData.creation
         this.updatedOn = this.cutomerData.modified
         this.modeOfApplication = this.cutomerData.modified_by
-        this.branch = this.cutomerData.fsl_mobile_num
+        this.branch = this.cutomerData?.branch
     },
 }
 </script>
