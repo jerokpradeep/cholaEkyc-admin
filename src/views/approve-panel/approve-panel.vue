@@ -116,21 +116,24 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('approval', ['getApprovalList'])
+        ...mapGetters('approval', ['getCustomerData'])
     },
     methods: {
         changeTab(id) {
             this.currentTab = id
         },
+
         approveOrRejectDoc(status) {
             let json = {
                 id: '',
                 status: status,
                 document_type : this.getDocmentType(),
-                remarks : status == 'Rejected' ? undefined : this.remarks
+                remarks : status == 'Rejected' ? undefined : this.remarks,
+                attachment_type: this.getAttachmentType(),
             }
             this.$store.dispatch('approval/updateDocStatus', json)
         },
+
         getDocmentType() {
             let docType = ''
             switch (this.currentTab) {
@@ -143,9 +146,33 @@ export default {
                 case 3:
                     docType = 'Profile'
                     break;
+                case 4:
+                    docType = 'Bank'
+                    break;
+                case 5:
+                    docType = 'Segment'
+                    break;
+                case 6:
+                    docType = 'Nominee'
+                    break;
+                case 7:
+                    docType = 'Document'
+                    break;
+                case 8:
+                    docType = 'IPV'
+                    break;
+                case 9:
+                    docType = 'E-Sign'
+                    break;
                 default:
+                    docType
                     break;
             }
+            return docType;
+        },
+
+        getAttachmentType() {
+
         }
     },
     
