@@ -109,7 +109,7 @@ export default {
     },
     setActiveTab(val) {
       this.steps.forEach((el) => {
-        if (el.name == val.name) {
+        if (el.route == val.route) {
           el.active = true;
         } else {
           el.active = false;
@@ -130,5 +130,9 @@ export default {
       return imgUrl;
     },
   },
+  created(){
+    let item = this.steps.filter((el)=> el.route == this.$router.currentRoute.value.path)
+    this.setActiveTab(item[0])
+  }
 };
 </script>

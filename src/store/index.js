@@ -5,9 +5,8 @@ import errorLog from './errorHandle/index.js'
 import login from "./modules/login.js"
 const store = createStore({
   state: {
-    brokerName: "gopocket",
-    myAppCode:'cBxWZqAtSIyRQIN',
     version: "1.0.0",
+    buildDate: '02_11_2023_14_30'
   },
   mutations: {},
   actions: {},
