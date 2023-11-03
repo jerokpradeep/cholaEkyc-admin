@@ -187,8 +187,11 @@ export default {
         ...mapGetters('approval', ['getApprovalList'])
     },
   methods: {
-    goToApprovalPage() {
-      this.$router.push('/approvepanel').catch(() => { })
+    async goToApprovalPage(data) {
+      if(data?.opportunity_id) {
+        this.$store.dispatch('approval/getCustomerData', data?.opportunity_id)
+        this.$router.push('/approvepanel').catch(() => { })
+      }
     },
     changeTab(id) {
 

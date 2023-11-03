@@ -6,10 +6,22 @@ const AXIOS = axios.create({
 });
 
 const httpService = {
-    getOpportunityList, login, getApprovalList, updateDocStatus
+    getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData
 }
 
 export default httpService
+
+function getHeader() {
+    let userData = JSON.parse(sessionStorage.getItem('userData'));
+    let header = { }
+    if (userData && userData?.token) {
+      header = { 'Authorization': `token 9f09a108aabf91a:3b3fa6fc6d99b1a` };
+    }
+    let requestOptions = {
+      headers: header,
+    };
+  return requestOptions
+}
 
 function getOpportunityList() {
     return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_admin.get_oppr_details`)
@@ -25,4 +37,8 @@ function getApprovalList() {
 
 function updateDocStatus(payload) {
   return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_post_approval_status.update_document_details?id=${payload?.id}&status=${payload?.status}&document_type=${payload?.docType}&remarks=${payload.remarks}&attachment_type=${payload.attachmentType}&nominee_no=${payload.nomineeNo}`)
+}
+
+function getCustomerData(customer_id) {
+  return AXIOS.get(`api/resource/Opportunity/${customer_id}`, getHeader())
 }
