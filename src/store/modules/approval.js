@@ -40,7 +40,7 @@ const actions = {
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
-    }
+    },
 };
 
 const mutations = {

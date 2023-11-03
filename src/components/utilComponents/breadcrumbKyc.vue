@@ -39,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    this.pages.push({ name: `${this.getCustomerData.fsl_user_name}`, href: '#', current: true })
+    this.pages.push({ name: `${this.getCustomerData?.fsl_user_name}`, href: '#', current: true })
   },
 }
 </script>

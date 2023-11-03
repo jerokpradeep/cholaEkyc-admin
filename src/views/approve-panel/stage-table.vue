@@ -94,7 +94,7 @@ export default {
         }
     },
     mounted() {
-       
+       this.$store.dispatch('approval/getStageDetails')
     },
 }
 </script>
