@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
-
+import store from '../store'
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: '/main',
       name: 'home',
-      component: () => import('../components/main.vue'),
+      component: () => import('../views/main.vue'),
       children: [
         { path: '/dashboard', component: () => import('../views/dashboard.vue') },
         { path: '/opportunity', component: () => import('../views/opportunity/opportunity.vue')},
@@ -25,3 +25,9 @@ const router = createRouter({
 });
 
 export default router
+
+router.beforeEach(async (to, from, next) => {
+  let userData = localStorage.getItem('userData') && localStorage.getItem('userData') != "undefined" ? JSON.parse(localStorage.getItem('userData')) : null
+  store.commit('login/setUserData' , userData)
+  next()
+})

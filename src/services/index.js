@@ -7,12 +7,11 @@ export function getUrl(){
 }
 
 export function authHeader() {
-  let userToken = store.state.auth.authToken;
-  let userId = store.state.auth.userId;
+  let userToken = store.state.login.userData.token;
   let headers;
-  if (userToken && userId) {
+  if (userToken) {
     headers = {
-      Authorization: `token 1906953e49c52ed:f0f7652d463f8d0`,
+      Authorization: userToken,
     };
   } else {
     headers = {
@@ -23,10 +22,10 @@ export function authHeader() {
 }
 
 export function resetAuthHeader() {
-  let token = store.state.auth.accessToken;
+  let token = store.state.login.userData.token;
   let headers;
   if (token) {
-    headers = { Authorization: 'token 1906953e49c52ed:f0f7652d463f8d0'};
+    headers = { Authorization: token};
   } else {
     headers = {
       'Content-Type': 'application/json',

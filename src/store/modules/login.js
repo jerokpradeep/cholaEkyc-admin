@@ -37,7 +37,7 @@ const actions = {
 const mutations = {
     setUserData(state, payload) {
         state.userData = payload
-        sessionStorage.setItem('userData', JSON.stringify(payload))
+        localStorage.setItem('userData', JSON.stringify(payload))
     }, 
     setIsLoading(state, payload) {
         state.isLoading = payload

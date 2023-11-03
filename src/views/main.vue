@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import headerComp from "./header.vue";
+import headerComp from "../components/header.vue";
 export default {
   components: { headerComp  },
   data(){

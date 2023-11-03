@@ -77,7 +77,7 @@ export default {
                     emailId: this.emailId,
                     password: this.password
                 }
-                this.$store.dispatch('login/getUserSession', json)
+              this.getIsLoading ? '' :  this.$store.dispatch('login/getUserSession', json)
             }else{
                 this.$store.dispatch('errorLog/toaster' ,{data: {
                         "title": "Enter Your valid credentials",
