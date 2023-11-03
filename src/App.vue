@@ -165,6 +165,12 @@ input[type="text"] {
   @apply text-[#000000]
 }
 
+.themeBtn {
+  @apply min-h-[32px] px-4 text-sm rounded !bg-[#4CADD6] text-[#ffffff] tracking-[0.2px] outline-none;
+}
+.cancelBtn {
+  @apply min-h-[32px] px-4 text-sm rounded bg-[#ffffff] border border-[#a2a2a2] text-[#17181A] tracking-[0.2px] outline-none;
+}
 </style>
 
 <script>

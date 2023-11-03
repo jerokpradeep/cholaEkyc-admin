@@ -1,5 +1,5 @@
 <template>
-    <TransitionRoot as="template" :show="$store.state.isLogout">
+    <TransitionRoot as="template" :show="$store.state.isReject">
       <Dialog as="div" class="relative z-10 " @close="close()" >
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
@@ -11,12 +11,15 @@
                 <DialogPanel
                   class="w-full max-w-md transform rounded overflow-hidden radius p-6 text-left align-middle bg-white">
                   <DialogTitle as="h3" class="text-base pb-2 font-medium leading-6 primaryColor">
-                    <p class="secondaryColor" id="logout_content">Are you sure want to logout ?</p>
+                   <div class="grid">
+                    <label for="reject_content" id="reject_content_label">Remarks</label>
+                    <textarea name="" id="reject_content" class="w-full" autofocus></textarea>
+                   </div>
                   </DialogTitle>
   
                   <div class="mt-8 flex justify-end gap-2">
-                    <button type="button" class="themeBtn" id="logout_btn" @click="$store.dispatch('callLogout')">
-                      Logout
+                    <button type="button" class="themeBtn" id="logout_btn" >
+                      Confirm
                     </button>
                     <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="close()" >
                       Cancel
@@ -33,13 +36,13 @@
 <script>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 export default {
-  name: 'logout-dialog',
+  name: 'reject-dialog',
   components:{
       Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot
   },
   methods:{
     close(){
-      this.$store.commit('setLogout',  false)
+      this.$store.commit('setReject',  false)
     }
   }
 }
