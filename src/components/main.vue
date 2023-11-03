@@ -79,7 +79,7 @@ export default {
           route: "/opportunity",
           icon: "Reports",
           status: "active",
-          active: false,
+          active: true,
           svg: "orders",
         },
         {

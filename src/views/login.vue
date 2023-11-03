@@ -34,7 +34,10 @@
                 </div>
 
                 <div class="mt-4">
-                    <button type="submit" class="bg-[#2490EF] font-semibold text-white text-xs w-full h-7 rounded-lg min-w-[320px] shadow">Login</button>
+                    <button type="submit" class="bg-[#2490EF] font-semibold text-white text-xs w-full h-7 rounded-lg min-w-[320px] shadow">
+                        <span v-if="!getIsLoading">Login</span>
+                        <span v-if="getIsLoading">Loading...</span>
+                    </button>
                 </div>
 
                 <div class="text-[13px] text-[#70848B]">
@@ -56,6 +59,7 @@
 </template>
 <script>
 import client_logo from "../assets/image/chola_head.png"
+import { mapGetters } from "vuex"
 export default {
     data() {
         return {
@@ -63,6 +67,9 @@ export default {
             emailId: '',
             password: ''
         }
+    },
+    computed: {
+        ...mapGetters('login', ['getIsLoading'])
     },
     methods: {
         handleSubmit() {

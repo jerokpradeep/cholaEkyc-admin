@@ -81,7 +81,7 @@
             <img :src="clientLogo" class="h-6 " alt="logo" />
         </div>
         <div>
-          <p class="text-blue-500 cursor-pointer text-xs" @click="">Logout</p>
+          <p class="text-blue-500 cursor-pointer text-xs" @click="logout">Logout</p>
         </div>
       </div>
     </div>
@@ -97,5 +97,11 @@ export default {
     };
   },
   components: { Menu, MenuButton, MenuItems, MenuItem },
+  methods: {
+    logout() {
+      sessionStorage.clear()
+      this.$router.push('/')
+    }
+  },
 };
 </script>

@@ -13,7 +13,7 @@ const httpService = {
 }
 
 export default httpService
-function getOpportunityList(){
+function getOpportunityList() {
     return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_admin.get_oppr_details`)
 }
 
