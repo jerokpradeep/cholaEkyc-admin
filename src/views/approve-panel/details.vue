@@ -127,12 +127,11 @@ export default {
         cutomerData: {type:Object}
     },
     mounted() {
-        console.log(this.cutomerData, 'this.cutomerData');
-        this.mobileNo = this.cutomerData.fsl_mobile_num
-        this.emailId = this.cutomerData.fsl_email_id
-        this.startDate = this.cutomerData.creation
-        this.updatedOn = this.cutomerData.modified
-        this.modeOfApplication = this.cutomerData.modified_by
+        this.mobileNo = this.cutomerData?.fsl_mobile_num
+        this.emailId = this.cutomerData?.fsl_email_id
+        this.startDate = this.cutomerData?.creation
+        this.updatedOn = this.cutomerData?.modified
+        this.modeOfApplication = this.cutomerData?.modified_by
         this.branch = this.cutomerData?.branch
     },
 }

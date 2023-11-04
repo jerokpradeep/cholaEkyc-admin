@@ -9,15 +9,103 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(i, id) in tableData" :key="id" class="border-b cursor-pointer hover:bg-gray-50">
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-                        {{ i.sno }}
+                       1
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ i.stage }}
+                        PAN
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ i.status }}
+                        {{ getStageData?.pan }}
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       2
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        Profile
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        {{ getStageData?.profile }}
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       3
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        Address
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        {{ getStageData?.address }}
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       4
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        Bank
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        {{ getStageData?.bank }}
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       5
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        Segments
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        {{ getStageData?.segment }}
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       6
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        IPV
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        {{ getStageData?.IPV }}
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       7
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        Nominees
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        <!-- {{ getStageData?.nominee.length ? getStageData?.nominee[0]?.status : '' }} -->
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       8
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        Documents
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        {{ getStageData?.document }}
+                    </td>
+                </tr>
+                <tr class="border-b cursor-pointer hover:bg-gray-50">
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+                       9
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        E-Sign Doc
+                    </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+                        {{ getStageData?.Esign }}
                     </td>
                 </tr>
             </tbody>
@@ -26,6 +114,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -93,8 +182,13 @@ export default {
             ],
         }
     },
+    computed: {
+        ...mapGetters('approval', ['getStageData'])
+    },
     mounted() {
-       this.$store.dispatch('approval/getStageDetails')
+        if(this.$route.query?.id) {
+            this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
+        }
     },
 }
 </script>

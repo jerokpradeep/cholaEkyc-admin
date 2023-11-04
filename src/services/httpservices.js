@@ -6,7 +6,7 @@ const AXIOS = axios.create({
 });
 
 const httpService = {
-    getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData,callLogout
+    getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData,callLogout, getStageDetails
 }
 
 export default httpService
@@ -33,4 +33,8 @@ function getCustomerData(customer_id) {
 
 function callLogout(){
   return AXIOS.get(`api/method/logout`)
+}
+
+function getStageDetails(customer_id) {
+  return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_approval_stage.get_approval_details?id=${customer_id}`)
 }

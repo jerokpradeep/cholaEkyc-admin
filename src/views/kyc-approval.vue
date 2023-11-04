@@ -190,7 +190,7 @@ export default {
     async goToApprovalPage(data) {
       if(data?.opportunity_id) {
         await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
-          this.$router.push('/approvepanel').catch(() => { })
+          this.$router.push(`/approvepanel?id=${data?.opportunity_id}`).catch(() => { })
         })
       }
     },

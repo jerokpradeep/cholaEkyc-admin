@@ -1,7 +1,8 @@
 import httpService from "../../services/httpservices";
 const state = {
     approvalList: [],
-    customerData: []
+    customerData: [],
+    stageData: []
 }
 
 const actions = {
@@ -41,6 +42,17 @@ const actions = {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
     },
+    async getStageDetails({commit, dispatch}, payload) {
+        await httpService.getStageDetails(payload).then(resp => {
+            if(resp.status == 200 && resp.data?.message?.success_key == 1) {
+                commit('setStageData', resp.data?.message?.data)
+            } else {
+                commit('setStageData', [])  
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
+    }
 };
 
 const mutations = {
@@ -50,12 +62,16 @@ const mutations = {
     setCustomerData(state, payload) {
         state.customerData = payload
         localStorage.setItem('customerData', JSON.stringify(payload))
-    }
+    },
+    setStageData(state, payload) {
+        state.stageData = payload
+    },
 };
 
 const getters = {
     getApprovalList: state => state.approvalList,
-    getCustomerData: state => state.customerData
+    getCustomerData: state => state.customerData,
+    getStageData: state => state.stageData
 };
 
 const approval = {
