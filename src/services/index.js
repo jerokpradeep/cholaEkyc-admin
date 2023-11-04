@@ -10,11 +10,14 @@ export function authHeader() {
   let userToken = store.state.login.userData.token;
   let header = { }
   if (userToken) {
-    header = { 'Authorization': `${userToken}` };
+    header = { 'Authorization': `${userToken}`};
+    // , withCredentials: true,crossDomain: true  , 'Cookie' : `system_user=${store.state.login.userData.system_user};sid=${store.state.login.userData.sid}`
+    // , 'Cookie' : `system_user=${store.state.login.userData.system_user};sid=${store.state.login.userData.sid}`
   }
   const requestOptions = {
     headers: header,
   };
+  console.log(requestOptions , 'requestOptions requestOptions');
   return requestOptions
 }
 

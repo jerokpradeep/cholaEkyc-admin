@@ -1,5 +1,5 @@
 import notification from '../../notification'
-import router from  '../../router';
+import router from '../../router'
 const state = {
     toasterPalce: 'top-right',
     counter: 0
@@ -53,8 +53,8 @@ const actions = {
     },
 
     resetLocal({dispatch, commit,rootGetters}, payload){
-        localStorage.clear()
-        router.push('/').catch(() =>{})      
+        // localStorage.clear()
+        // router.push('/').catch(() =>{})
     },
     checkRouter({ dispatch} , payload){
        let path = router.currentRoute.value.path

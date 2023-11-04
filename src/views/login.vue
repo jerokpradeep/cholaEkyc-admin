@@ -42,9 +42,7 @@
                 <div>
                     <button type="button" class="bg-[#F4F5F6] transition-all duration-200 hover:bg-[#dddee0] flex justify-center items-center text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With employee</button>
                 </div>
-                <div>
-                    <button type="button" class="bg-[#F4F5F6] transition-all duration-200 hover:bg-[#dddee0] flex justify-center items-center text-[#4C5A67] font-semibold text-xs w-full h-7 rounded-lg min-w-[320px]">Login With user</button>
-                </div>
+               
             </form>
         </div>
     </div>

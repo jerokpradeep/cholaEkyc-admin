@@ -2,7 +2,8 @@ import httpService from "../../services/httpservices";
 const state = {
     approvalList: [],
     customerData: [],
-    stageData: []
+    stageData: [],
+    isAssign: false
 }
 
 const actions = {
@@ -66,6 +67,9 @@ const mutations = {
     setStageData(state, payload) {
         state.stageData = payload
     },
+    setIsAssign(state, payload){
+        state.isAssign = payload
+    }
 };
 
 const getters = {

@@ -2,7 +2,7 @@ import { getUrl, authHeader } from './index.js';
 import axios from 'axios';
 
 const AXIOS = axios.create({
-  baseURL: getUrl().BASEURL,
+  baseURL: getUrl().BASEURL
 });
 
 const httpService = {
@@ -20,7 +20,7 @@ function login(payload) {
 }
 
 function getApprovalList() {
-  return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_admin.get_approve_oppr_details`)
+  return AXIOS.get(`api/method/cs_bo.custom_api.ekyc_admin.get_approve_oppr_details`, authHeader())
 }
 
 function updateDocStatus(payload) {
