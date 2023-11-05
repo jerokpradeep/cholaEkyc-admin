@@ -72,11 +72,18 @@
             <ipv_details v-if="currentTab == 8"/>
         </div>
 
-        <div class="flex gap-4 my-4 justify-end absolute right-4 bottom-2" v-if="currentTab != 0 && currentTab != 7">
-            <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">Approve</button>
-            <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">Reject</button>
+        <div class="flex gap-4 my-4 justify-between absolute right-4 bottom-2 " v-if="currentTab != 0 && currentTab != 7 && currentTab != 6">
+            <div class="flex gap-1 justify-center items-center min-w-[120px] py-2 rounded-lg text-white font-bold" :class="getStatusForPage(getStageData) == 'Approved' ? 'bg-green-700' : 'bg-red-700'" v-if="getStatusForPage(getStageData) != '' && getStatusForPage(getStageData) != 'Reset' && getStatusForPage(getStageData)">
+                <div v-html="tickSvg" v-if="getStatusForPage(getStageData) == 'Approved'"></div>
+                <div v-html="cancelSvg" v-else-if="getStatusForPage(getStageData) == 'Rejected'"></div>
+                {{ getStatusForPage(getStageData) }}
+            </div>
+            <div class="flex gap-4" v-else>
+                <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">Approve</button>
+                <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">Reject</button>
+            </div>
         </div>
-        <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
+        <rejectDialog v-if="isRejectDialog && currentTab != 6" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
 </template>
 
 <script>
@@ -93,6 +100,15 @@ import ipv_details from "./ipv-details.vue"
 import user_details from "./details.vue"
 import rejectDialog from '../rejectDialog.vue';
 import { mapGetters } from 'vuex';
+
+const tickSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white font-bold">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`
+const cancelSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white font-bold">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`
 export default {
     components: { breadcrumbKyc, tabs, user_details, pan_details, address_details, profile_details, bank_details, segment_details, nominee_details, document_details, ipv_details, rejectDialog },
     
@@ -114,12 +130,13 @@ export default {
             ],
             currentTab : 0,
             remarks: '',
-            isRejectDialog: false
+            isRejectDialog: false,
+            tickSvg, cancelSvg
         }
     },
 
     computed: {
-        ...mapGetters('approval', ['getCustomerData'])
+        ...mapGetters('approval', ['getCustomerData','getStageData'])
     },
 
     props: {
@@ -146,7 +163,6 @@ export default {
                 // attachmentType: '',
                 // nomineeNo : ''
             }
-            console.log(json , 'json json json');
             this.$store.dispatch('approval/updateDocStatus', json)
         },
 
@@ -236,6 +252,46 @@ export default {
             if(this.remarks){
                 this.approveOrRejectDoc('Rejected')
             }
+        },
+        getStatusForPage(data) {
+            let status = ''
+            switch (this.currentTab) {
+                case 1:
+                    status = this.stringTrim(data['pan status'])
+                    break;
+                case 2:
+                    status = this.stringTrim(data['address status'])
+                    break;
+                case 3:
+                    status = this.stringTrim(data['profile status'])
+                    break;
+                case 4:
+                    status = this.stringTrim(data['bank status'])
+                    break;
+                case 5:
+                    status = this.stringTrim(data['segment status'])
+                    break;
+                case 6:
+                    status = ''
+                    break;
+                case 7:
+                    status = this.stringTrim(data['document status'])
+                    break;
+                case 8:
+                    status = this.stringTrim(data['IPV status'])
+                    break;
+                case 9:
+                    status = this.stringTrim(data['Esign status']) 
+                    break;
+                default:
+                    status
+                    break;
+            }
+            return status
+    },
+        stringTrim(data) {
+            if(data)
+            return data?.toString().trim()
         }
     },
     created(){

@@ -35,5 +35,10 @@ router.beforeEach(async (to, from, next) => {
   store.commit('setValidSteps', steps)
   let queries = localStorage.getItem('tabQuries') && localStorage.getItem('tabQuries') != "undefined" ? JSON.parse(localStorage.getItem('tabQuries')) : store.state.defaultQueries
   store.commit("setQuries", { data: queries, action: "intial" });
+
+  let stageData = JSON.parse(localStorage.getItem('stageData'))
+  if(stageData) {
+    store.commit('approval/setStageData' , stageData)
+  }
   next()
 })
