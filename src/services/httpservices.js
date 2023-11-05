@@ -45,5 +45,5 @@ function getStageDetails(payload) {
 }
 
 function assignOpportunity(payload) {
-  return WRAPPERAXIOS.get(`assignOpportunity?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
+  return WRAPPERAXIOS.get(`assignOpportunity?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}&request=${payload.request}`)
 }

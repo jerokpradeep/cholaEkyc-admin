@@ -43,7 +43,7 @@
           </div>
       </div>
   </div>
-  <div class="my-4" v-if="$store.state.activeTab == 1">
+  <div class="my-4" v-if="currentTab == 1">
     <table class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
@@ -82,7 +82,7 @@
       </tbody>
     </table>
   </div>
-  <assigneeDialog/>
+  <assigneeDialog v-if="isAssign" :assigneeData="currentAssigneeData"/>
   </div>
 </template>
 
@@ -93,7 +93,7 @@ import Progress from "../assets/image/process.svg";
 import completed from "../assets/image/100percent.svg";
 import chevronSvg from "../assets/image/Chevron.svg"
 import tabs from "../components/utilComponents/tabs.vue"
-import { mapGetters } from 'vuex';
+import { mapGetters,mapState } from 'vuex';
 import assigneeDialog from './approve-panel/assigneeDialog.vue';
 export default {
   components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog },
@@ -183,11 +183,13 @@ export default {
             },
           ],
           Progress, completed, chevronSvg,
-          currentTab : 0
+          currentTab : 0,
+          currentAssigneeData: ''
       }
   },
   computed: {
-        ...mapGetters('approval', ['getApprovalList'])
+        ...mapGetters('approval', ['getApprovalList']),
+        ...mapState('approval', ['isAssign'])
     },
   methods: {
     async goToApprovalPage(data) {
@@ -198,6 +200,7 @@ export default {
           
         })
       }else{
+        this.currentAssigneeData = data
         this.$store.commit('approval/setIsAssign',  true)
       }
     },
