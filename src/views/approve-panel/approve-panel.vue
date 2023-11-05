@@ -61,7 +61,7 @@
 
         <tabs class="mx-4" @activeTab="changeTab"/>
         <div class="p-4">
-            <user_details :cutomerData="getCustomerData" v-if="currentTab == 0"/>
+            <user_details :cutomerData="getCustomerData" v-if="currentTab == 1"/>
             <pan_details v-if="currentTab == 1"/>
             <address_details :cutomerData="getCustomerData" v-if="currentTab == 2"/>
             <profile_details v-if="currentTab == 3"/>
@@ -126,7 +126,8 @@ export default {
     methods: {
         changeTab(id) {
             this.currentTab = id
-            this.$store.dispatch("tabs/setActiveTab", {path: this.$route.path, id: id});
+            this.$store.commit('setActiveTab', id)
+            this.$store.commit('setQuries', {data: {tab: id}, action: 'change'})
         },
 
         approveOrRejectDoc(status) {
@@ -181,10 +182,10 @@ export default {
 
         }
     },
-
-    mounted() {
-       this.changeTab(0)
-    },
+    created(){
+        this.currentTab = this.$store.state.queries['approvepanel'].query.tab
+        this.$store.commit('setActiveTab', this.currentTab)
+    }
     
 }
 </script>

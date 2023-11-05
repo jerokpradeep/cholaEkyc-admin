@@ -1,7 +1,7 @@
 <template>
     <nav class="flex p-5" aria-label="Breadcrumb">
       <ol role="list" class="flex items-center space-x-4">
-        <li v-for="(page, id) in pages" :key="page.name" @click="handleClick(page)">
+        <li v-for="(page, id) in pages" :key="page.name" @click="handleClick(page)" class="cursor-pointer">
           <div class="flex items-center">
             <a class="mr-4 text-sm font-medium" :class="!page.current ? 'violet-color' : 'text-gray-500 hover:text-gray-700'">{{ page.name }}</a>
             <svg v-if="id == 0" class="h-5 w-5 flex-shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">

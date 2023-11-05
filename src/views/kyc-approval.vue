@@ -43,7 +43,7 @@
           </div>
       </div>
   </div>
-  <div>
+  <div v-if="$store.state.activeTab == 1">
     <table class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
@@ -193,6 +193,8 @@ export default {
       if(data && data.fsl_assign_to && data.opportunity_id) {
         await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
           this.$router.push(`/approvepanel?id=${data?.opportunity_id}`).catch(() => { })
+          this.$store.commit('setQuries', {data: {tab: 0}, action: 'change' , overRideKey : 'approvepanel'})
+          
         })
       }else{
         this.$store.commit('approval/setIsAssign',  true)
@@ -200,11 +202,14 @@ export default {
     },
 
     changeTab(id) {
-
+      this.$store.commit('setActiveTab', id)
+      this.$store.commit('setQuries', {data: {tab: id}, action: 'change'})
+      id == 1 ?  this.$store.dispatch('approval/getApprovalList') : ''
     }
   },
   created() {
-    this.$store.dispatch('approval/getApprovalList');
+    this.$store.commit('setActiveTab', this.$store.state.queries['kycapproval'].query.tab)
+   this.changeTab(this.$store.state.queries['kycapproval'].query.tab)
   },
 }
 </script>

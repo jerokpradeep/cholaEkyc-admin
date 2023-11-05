@@ -7,7 +7,7 @@
         style="height: calc(100vh - 56px)">
     <div  class="border-r w-[80px] hidden lg:block lg:h-[calc(100vh-83px)] h-[calc(100vh-98px)] overflow-y-auto overflow-x-hidden">
           <ul role="list" class="space-y-2 ">
-            <li   class="md:flex-1 py-2  hover:bg-[#f9fdff] border-l-4" v-for="(step, index) in steps" :key="index" 
+            <li   class="md:flex-1 py-2  hover:bg-[#f9fdff] border-l-4" v-for="(step, index) in $store.state.validSteps" :key="index" 
             @click="activeTab(step)" :class="{ ' border-[#0081B8] bg-[#f9fdff]': step.active }"
 >
               <!-- <router-link :id="head.id" :to="head.route"><span class="font-medium text-xs text-center primaryColor" >{{
@@ -61,48 +61,8 @@ export default {
   components: { headerComp ,logoutDialog,rejectDialog },
   data(){
     return{ 
-      steps: [
-      // {
-      //     name: "Dashboard",
-      //     route: "/dashboard",
-      //     icon: "Reports",
-      //     status: "active",
-      //     active: true,
-      //     svg: "home",
-      //   },
-        // {
-        //   name: "Lead",
-        //   route: "/lead",
-        //   icon: "Reports",
-        //   status: "active",
-        //   active: false,
-        //   svg: "orders",
-        // },
-        {
-          name: "Opportunity",
-          route: "/opportunity",
-          icon: "Reports",
-          status: "active",
-          active: true,
-          svg: "orders",
-        },
-        {
-          name: "Approval",
-          route: "/kycapproval",
-          icon: "Reports",
-          status: "active",
-          active: false,
-          svg: "upload",
-        },
-        // {
-        //   name: "Recon",
-        //   route: "/re",
-        //   icon: "Reports",
-        //   status: "active",
-        //   active: false,
-        //   svg: "newsIcon",
-        // },
-      ],
+      steps: [],
+      
     }
   },
   methods: {
@@ -112,13 +72,15 @@ export default {
       localStorage.setItem("sidebarTab", val.name);
     },
     setActiveTab(val) {
-      this.steps.forEach((el) => {
+      let test = this.$store.state.validSteps
+      test.forEach((el) => {
         if (el.route == val.route) {
           el.active = true;
         } else {
           el.active = false;
         }
       });
+      this.$store.commit('setValidSteps', test)
     },
     retainCurrentTab() {
       let tab = localStorage.getItem("sidebarTab");
@@ -135,8 +97,9 @@ export default {
     },
   },
   created(){
-    let item = this.steps.filter((el)=> el.route == this.$router.currentRoute.value.path)
+    let item = this.$store.state.validSteps.filter((el)=> el.route == this.$router.currentRoute.value.path)
     item.length > 0 ? this.setActiveTab(item[0]) : ''
+    
   }
 };
 </script>

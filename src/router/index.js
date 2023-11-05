@@ -31,5 +31,9 @@ router.beforeEach(async (to, from, next) => {
   store.commit('login/setUserData' , userData)
   let customerData = localStorage.getItem('customerData') && localStorage.getItem('customerData') != "undefined" ? JSON.parse(localStorage.getItem('customerData')) : null
   store.commit('approval/setCustomerData' , customerData)
+  let steps = localStorage.getItem('steps') && localStorage.getItem('steps') != "undefined" ? JSON.parse(localStorage.getItem('steps')) : []
+  store.commit('setValidSteps', steps)
+  let queries = localStorage.getItem('tabQuries') && localStorage.getItem('tabQuries') != "undefined" ? JSON.parse(localStorage.getItem('tabQuries')) : store.state.defaultQueries
+  store.commit("setQuries", { data: queries, action: "intial" });
   next()
 })

@@ -1,5 +1,4 @@
 import httpService from "../../services/httpservices";
-import router from "../../router/index"
 import common from "../../mixins/common";
 const state = {
     userData: '',
@@ -12,7 +11,7 @@ const actions = {
         httpService.login(payload).then(resp => {
             if(resp.status == 200 && resp.data.message.success_key == 1) {
                 commit('setUserData', resp.data.message.data)
-                router.push('/opportunity').catch(() => { })
+                dispatch('navigateSteps', resp.data.message.data.Role, {root: true})
             } else {
                 commit('setUserData', '')
                 dispatch('errorLog/toaster', {
