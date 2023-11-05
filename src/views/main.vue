@@ -48,7 +48,6 @@
         </div>
       </div>
       <logoutDialog/>
-      <rejectDialog />
     </div>
   </div>
 </template>
@@ -56,9 +55,9 @@
 <script>
 import headerComp from "../components/header.vue";
 import logoutDialog from "./logoutDialog.vue";
-import rejectDialog from "./rejectDialog.vue";
+
 export default {
-  components: { headerComp ,logoutDialog,rejectDialog },
+  components: { headerComp ,logoutDialog },
   data(){
     return{ 
       steps: [],

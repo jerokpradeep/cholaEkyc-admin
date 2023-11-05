@@ -1,6 +1,6 @@
 <template>
-    <TransitionRoot as="template" :show="$store.state.isReject">
-      <Dialog as="div" class="relative z-10 " @close="close()" >
+    <TransitionRoot as="template" :show="isOpen">
+      <Dialog as="div" class="relative z-10 " @close="sentRemarks()" >
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
@@ -13,15 +13,15 @@
                   <DialogTitle as="h3" class="text-base pb-2 font-medium leading-6 primaryColor">
                    <div class="grid">
                     <label for="reject_content" id="reject_content_label">Remarks</label>
-                    <textarea name="" id="reject_content" class="w-full" autofocus></textarea>
+                    <textarea name="" id="reject_content" class="w-full" v-model="remarks" autofocus></textarea>
                    </div>
                   </DialogTitle>
   
                   <div class="mt-8 flex justify-end gap-2">
-                    <button type="button" class="themeBtn" id="logout_btn" >
+                    <button type="button" class="themeBtn" id="logout_btn" @click="sentRemarks()">
                       Confirm
                     </button>
-                    <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="close()" >
+                    <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="sentRemarks()" >
                       Cancel
                     </button>
                   </div>
@@ -36,14 +36,29 @@
 <script>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 export default {
+  emits:['send-remarks'],
   name: 'reject-dialog',
   components:{
       Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot
   },
-  methods:{
-    close(){
-      this.$store.commit('setReject',  false)
+  data(){
+    return {
+      remarks : ''
     }
+  },
+  props:{
+    isOpen: {
+      type: Boolean
+    },
+
+  },
+  methods:{
+    sentRemarks(){
+      this.$emit('send-remarks', {remarks:  this.remarks, isOpen: false})
+    }
+  },
+  mounted(){
+    this.remarks = ''
   }
 }
 </script>

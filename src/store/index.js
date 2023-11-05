@@ -11,7 +11,6 @@ const store = createStore({
     version: "1.0.0",
     buildDate: '03_11_2023_24_00',
     isLogout: false,
-    isReject: false,
     tempSteps: [
       {
           name: "Dashboard",
@@ -76,9 +75,6 @@ const store = createStore({
   mutations: {
     setLogout(state, payload){
       state.isLogout = payload
-    },
-    setReject(state, payload){
-      state.isReject = payload
     },
     setValidSteps(state, payload){
       state.validSteps = payload
