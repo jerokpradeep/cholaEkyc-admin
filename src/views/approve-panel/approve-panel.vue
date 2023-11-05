@@ -61,7 +61,7 @@
 
         <tabs class="mx-4" @activeTab="changeTab"/>
         <div class="p-4">
-            <user_details :cutomerData="getCustomerData" v-if="currentTab == 1"/>
+            <user_details :cutomerData="getCustomerData" v-if="currentTab == 0"/>
             <pan_details v-if="currentTab == 1"/>
             <address_details :cutomerData="getCustomerData" v-if="currentTab == 2"/>
             <profile_details v-if="currentTab == 3"/>
