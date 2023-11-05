@@ -35,7 +35,7 @@
       <input type="text" v-model="mobileNo" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: Mobile No.">
   </div>
 
-  <div class="bg-white py-4 px-8 my-6 rounded-lg flex gap-2 flex-wrap justify-between">
+  <div class="bg-white py-4 px-8 my-6 rounded-lg flex gap-2 flex-wrap justify-between" v-if="currentTab == 0">
       <div v-for="(item,id) in applicationSummary" :key="id">
           <div class="flex flex-col gap-2 justify-center items-center">
               <div class="text-xs">{{ item.type }}</div>
@@ -43,7 +43,7 @@
           </div>
       </div>
   </div>
-  <div v-if="$store.state.activeTab == 1">
+  <div class="my-4" v-if="$store.state.activeTab == 1">
     <table class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
@@ -182,7 +182,8 @@ export default {
               mobileNo: '8783423442'
             },
           ],
-          Progress, completed, chevronSvg
+          Progress, completed, chevronSvg,
+          currentTab : 0
       }
   },
   computed: {
@@ -205,11 +206,12 @@ export default {
       this.$store.commit('setActiveTab', id)
       this.$store.commit('setQuries', {data: {tab: id}, action: 'change'})
       id == 1 ?  this.$store.dispatch('approval/getApprovalList') : ''
+      this.currentTab = id
     }
   },
   created() {
     this.$store.commit('setActiveTab', this.$store.state.queries['kycapproval'].query.tab)
-   this.changeTab(this.$store.state.queries['kycapproval'].query.tab)
+    this.changeTab(this.$store.state.queries['kycapproval'].query.tab)
   },
 }
 </script>
