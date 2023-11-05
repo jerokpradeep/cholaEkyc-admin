@@ -9,7 +9,7 @@ const state = {
 const actions = {
     async getApprovalList({ commit, dispatch, rootGetters }) {
         let json = {
-            token : rootGetters['login/getUserData']['token'],
+            token : rootGetters['login/getUserData']['tempToken'],
             sessId : rootGetters['login/getUserData']['sid']
         }
         await httpService.getApprovalList(json).then(resp => {
@@ -25,11 +25,15 @@ const actions = {
 
     async updateDocStatus({ commit, dispatch }, payload) {
         await httpService.updateDocStatus(payload).then(resp => {
-            console.log(resp, 'updateDocStatus');
             if(resp.status == 200) {
-                
-            } else {
-                
+                if(resp.data.message.success_key == 0 && resp.data.message.message)   {
+                    dispatch('errorLog/toaster',{data: {
+                        "title": resp.data.message.message,
+                        "type": "danger",
+                        "message": '',
+                        "duration": 4500
+                    },position: ''}, {root: true})
+                }
             }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
@@ -39,7 +43,7 @@ const actions = {
     async getCustomerData({ commit, dispatch, rootGetters }, payload) {
         let json = {
             id : payload,
-            token : rootGetters['login/getUserData']['token'],
+            token : rootGetters['login/getUserData']['tempToken'],
             sessId : rootGetters['login/getUserData']['sid'],
             userId : rootGetters['login/getUserData']['user'],
         }
@@ -56,7 +60,7 @@ const actions = {
     async getStageDetails({commit, dispatch, rootGetters}, payload) {
         let json = {
             id : payload,
-            token : rootGetters['login/getUserData']['token'],
+            token : rootGetters['login/getUserData']['tempToken'],
             sessId : rootGetters['login/getUserData']['sid'],
             userId : rootGetters['login/getUserData']['user'],
         }
@@ -71,7 +75,6 @@ const actions = {
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
     },
     async callAssignee({commit, dispatch, rootGetters}, payload){
-        console.log(payload , 'payload payload');
         await httpService.assignOpportunity(payload).then(resp =>{
             if(resp.status == 200 && resp.data){
                 commit('setIsAssign', false)
@@ -80,6 +83,17 @@ const actions = {
        }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => {  })
+    },
+
+    formatJson({state,commit, dispatch, rootGetters}, payload){
+        let str = `userId=${rootGetters['login/getUserData']['user']}&id=${state.customerData.name}&status=${payload.status}&document_type=${getDocmentType(payload.tab)}&remarks=${payload.remarks}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`
+        if(payload.tab == 7 || payload.tab == 8 || payload.tab == 9){
+            str += `&attachmentType=${payload.tab == 7 ? 'Document' : payload.tab == 8 ? 'IPV' : 'ESIGN_ DOCUMENT'}`
+        }
+        if(payload.tab == 6){
+            str +=`&nominee_no=${payload.nomineeId}`
+        }
+        dispatch('updateDocStatus', str)
     }
 };
 
@@ -114,3 +128,40 @@ const approval = {
 }
 
 export default approval
+
+function getDocmentType(currentTab) {
+    let docType = ''
+    switch (currentTab) {
+        case 1:
+            docType = 'Pan'
+            break;
+        case 2:
+            docType = 'Address'
+            break;
+        case 3:
+            docType = 'Profile'
+            break;
+        case 4:
+            docType = 'Bank'
+            break;
+        case 5:
+            docType = 'Segment'
+            break;
+        case 6:
+            docType = 'Nominee'
+            break;
+        case 7:
+            docType = 'Document'
+            break;
+        case 8:
+            docType = 'IPV'
+            break;
+        case 9:
+            docType = 'E-Sign'
+            break;
+        default:
+            docType
+            break;
+    }
+    return docType;
+}

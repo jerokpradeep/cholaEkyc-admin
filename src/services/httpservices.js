@@ -29,7 +29,7 @@ function getApprovalList(payload) {
 }
 
 function updateDocStatus(payload) {
-  return WRAPPERAXIOS.get(`update_document_details?userId=${payload?.userId}&id=${payload?.id}&status=${payload?.status}&document_type=${payload?.docType}&remarks=${payload.remarks}&token=${payload.token}&sessId=${payload.sessId}`)
+  return WRAPPERAXIOS.get(`update_document_details?${payload}`)
 }
 
 function getCustomerData(payload) {

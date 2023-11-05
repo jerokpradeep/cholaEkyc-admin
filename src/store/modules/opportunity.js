@@ -6,7 +6,6 @@ const state = {
 const actions = {
    getOpportunityList({state,commit,dispatch}, payload){
     httpService.getOpportunityList().then(resp =>{
-        console.log(resp , 'dasfc adsfcasdv sadfcasdv');
     }, (err) => {
         dispatch('errorLog/checkRouter', err, { root: true })
 

@@ -135,19 +135,7 @@ export default {
         },
 
         approveOrRejectDoc(status) {
-            let json = {
-                token: this.$store.state.login.userData.tempToken,
-                sessId: this.$store.state.login.userData.sid,
-                userId:  this.$store.state.login.userData.user,
-                id: this.$store.state.approval.customerData.name,
-                status: status,
-                docType : this.getDocmentType(),
-                remarks : status == 'Rejected' ? this.remarks : '' ,
-                // attachmentType: '',
-                // nomineeNo : ''
-            }
-            console.log(json , 'json json json');
-            this.$store.dispatch('approval/updateDocStatus', json)
+            this.$store.dispatch('approval/formatJson', {tab: this.currentTab , status: status , remarks: status == 'Rejected' ? this.remarks : ''})
         },
 
         getDocmentType() {
@@ -231,7 +219,6 @@ export default {
         },
         getRemarks(data){
             this.remarks = data.remarks
-            console.log(this.remarks, 'remarks');
             this.isRejectDialog = data.isOpen
             if(this.remarks){
                 this.approveOrRejectDoc('Rejected')

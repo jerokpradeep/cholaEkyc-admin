@@ -2,8 +2,8 @@
     <div class="">
         <div class="">
             <div class="my-4 flex flex-col gap-4 ">
-                <div v-for="(i, id) in nomineeList" :key="id" class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full" @click="expanstion == id ? expanstion = -1 : expanstion = id">
-                    <div class="flex justify-between gap-3">
+                <div v-for="(i, id) in nomineeList" :key="id" class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full" >
+                    <div class="flex justify-between gap-3" @click="expandNominee(id)">
                         <div class="text-sm font-semibold">
                             Nominee {{ id + 1 }}
                         </div>
@@ -74,17 +74,19 @@
 
                             </div>
                         </div>
+                        <div class="flex gap-4 my-4 justify-end " >
+            <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="callServiceApporve_Reject('Approved')">Approve</button>
+            <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="remarks ? callServiceApporve_Reject('Rejected') : isRejectDialog = true">Reject</button>
+        </div>
                     </div>
+
+          
                 </div>
                 
             </div>
         </div>
     </div>
-
-    <!-- <div class="flex gap-4 my-4 justify-end">
-        <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Approve</button>
-        <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Reject</button>
-    </div> -->
+    <rejectDialog  v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks" />
 </template>
 
 <script>
@@ -97,6 +99,7 @@ const downArrow = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
 </svg>
 `
 import { mapGetters } from 'vuex'
+import rejectDialog from '../rejectDialog.vue'
 export default {
     data() {
         return {
@@ -111,12 +114,36 @@ export default {
             upArrow, downArrow,
             isOpen: false,
             nomineeList: [],
-            nomineeObj: { isOpen: false, name: '', dob: '', mobNo: '', emailId:'', proofType: '', proofId:'', relationOfNominee: '', address: ''},
-            expanstion: -1
+            nomineeObj: { isOpen: false, name: '', dob: '', mobNo: '', emailId:'', proofType: '', proofId:'', relationOfNominee: '', address: '', nomineeId: ''},
+            expanstion: 0,
+            currectSelectData: '',
+            isRejectDialog: false,
+            remarks: ''
         }
+    },
+    components:{
+        rejectDialog
     },
     computed:{
         ...mapGetters('approval', ['getCustomerData'])
+    },
+    methods:{
+        callServiceApporve_Reject(status){
+            this.$store.dispatch('approval/formatJson', {tab: 6 , status: status , remarks: status == 'Rejected' ? this.remarks : '', nomineeId:this.currectSelectData.nomineeId})
+        },
+        expandNominee(id){
+            this.remarks = ''
+            this.isRejectDialog = false
+            this.expanstion == id ? '' : expanstion = id
+            this.currectSelectData = this.nomineeList[id]
+        },
+        getRemarks(data){
+            this.remarks = data.remarks
+            this.isRejectDialog = data.isOpen
+            if(this.remarks){
+                this.callServiceApporve_Reject('Rejected')
+            }
+        }
     },
     mounted(){
         if(this.getCustomerData && this.getCustomerData.fsl_nominee_table){
@@ -128,7 +155,11 @@ export default {
                 this.nomineeObj.proofId = item.proof_id
                 this.nomineeObj.proofType = item.proof_type
                 this.nomineeObj.relationOfNominee = item.relationship
+                this.nomineeObj.nomineeId = item.nominee_number
                 this.nomineeList.push(this.nomineeObj)
+            }
+            if(this.nomineeList.length > 0){
+                this.expandNominee(0)
             }
         }
     }
