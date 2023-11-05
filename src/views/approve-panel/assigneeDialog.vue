@@ -45,12 +45,7 @@ export default {
       this.$store.commit('approval/setIsAssign',  false)
     },
     callService(){
-      let temp = {
-        data: {
-          fsl_assign_to : this.$store.state.login.userData.user
-        }
-      }
-      this.$store.dispatch('approval/callAssignee', {id: this.assigneeData.opportunity_id,userId: this.$store.state.login.userData.user,sessId: this.$store.state.login.userData.sid, token: this.$store.state.login.userData.tempToken, request:encodeURI(JSON.stringify(temp))})
+      this.$store.dispatch('approval/callAssignee', {id: this.assigneeData.opportunity_id,userId: this.$store.state.login.userData.user,sessId: this.$store.state.login.userData.sid, token: this.$store.state.login.userData.tempToken, assignTo:this.$store.state.login.userData.user})
     }
   }
 }
