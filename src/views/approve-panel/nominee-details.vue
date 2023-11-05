@@ -2,7 +2,7 @@
     <div class="">
         <div class="">
             <div class="my-4 flex flex-col gap-4 ">
-                <div v-for="(i, id) in nomineeList" :key="id" class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full" @click="expantion(id)">
+                <div v-for="(i, id) in nomineeList" :key="id" class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full" @click="expanstion == id ? expanstion = -1 : expanstion = id">
                     <div class="flex justify-between gap-3">
                         <div class="text-sm font-semibold">
                             Nominee {{ id + 1 }}
@@ -12,7 +12,7 @@
                             <div v-html="upArrow" v-if="i.isOpen"></div>
                         </div>
                     </div>
-                    <div class="" v-if="i.isOpen">
+                    <div class="" v-if="expanstion == id">
                         <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-gray-900/10 pb-12 md:grid-cols-2 my-4">
                             <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 md:col-span-2">
 
@@ -96,7 +96,6 @@ const downArrow = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
 </svg>
 `
-
 import { mapGetters } from 'vuex'
 export default {
     data() {
@@ -111,20 +110,27 @@ export default {
             address: 'ICICI BANK LTD, DLF IT SEZ PARK, BLOCK-12, NO. 1/12A SHIVAJI GARDENS, NANDAMBAKKAM, POST MOUNT POONAMALEE ROAD, MANAPAKKAM, CHENNAI, TAMIL NADU - 600089',
             upArrow, downArrow,
             isOpen: false,
-            nomineeList: [
-                { isOpen: false, name: 'VIJI VINOTHKUMAR', dob: '24-09-1989', mobNo: '7010127185', emailId:'viji8920@gmail.com', proofType: 'PAN', proofId:'HBOPP0734E', relationOfNominee: 'Spouse', address: 'O BLOCK 5, 73 STREET R V NAGAR JAFFERKHAN PET, Tamil Nadu CHENNAI 600083'},
-                { isOpen: false, name: 'VIJI VINOTHKUMAR', dob: '24-09-1989', mobNo: '7010127185', emailId:'viji8920@gmail.com', proofType: 'PAN', proofId:'HBOPP0734E', relationOfNominee: 'Spouse', address: 'O BLOCK 5, 73 STREET R V NAGAR JAFFERKHAN PET, Tamil Nadu CHENNAI 600083'},
-                { isOpen: false, name: 'VIJI VINOTHKUMAR', dob: '24-09-1989', mobNo: '7010127185', emailId:'viji8920@gmail.com', proofType: 'PAN', proofId:'HBOPP0734E', relationOfNominee: 'Spouse', address: 'O BLOCK 5, 73 STREET R V NAGAR JAFFERKHAN PET, Tamil Nadu CHENNAI 600083'}
-            ]
+            nomineeList: [],
+            nomineeObj: { isOpen: false, name: '', dob: '', mobNo: '', emailId:'', proofType: '', proofId:'', relationOfNominee: '', address: ''},
+            expanstion: -1
         }
     },
     computed:{
         ...mapGetters('approval', ['getCustomerData'])
     },
-    methods: {
-        expantion(id) {
-            this.nomineeList[id]['isOpen'] = !this.nomineeList[id]['isOpen']
+    mounted(){
+        if(this.getCustomerData && this.getCustomerData.fsl_nominee_table){
+            for(let item of this.getCustomerData.fsl_nominee_table){
+                this.nomineeObj.name = item.name
+                this.nomineeObj.dob = item.date_of_birth
+                this.nomineeObj.emailId = item.email_id
+                this.nomineeObj.mobNo = item.mobile_number
+                this.nomineeObj.proofId = item.proof_id
+                this.nomineeObj.proofType = item.proof_type
+                this.nomineeObj.relationOfNominee = item.relationship
+                this.nomineeList.push(this.nomineeObj)
+            }
         }
-    },
+    }
 }
 </script>
