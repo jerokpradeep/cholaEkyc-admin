@@ -16,7 +16,6 @@ export function authHeader() {
   const requestOptions = {
     headers: header,
   };
-  console.log(requestOptions , 'requestOptions requestOptions');
   return requestOptions
 }
 

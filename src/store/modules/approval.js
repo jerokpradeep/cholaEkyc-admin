@@ -7,8 +7,12 @@ const state = {
 }
 
 const actions = {
-    async getApprovalList({ commit, dispatch }, payload) {
-        await httpService.getApprovalList(payload).then(resp => {
+    async getApprovalList({ commit, dispatch, rootGetters }) {
+        let json = {
+            token : rootGetters['login/getUserData']['token'],
+            sessId : rootGetters['login/getUserData']['sid']
+        }
+        await httpService.getApprovalList(json).then(resp => {
             if(resp.status == 200 && resp.data?.message?.success_key == 1 && resp.data?.message?.Data?.length) {
                 commit('setApprovalList', resp.data.message.Data)
             } else {
@@ -32,8 +36,14 @@ const actions = {
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
     },
 
-    async getCustomerData({ commit, dispatch }, payload) {
-        await httpService.getCustomerData(payload).then(resp => {
+    async getCustomerData({ commit, dispatch, rootGetters }, payload) {
+        let json = {
+            id : payload,
+            token : rootGetters['login/getUserData']['token'],
+            sessId : rootGetters['login/getUserData']['sid'],
+            userId : rootGetters['login/getUserData']['user'],
+        }
+        await httpService.getCustomerData(json).then(resp => {
             if(resp.status == 200 && resp.data?.data) {
                 commit('setCustomerData', resp.data?.data)
             } else {
@@ -43,8 +53,14 @@ const actions = {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
     },
-    async getStageDetails({commit, dispatch}, payload) {
-        await httpService.getStageDetails(payload).then(resp => {
+    async getStageDetails({commit, dispatch, rootGetters}, payload) {
+        let json = {
+            id : payload,
+            token : rootGetters['login/getUserData']['token'],
+            sessId : rootGetters['login/getUserData']['sid'],
+            userId : rootGetters['login/getUserData']['user'],
+        }
+        await httpService.getStageDetails(json).then(resp => {
             if(resp.status == 200 && resp.data?.message?.success_key == 1) {
                 commit('setStageData', resp.data?.message?.data)
             } else {

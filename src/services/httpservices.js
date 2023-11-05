@@ -16,7 +16,7 @@ const httpService = {
 export default httpService
 
 function getOpportunityList(payload) {
-    return WRAPPERAXIOS.get(`get_oppr_details/?token=${payload.userId}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
+    return WRAPPERAXIOS.get(`get_oppr_details/?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
 }
 
 function login(payload) {
@@ -24,7 +24,7 @@ function login(payload) {
 }
 
 function getApprovalList(payload) {
-  return WRAPPERAXIOS.get(`get_approve_oppr_details?token=${payload.userId}&sessId=${payload.sessId}`)
+  return WRAPPERAXIOS.get(`get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}`)
 }
 
 function updateDocStatus(payload) {
@@ -32,18 +32,18 @@ function updateDocStatus(payload) {
   &remarks=${payload.remarks}&attachment_type=${payload.attachmentType}&nominee_no=${payload.nomineeNo}&token=${payload.token}&sessId=${payload.sessId}`)
 }
 
-function getCustomerData(customer_id) {
-  return WRAPPERAXIOS.get(`opportunity?id=${customer_id}&token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
+function getCustomerData(payload) {
+  return WRAPPERAXIOS.get(`opportunity?id=${payload.id}&token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
 }
 
 function callLogout(){
   return ERPAXIOS.get(`api/method/logout`)
 }
 
-function getStageDetails(customer_id) {
-  return WRAPPERAXIOS.get(`get_approval_details?id=${customer_id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
+function getStageDetails(payload) {
+  return WRAPPERAXIOS.get(`get_approval_details?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
 }
 
-function assignOpportunity(customer_id) {
-  return WRAPPERAXIOS.get(`assignOpportunity?id=${customer_id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
+function assignOpportunity(payload) {
+  return WRAPPERAXIOS.get(`assignOpportunity?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
 }

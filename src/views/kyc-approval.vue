@@ -204,25 +204,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('approval/getApprovalList', '');
-    const value = `${document.cookie}`;
-    console.log(value);
-    var myHeaders = new Headers();
-myHeaders.append("Cookie", "vicky");
-// debugger;
-var requestOptions = {
-  method: 'GET',
-  headers: {"Cookie": "vicky"},
-  redirect: 'follow'
-};
-
-console.log(requestOptions)
-
-fetch("https://erp.cholasecurities.com/api/method/cs_bo.custom_api.ekyc_admin.get_approve_oppr_details", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
+    this.$store.dispatch('approval/getApprovalList');
   },
 }
 </script>
