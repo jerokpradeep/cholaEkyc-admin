@@ -77,18 +77,34 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
     data() {
         return {
-            bankName: 'ICICI Bank',
-            branchName: 'CHENNAIDLF IT PARK, TAMIL NADU',
-            ifscCode: 'ICIC0001547',
-            micrCode: '600229061',
-            acHolderName: 'T VINOTHKUMAR',
-            acNo: '154701501195',
-            pennyVerifyStatus: 'Yes',
-            address: 'ICICI BANK LTD, DLF IT SEZ PARK, BLOCK-12, NO. 1/12A SHIVAJI GARDENS, NANDAMBAKKAM, POST MOUNT POONAMALEE ROAD, MANAPAKKAM, CHENNAI, TAMIL NADU - 600089'
+            bankName: '',
+            branchName: '',
+            ifscCode: '',
+            micrCode: '',
+            acHolderName: '',
+            acNo: '',
+            pennyVerifyStatus: '',
+            address: ''
         }
     },
+    computed:{
+        ...mapGetters('approval', ['getCustomerData'])
+    },
+    mounted(){
+      if(this.getCustomerData){
+        this.getCustomerData.fsl_bank_name ? this.bankName  = this.getCustomerData.fsl_bank_name  : ''
+        // this.getCustomerData.fsl_bank_name ? this.branchName  = this.getCustomerData.fsl_bank_name  : ''
+        this.getCustomerData.fsl_bank_ifsc ? this.ifscCode  = this.getCustomerData.fsl_bank_ifsc  : ''
+        this.getCustomerData.fsl_bank_micr ? this.micrCode  = this.getCustomerData.fsl_bank_micr  : ''
+        this.getCustomerData.fsl_acc_hname ? this.acHolderName  = this.getCustomerData.fsl_acc_hname  : ''
+        this.getCustomerData.fsl_verify_acc_number ? this.acNo  = this.getCustomerData.fsl_verify_acc_number  : ''
+        this.getCustomerData.fsl_bank_status ? this.pennyVerifyStatus  = this.getCustomerData.fsl_bank_status  : ''
+        this.getCustomerData.fsl_bank_address ? this.address  = this.getCustomerData.fsl_bank_address  : ''
+      }
+    }
 }
 </script>
