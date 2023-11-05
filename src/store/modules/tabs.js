@@ -10,6 +10,7 @@ const state = {
         { name: 'Document', id: 7, active: false, count: '0' },
         { name: 'IPV', id: 8, active: false, count: '0' },
         { name: 'ESign', id: 9, active: false, count: '0' },
+        { name: 'Push to BO', id: 10, active: false, count: '0' },
     ],
     kycPanelTabs : [
         { name: 'Reports', id: 0, active: true, count: '0' },

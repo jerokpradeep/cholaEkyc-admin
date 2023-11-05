@@ -73,7 +73,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData'])
+        ...mapGetters('approval', ['getCustomerData']),
     },
     mounted(){
       if(this.getCustomerData){

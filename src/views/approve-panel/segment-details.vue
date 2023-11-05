@@ -45,6 +45,7 @@ const cancelSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
   <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
 `
+import { mapGetters } from 'vuex'
 export default {
     data() {
         return {
@@ -57,12 +58,12 @@ export default {
               {
                 sno: "1",
                 field: 'Equity Cash - NSE',
-                value: "Yes",
+                value: "No",
               },
               {
                 sno: "2",
                 field: 'Equity Cash - BSE',
-                value: "Yes",
+                value: "No",
               },
               {
                 sno: "3",
@@ -72,22 +73,22 @@ export default {
               {
                 sno: "4",
                 field: 'Equity Funds - NSE',
-                value: "Yes",
+                value: "No",
               },
               {
                 sno: "5",
                 field: 'Equity Funds - BSE',
-                value: "Yes",
+                value: "No",
               },
               {
                 sno: "6",
                 field: 'SLB - NSE',
-                value: "Yes",
+                value: "No",
               },
               {
                 sno: "7",
                 field: 'SLB - BSE',
-                value: "Yes",
+                value: "No",
               },
               {
                 sno: "8",
@@ -107,7 +108,7 @@ export default {
               {
                 sno: "11",
                 field: 'Consent',
-                value: "Yes",
+                value: "No",
               },
               {
                 sno: "12",
@@ -135,5 +136,30 @@ export default {
             tickSvg, cancelSvg
         }
     },
+    computed:{
+        ...mapGetters('approval', ['getCustomerData'])
+    },
+    mounted(){
+      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_equity_cash == 1){
+        this.tableData[0].value  = this.tableData[1].value = "Yes"
+      }
+      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_equity_derivative == 1){
+         this.tableData[2].value = "Yes"
+      }
+      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_slb == 1){
+        this.tableData[5].value = this.tableData[6].value = "Yes"
+      }
+      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_currency_derivatives == 1){
+         this.tableData[7].value = "Yes"
+      }
+      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_mutual_funds == 1){
+         this.tableData[9].value = "Yes"
+      }
+      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_consent == 1){
+         this.tableData[10].value = "Yes"
+      }
+      
+      
+    }
 }
 </script>

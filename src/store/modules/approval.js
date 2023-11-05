@@ -23,7 +23,7 @@ const actions = {
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
     },
 
-    async updateDocStatus({ commit, dispatch }, payload) {
+    async updateDocStatus({ state, commit, dispatch }, payload) {
         await httpService.updateDocStatus(payload).then(resp => {
             if(resp.status == 200) {
                 if(resp.data.message.success_key == 0 && resp.data.message.message)   {
@@ -37,7 +37,10 @@ const actions = {
             }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
-        }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
+        }).finally(() => { 
+            commit('errorLog/setCounter', 0, { root: true })
+            dispatch('getStageDetails', state.customerData.name)
+         })
     },
 
     async getCustomerData({ commit, dispatch, rootGetters }, payload) {
@@ -107,6 +110,7 @@ const mutations = {
     },
     setStageData(state, payload) {
         state.stageData = payload
+        localStorage.setItem('stageData', JSON.stringify(payload))
     },
     setIsAssign(state, payload){
         state.isAssign = payload
