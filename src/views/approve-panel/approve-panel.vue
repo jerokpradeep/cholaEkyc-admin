@@ -135,15 +135,14 @@ export default {
         },
 
         approveOrRejectDoc(status) {
-            let userData = JSON.parse(localStorage.getItem('userData'))
             let json = {
-                token: userData.token.split(' ')[1],
+                token: this.$store.state.login.userData.tempToken,
                 sessId: this.$store.state.login.userData.sid,
                 userId:  this.$store.state.login.userData.user,
                 id: this.$store.state.approval.customerData.name,
                 status: status,
                 docType : this.getDocmentType(),
-                remarks : status == 'Rejected' ? this.remarks : undefined ,
+                remarks : status == 'Rejected' ? this.remarks : '' ,
                 // attachmentType: '',
                 // nomineeNo : ''
             }
