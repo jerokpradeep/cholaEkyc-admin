@@ -47,35 +47,35 @@
     <table class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
-          <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-[13px] font-medium text-center  primaryColor whitespace-nowrap" >
+          <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap" >
             {{ head.name }}
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(i, id) in getApprovalList" :key="id" class="border-b cursor-pointer hover:bg-gray-50" @click="goToApprovalPage(i)">
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ id + 1 }}
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-left">
             {{ i.customer_name ? i.customer_name : 'NA' }}
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.opportunity_id ? i.opportunity_id : 'NA' }}
           </td>
-          <td class="flex py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
+          <td class="flex py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
             {{ i.fsl_pan_no ? i.fsl_pan_no : 'NA' }}
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ i['current phase'] ? i['current phase'] : 'NA' }}
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.fsl_mobile_num ? i.fsl_mobile_num : 'NA'  }}
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.fsl_assign_to ? i.fsl_assign_to : '' }}
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            {{ i.assigned_person_name ? i.assigned_person_name : '' }}
           </td>
-          <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.time && i.time != " "  ? i.time : 'NA' }}
           </td>
         </tr>
@@ -123,10 +123,10 @@ export default {
 
           tableHeads: [
             { name: "S.No", class: "text-center" },
-            { name: "Customer Name", class: "text-center" },
+            { name: "Customer Name", class: "text-left" },
             { name: "Application ID", class: "text-center" },
             { name: "PAN No", class: "text-center" },
-            { name: "Current Phase", class: "text-center" },
+            { name: "Status", class: "text-center" },
             { name: "Mobile No", class: "text-center" },
             { name: "Assigned to", class: "text-center" },
             { name: "Hours consumed", class: "text-center" },
