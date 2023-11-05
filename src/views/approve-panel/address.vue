@@ -62,6 +62,7 @@ export default {
     },
     mounted() {
       if(this.getCustomerData) {
+        
         this.getCustomerData.fsl_bank_address  ?  this.address=  this.getCustomerData.fsl_bank_address : ''
         this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
         // this.getCustomerData  ? this.source =  this.getCustomerData : ''
