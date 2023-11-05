@@ -17,7 +17,7 @@
                         PAN
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['pan status']) ? getStageData['pan status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['pan status']) ? getStageData['pan status'] : 'Open' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -28,7 +28,7 @@
                         Profile
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['profile status']) ? getStageData['profile status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['profile status']) ? getStageData['profile status'] : 'Open' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -39,7 +39,7 @@
                         Address
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['address status']) ? getStageData['address status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['address status']) ? getStageData['address status'] : 'Open' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -50,7 +50,7 @@
                         Bank
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['bank status']) ? getStageData['bank status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['bank status']) ? getStageData['bank status'] : 'Open' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -61,7 +61,7 @@
                         Segments
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['segment status']) ? getStageData['segment status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['segment status']) ? getStageData['segment status'] : 'Open' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -72,7 +72,7 @@
                         IPV
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['IPV status']) ? getStageData['IPV status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['IPV status']) ? getStageData['IPV status'] : 'Open' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -83,8 +83,13 @@
                         Nominees
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        <div v-for="(i, id) in getStageData?.nominee" :key="id">
-                            {{id + 1}}. {{ checkValid(i.status) ? i.status : 'Un Approved' }}
+                        <div v-if="getStageData?.nominee?.length">
+                            <div v-for="(i, id) in getStageData?.nominee" :key="id">
+                                 {{id + 1}}. {{ checkValid(i.status) ? i.status : 'Open' }}
+                            </div>
+                        </div>
+                        <div v-else>
+                            NA
                         </div>
                     </td>
                 </tr>
@@ -96,7 +101,7 @@
                         Documents
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['document status']) ? getStageData['document status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['document status']) ? getStageData['document status'] : 'Open' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -107,7 +112,7 @@
                         E-Sign Doc
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['Esign status']) ? getStageData['Esign status'] : 'Un Approved' }}
+                        {{ checkValid(getStageData['Esign status']) ? getStageData['Esign status'] : 'Open' }}
                     </td>
                 </tr>
             </tbody>

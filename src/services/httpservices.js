@@ -28,8 +28,8 @@ function getApprovalList(payload) {
 }
 
 function updateDocStatus(payload) {
-  return WRAPPERAXIOS.get(`update_document_details?id=${payload?.id}&status=${payload?.status}&document_type=${payload?.docType}
-  &remarks=${payload.remarks}&attachment_type=${payload.attachmentType}&nominee_no=${payload.nomineeNo}&token=${payload.token}&sessId=${payload.sessId}`)
+  return WRAPPERAXIOS.get(`update_document_details?userId=${payload?.userId}&id=${payload?.id}&status=${payload?.status}&document_type=${payload?.docType}
+  &remarks=${payload.remarks}&token=${payload.token}&sessId=${payload.sessId}`)
 }
 
 function getCustomerData(payload) {

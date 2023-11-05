@@ -135,15 +135,20 @@ export default {
         },
 
         approveOrRejectDoc(status) {
+            let userData = JSON.parse(localStorage.getItem('userData'))
             let json = {
-                id: '',
+                token: userData.token.split(' ')[1],
+                sessId: this.$store.state.login.userData.sid,
+                userId:  this.$store.state.login.userData.user,
+                id: this.$store.state.approval.customerData.name,
                 status: status,
-                document_type : this.getDocmentType(),
-                remarks : status == 'Rejected' ? undefined : this.remarks,
-                attachment_type: this.getAttachmentType(),
+                docType : this.getDocmentType(),
+                remarks : status == 'Rejected' ? this.remarks : undefined ,
+                // attachmentType: '',
+                // nomineeNo : ''
             }
             console.log(json , 'json json json');
-            // this.$store.dispatch('approval/updateDocStatus', json)
+            this.$store.dispatch('approval/updateDocStatus', json)
         },
 
         getDocmentType() {
@@ -227,6 +232,7 @@ export default {
         },
         getRemarks(data){
             this.remarks = data.remarks
+            console.log(this.remarks, 'remarks');
             this.isRejectDialog = data.isOpen
             if(this.remarks){
                 this.approveOrRejectDoc('Rejected')

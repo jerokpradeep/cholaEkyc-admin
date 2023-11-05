@@ -135,7 +135,7 @@ export default {
         this.emailId = this.cutomerData?.fsl_email_id
         this.startDate = this.cutomerData?.creation
         this.updatedOn = this.cutomerData?.modified
-        this.modeOfApplication = this.cutomerData?.modified_by
+        this.modeOfApplication = ''
         this.branch = this.cutomerData?.branch
     },
 }

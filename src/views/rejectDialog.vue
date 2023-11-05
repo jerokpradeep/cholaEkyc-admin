@@ -13,7 +13,7 @@
                   <DialogTitle as="h3" class="text-base pb-2 font-medium leading-6 primaryColor">
                    <div class="grid">
                     <label for="reject_content" id="reject_content_label">Remarks</label>
-                    <textarea name="" id="reject_content" class="w-full" v-model="remarks" autofocus></textarea>
+                    <textarea rows="5" name="" id="reject_content" class="w-full border rounded my-2" v-model="remarks" autofocus></textarea>
                    </div>
                   </DialogTitle>
   
