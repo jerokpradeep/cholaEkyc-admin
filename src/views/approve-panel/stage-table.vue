@@ -1,11 +1,11 @@
 <template>
     <div>
-        <table class="bg-white w-[800px] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
+        <table class="bg-white w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
-                <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
-                    {{ head.name }}
-                </th>
+                    <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
+                        {{ head.name }}
+                    </th>
                 </tr>
             </thead>
             <tbody>

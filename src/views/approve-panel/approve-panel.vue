@@ -126,6 +126,7 @@ export default {
     methods: {
         changeTab(id) {
             this.currentTab = id
+            this.$store.dispatch("tabs/setActiveTab", {path: this.$route.path, id: id});
         },
 
         approveOrRejectDoc(status) {
@@ -182,7 +183,7 @@ export default {
     },
 
     mounted() {
-        
+       this.changeTab(0)
     },
     
 }
