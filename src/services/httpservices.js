@@ -29,8 +29,7 @@ function getApprovalList(payload) {
 }
 
 function updateDocStatus(payload) {
-  return WRAPPERAXIOS.get(`update_document_details?userId=${payload?.userId}&id=${payload?.id}&status=${payload?.status}&document_type=${payload?.docType}
-  &remarks=${payload.remarks}&token=${payload.token}&sessId=${payload.sessId}`)
+  return WRAPPERAXIOS.get(`update_document_details?userId=${payload?.userId}&id=${payload?.id}&status=${payload?.status}&document_type=${payload?.docType}&remarks=${payload.remarks}&token=${payload.token}&sessId=${payload.sessId}`)
 }
 
 function getCustomerData(payload) {
@@ -46,5 +45,5 @@ function getStageDetails(payload) {
 }
 
 function assignOpportunity(payload) {
-  return WRAPPERAXIOS.get(`assignOpportunity?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}&request=${payload.request}`)
+  return WRAPPERAXIOS.get(`assignOpportunityLatest?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}&assignTo=${payload.assignTo}`)
 }

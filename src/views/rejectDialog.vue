@@ -1,6 +1,6 @@
 <template>
     <TransitionRoot as="template" :show="isOpen">
-      <Dialog as="div" class="relative z-10 " @close="sentRemarks()" >
+      <Dialog as="div" class="relative z-10 " @close="sentRemarks('close')" >
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
@@ -18,10 +18,10 @@
                   </DialogTitle>
   
                   <div class="mt-8 flex justify-end gap-2">
-                    <button type="button" class="themeBtn" id="logout_btn" @click="sentRemarks()">
+                    <button type="button" class="themeBtn" id="logout_btn" @click="sentRemarks('call')">
                       Confirm
                     </button>
-                    <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="sentRemarks()" >
+                    <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="sentRemarks('close')" >
                       Cancel
                     </button>
                   </div>
@@ -53,7 +53,8 @@ export default {
 
   },
   methods:{
-    sentRemarks(){
+    sentRemarks(key){
+      key == 'close' ? this.remarks = '' : ''
       this.$emit('send-remarks', {remarks:  this.remarks, isOpen: false})
     }
   },
