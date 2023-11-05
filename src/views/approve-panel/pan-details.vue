@@ -60,16 +60,30 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex"
 export default {
     data() {
         return {
-            panNumber: 'AMDPV9160F',
-            nameAsPan: 'THAVAMANI VINOTH KUMAR',
-            nameAsAadhar: 'No Record Found',
-            panStatusCode: 'CVLKRA - KRA Validated',
-            kraRespDate: 'No Record Found',
-            trackWiz: 'NotMatch'
+            panNumber: '',
+            nameAsPan: '',
+            nameAsAadhar: '',
+            panStatusCode: '',
+            kraRespDate: '',
+            trackWiz: ''
         }
     },
+    computed:{
+        ...mapGetters('approval', ['getCustomerData'])
+    },
+    mounted(){
+      if(this.getCustomerData){
+        this.getCustomerData.fsl_pan_no  ? this.panNumber = this.getCustomerData.fsl_pan_no : ''
+        this.getCustomerData.fsl_user_name  ? this.nameAsPan = this.getCustomerData.fsl_user_name : ''
+        this.getCustomerData.fsl_user_name  ? this.nameAsAadhar = this.getCustomerData.fsl_user_name : ''
+        this.getCustomerData.fsl_pan_status  ? this.panStatusCode = this.getCustomerData.fsl_pan_status : ''
+        this.getCustomerData.fsl_kra_response_date  ? this.kraRespDate = this.getCustomerData.fsl_kra_response_date : ''
+        // this.getCustomerData.fsl_pan_no  ? this.trackWiz = this.getCustomerData.fsl_pan_no : ''
+      }
+    }
 }
 </script>

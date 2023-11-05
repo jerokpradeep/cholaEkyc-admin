@@ -96,6 +96,8 @@ const downArrow = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
 </svg>
 `
+
+import { mapGetters } from 'vuex'
 export default {
     data() {
         return {
@@ -115,6 +117,9 @@ export default {
                 { isOpen: false, name: 'VIJI VINOTHKUMAR', dob: '24-09-1989', mobNo: '7010127185', emailId:'viji8920@gmail.com', proofType: 'PAN', proofId:'HBOPP0734E', relationOfNominee: 'Spouse', address: 'O BLOCK 5, 73 STREET R V NAGAR JAFFERKHAN PET, Tamil Nadu CHENNAI 600083'}
             ]
         }
+    },
+    computed:{
+        ...mapGetters('approval', ['getCustomerData'])
     },
     methods: {
         expantion(id) {

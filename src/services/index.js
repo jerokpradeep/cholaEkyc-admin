@@ -9,15 +9,14 @@ export function getUrl(){
 
 export function authHeader() {
   let userToken = store.state.login.userData.token;
-  let sid = store.state.login.userData.sid;
-  let system_user = store.state.login.userData.system_user
   let header = { }
   if (userToken) {
-    header = { withCredentials: true ,'Authorization': `${userToken}`, 'Cookie': `sid=${sid};system_user=${system_user}` };
+    header = { 'Authorization': `${userToken}` };
   }
   const requestOptions = {
     headers: header,
   };
+  console.log(requestOptions , 'requestOptions requestOptions');
   return requestOptions
 }
 

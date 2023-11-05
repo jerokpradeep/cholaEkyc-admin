@@ -1,6 +1,6 @@
 import httpService from "../../services/httpservices";
 import router from "../../router/index"
-
+import common from "../../mixins/common";
 const state = {
     userData: '',
     isLoading: false
@@ -38,6 +38,10 @@ const mutations = {
     setUserData(state, payload) {
         state.userData = payload
         localStorage.setItem('userData', JSON.stringify(payload))
+        if(payload && payload.system_user && payload.sid){
+        common.setCookie('system_user', payload.system_user)
+        common.setCookie('sid', payload.sid)
+        }
     }, 
     setIsLoading(state, payload) {
         state.isLoading = payload
