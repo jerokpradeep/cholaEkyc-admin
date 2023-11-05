@@ -15,7 +15,7 @@
                   </DialogTitle>
   
                   <div class="mt-8 flex justify-end gap-2">
-                    <button type="button" class="themeBtn" id="logout_btn" >
+                    <button type="button" class="themeBtn" id="logout_btn" @click="callService()">
                       Yes
                     </button>
                     <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="close()" >
@@ -37,9 +37,20 @@ export default {
   components:{
       Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot
   },
+  props:{
+    assigneeData: Object
+  },
   methods:{
     close(){
       this.$store.commit('approval/setIsAssign',  false)
+    },
+    callService(){
+      let temp = {
+        data: {
+          fsl_assign_to : this.$store.state.login.userData.user
+        }
+      }
+      this.$store.dispatch('approval/callAssignee', {id: this.assigneeData.opportunity_id,userId: this.$store.state.login.userData.user,sessId: this.$store.state.login.userData.sid, token: this.$store.state.login.userData.token, request:encodeURI(JSON.stringify(temp))})
     }
   }
 }

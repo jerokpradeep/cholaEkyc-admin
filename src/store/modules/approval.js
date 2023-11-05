@@ -69,6 +69,17 @@ const actions = {
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
+    },
+    async callAssignee({commit, dispatch, rootGetters}, payload){
+        console.log(payload , 'payload payload');
+        await httpService.assignOpportunity(payload).then(resp =>{
+            if(resp.status == 200 && resp.data){
+                commit('setIsAssign', false)
+                dispatch('getApprovalList')
+            }
+       }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  })
     }
 };
 
