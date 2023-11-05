@@ -23,6 +23,7 @@ function login(payload) {
   return ERPAXIOS.get(`api/method/cs_bo.custom_api.ekyc_login.login?email=${payload.emailId}&password=${payload.password}`)
 }
 
+
 function getApprovalList(payload) {
   return WRAPPERAXIOS.get(`get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}`)
 }
