@@ -63,7 +63,7 @@
         <div class="p-4">
             <user_details :cutomerData="getCustomerData" v-if="currentTab == 0"/>
             <pan_details v-if="currentTab == 1"/>
-            <address_details v-if="currentTab == 2"/>
+            <address_details :cutomerData="getCustomerData" v-if="currentTab == 2"/>
             <profile_details v-if="currentTab == 3"/>
             <bank_details v-if="currentTab == 4"/>
             <segment_details v-if="currentTab == 5"/>

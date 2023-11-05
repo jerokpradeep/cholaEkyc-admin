@@ -17,7 +17,7 @@
                         PAN
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.pan }}
+                        {{ checkValid(getStageData['pan status']) ? getStageData['pan status'] : 'Un Approved' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -28,7 +28,7 @@
                         Profile
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.profile }}
+                        {{ checkValid(getStageData['profile status']) ? getStageData['profile status'] : 'Un Approved' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -39,7 +39,7 @@
                         Address
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.address }}
+                        {{ checkValid(getStageData['address status']) ? getStageData['address status'] : 'Un Approved' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -50,7 +50,7 @@
                         Bank
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.bank }}
+                        {{ checkValid(getStageData['bank status']) ? getStageData['bank status'] : 'Un Approved' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -61,7 +61,7 @@
                         Segments
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.segment }}
+                        {{ checkValid(getStageData['segment status']) ? getStageData['segment status'] : 'Un Approved' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -72,7 +72,7 @@
                         IPV
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.IPV }}
+                        {{ checkValid(getStageData['IPV status']) ? getStageData['IPV status'] : 'Un Approved' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -83,7 +83,9 @@
                         Nominees
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        <!-- {{ getStageData?.nominee.length ? getStageData?.nominee[0]?.status : '' }} -->
+                        <div v-for="(i, id) in getStageData?.nominee" :key="id">
+                            {{id + 1}}. {{ checkValid(i.status) ? i.status : 'Un Approved' }}
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -94,7 +96,7 @@
                         Documents
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.document }}
+                        {{ checkValid(getStageData['document status']) ? getStageData['document status'] : 'Un Approved' }}
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -105,7 +107,7 @@
                         E-Sign Doc
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ getStageData?.Esign }}
+                        {{ checkValid(getStageData['Esign status']) ? getStageData['Esign status'] : 'Un Approved' }}
                     </td>
                 </tr>
             </tbody>
@@ -184,6 +186,12 @@ export default {
     },
     computed: {
         ...mapGetters('approval', ['getStageData'])
+    },
+    methods: {
+        checkValid(data) {
+            if(data)
+            return data.trim() != '' && data
+        }
     },
     mounted() {
         if(this.$route.query?.id) {

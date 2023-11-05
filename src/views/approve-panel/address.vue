@@ -11,28 +11,28 @@
           <div class="sm:col-span-3">
             <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Aadhar Number</label>
             <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="nameAsPan"/>
+              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="aadharNo"/>
             </div>
           </div>
 
           <div class="sm:col-span-3">
             <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Source</label>
             <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="panStatusCode"/>
+              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="source"/>
             </div>
           </div>
 
           <div class="sm:col-span-3">
             <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">KRA Address Proof</label>
             <div class="mt-2">
-              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="nameAsAadhar"/>
+              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="kraAddressProof"/>
             </div>
           </div>
 
           <div class="sm:col-span-3">
             <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">KRA Proof Id Number</label>
             <div class="mt-2">
-              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="kraRespDate"/>
+              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="kraAddressProofId"/>
             </div>
           </div>
 
@@ -46,30 +46,27 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex"
-
+import { mapGetters } from "vuex"
 export default {
     data() {
         return {
             address: '',
-            nameAsPan: '',
-            nameAsAadhar: '',
-            panStatusCode: '',
-            kraRespDate: '',
-            trackWiz: ''
+            aadharNo: '',
+            source: '',
+            kraAddressProof: '',
+            kraAddressProofId: '',
         }
     },
     computed:{
         ...mapGetters('approval', ['getCustomerData'])
     },
-    mounted(){
-      if(this.getCustomerData){
+    mounted() {
+      if(this.getCustomerData) {
         this.getCustomerData.fsl_bank_address  ?  this.address=  this.getCustomerData.fsl_bank_address : ''
-        this.getCustomerData.fsl_pan_no  ? this.nameAsPan = 'THAVAMANI VINOTH KUMAR' : ''
-        this.getCustomerData.fsl_pan_no  ? this.nameAsAadhar=  'No Record Found' : ''
-        this.getCustomerData.fsl_pan_no  ? this.panStatusCode = 'CVLKRA - KRA Validated' : ''
-        this.getCustomerData.fsl_pan_no  ? this.kraRespDate = 'No Record Found' : ''
-        this.getCustomerData.fsl_pan_no  ? this.trackWiz = 'NotMatch' : ''
+        this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
+        // this.getCustomerData  ? this.source =  this.getCustomerData : ''
+        // this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
+        // this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
       }
     }
 }

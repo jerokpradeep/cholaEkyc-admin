@@ -93,15 +93,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 export default {
     data() {
         return {
-            fathersName: 'AMDPV9160F',
-            mothersName: 'THAVAMANI VINOTH KUMAR',
-            occupation: 'No Record Found',
-            tradingExp: 'CVLKRA - KRA Validated',
-            annualIncome: 'No Record Found',
-            netWorth: 'NotMatch',
+            fathersName: '',
+            mothersName: '',
+            occupation: '',
+            tradingExp: '',
+            annualIncome: '',
+            netWorth: '',
             maritalStatus: '',
             isPoliticalExposedPerson: '',
             taxOutSideIndia: '',
@@ -110,5 +111,27 @@ export default {
             fatca: ''
         }
     },
+    computed:{
+        ...mapGetters('approval', ['getCustomerData'])
+    },
+    mounted() {
+      if(this.getCustomerData) {
+        // this.getCustomerData  ?  this.fathersName =  this.getCustomerData : ''
+        // this.getCustomerData  ? this.mothersName = this.getCustomerData : ''
+        this.getCustomerData?.fsl_occu  ? this.occupation =  this.getCustomerData?.fsl_occu : ''
+        // this.getCustomerData  ? this.tradingExp = this.getCustomerData : ''
+        this.getCustomerData?.annual_revenue == 0 || this.getCustomerData?.annual_revenue  ? this.annualIncome = this.getCustomerData.annual_revenue : ''
+        this.getCustomerData?.fsl_net_worth  ? this.netWorth = this.getCustomerData?.fsl_net_worth : ''
+
+        this.getCustomerData?.fsl_marital_status  ? this.maritalStatus = this.getCustomerData?.fsl_marital_status : ''
+        this.getCustomerData?.fsl_political_exposure  ? this.isPoliticalExposedPerson = this.getCustomerData?.fsl_political_exposure : ''
+        // this.getCustomerData  ? this.taxOutSideIndia = this.getCustomerData : ''
+        // this.getCustomerData  ? this.settlementCycle = this.getCustomerData : ''
+        // this.getCustomerData  ? this.standingInstruction = this.getCustomerData : ''
+        this.getCustomerData?.fsl_fatca  ? this.fatca = this.getCustomerData?.fsl_fatca : ''
+        
+
+      }
+    }
 }
 </script>

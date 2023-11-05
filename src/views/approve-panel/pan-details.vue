@@ -82,7 +82,6 @@ export default {
         this.getCustomerData.fsl_user_name  ? this.nameAsAadhar = this.getCustomerData.fsl_user_name : ''
         this.getCustomerData.fsl_pan_status  ? this.panStatusCode = this.getCustomerData.fsl_pan_status : ''
         this.getCustomerData.fsl_kra_response_date  ? this.kraRespDate = this.getCustomerData.fsl_kra_response_date : ''
-        // this.getCustomerData.fsl_pan_no  ? this.trackWiz = this.getCustomerData.fsl_pan_no : ''
       }
     }
 }
