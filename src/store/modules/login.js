@@ -35,12 +35,9 @@ const actions = {
 
 const mutations = {
     setUserData(state, payload) {
+        payload ?  payload.tempToken = payload.token.split(" ")[1] : ''
         state.userData = payload
         localStorage.setItem('userData', JSON.stringify(payload))
-        if(payload && payload.system_user && payload.sid){
-        common.setCookie('system_user', payload.system_user)
-        common.setCookie('sid', payload.sid)
-        }
     }, 
     setIsLoading(state, payload) {
         state.isLoading = payload
