@@ -33,8 +33,8 @@
         
         <div class="col-span-6">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg bg-white border h-[200px] my-4">
-
+          <div class="rounded-lg my-4">
+            <img class="max-w-[50%] h-auto" :src="getDocumentSource('Photo')" alt="panImage">
           </div>
         </div>
 
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -57,6 +58,14 @@ export default {
             latitude: '',
             longitude: '',
         }
+    },
+    computed: {
+      ...mapGetters('approval', ['getCustomerData']),
+    },
+    methods: {
+      getDocumentSource(docType) {
+        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}`
+      }
     },
 }
 </script>

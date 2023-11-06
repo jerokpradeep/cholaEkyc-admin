@@ -3,59 +3,71 @@
             <breadcrumbKyc />
         </div>
 
-        <div class="bg-white py-6 px-8 my-2 rounded-lg flex flex-wrap gap-4 justify-between mx-4">
-            <div>
+        <div class="bg-white py-6 px-8 my-2 rounded-lg flex flex-col flex-wrap gap-4 justify-between mx-4">
+            <div class="flex flex-wrap gap-4 justify-between">
+                <div>
                 <div class="text-xs mb-2 secondaryColor">
                     Name
                 </div>
                 <div class="text-sm">
                     {{ getCustomerData?.opportunity_data?.fsl_user_name }}
                 </div>
+                </div>
+
+                <div>
+                    <div class="text-xs mb-2 secondaryColor">
+                        Status
+                    </div>
+                    <div class="text-sm">
+                        {{ getCustomerData?.opportunity_data?.status }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-xs mb-2 secondaryColor">
+                        DOB
+                    </div>
+                    <div class="text-sm">
+                        {{ getFormat(getCustomerData?.opportunity_data?.fsl_dob) }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-xs mb-2 secondaryColor">
+                        Gender
+                    </div>
+                    <div class="text-sm">
+                        {{ getCustomerData?.profile_data?.gender }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-xs mb-2 secondaryColor">
+                        Mobile
+                    </div>
+                    <div class="text-sm">
+                        {{ getCustomerData?.opportunity_data?.fsl_mobile_num }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-xs mb-2 secondaryColor">
+                        PAN
+                    </div>
+                    <div class="text-sm">
+                        {{ getCustomerData?.opportunity_data?.fsl_pan_no }}
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <div class="text-xs mb-2 secondaryColor">
-                    Status
-                </div>
-                <div class="text-sm">
-                    {{ getCustomerData?.opportunity_data?.status }}
-                </div>
-            </div>
-
-            <div>
-                <div class="text-xs mb-2 secondaryColor">
-                    DOB
-                </div>
-                <div class="text-sm">
-                    {{ getFormat(getCustomerData?.opportunity_data?.fsl_dob) }}
-                </div>
-            </div>
-
-            <div>
-                <div class="text-xs mb-2 secondaryColor">
-                    Gender
-                </div>
-                <div class="text-sm">
-                    {{ getCustomerData?.profile_data?.gender }}
-                </div>
-            </div>
-
-            <div>
-                <div class="text-xs mb-2 secondaryColor">
-                    Mobile
-                </div>
-                <div class="text-sm">
-                    {{ getCustomerData?.opportunity_data?.fsl_mobile_num }}
-                </div>
-            </div>
-
-            <div>
-                <div class="text-xs mb-2 secondaryColor">
-                    PAN
-                </div>
-                <div class="text-sm">
-                    {{ getCustomerData?.opportunity_data?.fsl_pan_no }}
-                </div>
+            <div class="my-4">
+              <div class="w-full mb-2 secondary-color dark:text-[#94A3B8] font-medium text-sm">Progress ({{ progress() }}%)</div> 
+              <div class="flex items-center">
+                <div class="progress-bar bg-[#f3f3f3] dark:bg-gray-600">
+                <div class="progress" :style="{width: progress() + '%'}"></div>
+              </div>
+              </div>
+              <!-- <div class="primary-color ml-1 mt-2 font-medium">{{ progress() }}%</div> -->
             </div>
         </div>
 
@@ -283,7 +295,29 @@ export default {
         },
         getFormat(date){
            return window.formatDate(date, 'D')
-        }
+        },
+
+        progress() {
+            let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'document status', 'Esign status']
+            let data = this.getStageData
+            let nomineesArray = this.getStageData.nominee
+            let percentage = 0
+            let isNomineeApproved = false
+            for (const property in data) {
+                statusArray.forEach((status)=> {
+                    if(property == status && data[property] == 'Approved') {
+                        percentage += 10
+                    }
+                })
+            }
+            isNomineeApproved = nomineesArray.every(function(nominee){
+                return nominee.status == 'Approved'
+            })
+            if(isNomineeApproved) {
+                percentage += 10
+            }
+            return percentage
+        },
     },
     created(){
         this.currentTab = this.$store.state.queries['approvepanel'].query.tab
@@ -292,3 +326,17 @@ export default {
     
 }
 </script>
+
+<style>
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.progress {
+  height: 100%;
+  background-color: #753ED7;
+  border-radius: 2px;
+}
+</style>

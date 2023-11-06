@@ -2,53 +2,53 @@
     <div class="grid grid-cols-12">
         <div class="col-span-6">
           <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
-          <div class="sm:col-span-3">
-            <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">PAN Number</label>
-            <div class="mt-2">
-              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="panNumber"/>
+            <div class="sm:col-span-3">
+              <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">PAN Number</label>
+              <div class="mt-2">
+                <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="panNumber"/>
+              </div>
             </div>
-          </div>
 
-          <div class="sm:col-span-3">
-            <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Name as per PAN</label>
-            <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="nameAsPan"/>
+            <div class="sm:col-span-3">
+              <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Name as per PAN</label>
+              <div class="mt-2">
+                <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="nameAsPan"/>
+              </div>
             </div>
-          </div>
 
-          <div class="sm:col-span-3">
-            <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">PAN Status Code</label>
-            <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="panStatusCode"/>
+            <div class="sm:col-span-3">
+              <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">PAN Status Code</label>
+              <div class="mt-2">
+                <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="panStatusCode"/>
+              </div>
             </div>
-          </div>
 
-          <div class="sm:col-span-3">
-            <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Name as per Aadhar</label>
-            <div class="mt-2">
-              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="nameAsAadhar"/>
+            <div class="sm:col-span-3">
+              <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Name as per Aadhar</label>
+              <div class="mt-2">
+                <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="nameAsAadhar"/>
+              </div>
             </div>
-          </div>
 
-          <div class="sm:col-span-3">
-            <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">KRA Response Date</label>
-            <div class="mt-2">
-              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="kraRespDate"/>
+            <div class="sm:col-span-3">
+              <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">KRA Response Date</label>
+              <div class="mt-2">
+                <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="kraRespDate"/>
+              </div>
             </div>
-          </div>
 
-          <div class="sm:col-span-3">
-            <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Track Wiz</label>
-            <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="trackWiz"/>
+            <div class="sm:col-span-3">
+              <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Track Wiz</label>
+              <div class="mt-2">
+                <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="trackWiz"/>
+              </div>
             </div>
-          </div>
         </div>
         </div>
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg bg-white border h-[200px] my-4">
-
+          <div class="rounded-lg my-4">
+            <img class="max-w-[50%] h-auto" :src="getDocumentSource('PAN')" alt="panImage">
           </div>
         </div>        
     </div>
@@ -61,7 +61,9 @@
 
 <script>
 import {mapGetters} from "vuex"
+import commonJs from "../../mixins/common"
 export default {
+  mixins: [commonJs],
     data() {
         return {
             panNumber: '',
@@ -75,6 +77,11 @@ export default {
     computed:{
         ...mapGetters('approval', ['getCustomerData']),
     },
+    methods: {
+      getDocumentSource(docType) {
+        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}`
+      }
+    },
     mounted(){
       if(this.getCustomerData && this.getCustomerData?.opportunity_data){
         this.getCustomerData.opportunity_data?.fsl_pan_no  ? this.panNumber = this.getCustomerData.opportunity_data?.fsl_pan_no : ''
@@ -84,6 +91,6 @@ export default {
         this.getCustomerData.opportunity_data?.fsl_kra_response_date  ? this.kraRespDate = this.getCustomerData.opportunity_data?.fsl_kra_response_date : ''
         this.getCustomerData.opportunity_data?.trackwizz_passkey ? this.trackWiz = this.getCustomerData.opportunity_data?.trackwizz_passkey : ''
       }
-    }
+    },
 }
 </script>

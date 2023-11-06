@@ -25,7 +25,7 @@ function login(payload) {
 
 
 function getApprovalList(payload) {
-  return WRAPPERAXIOS.get(`get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}`)
+  return WRAPPERAXIOS.get(`get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`)
 }
 
 function updateDocStatus(payload) {

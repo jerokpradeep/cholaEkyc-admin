@@ -1,6 +1,6 @@
 <template>
-    <div class="pb-12">
-        <table class="bg-white w-[800px] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
+    <div class="pb-12 flex flex-wrap gap-4">
+        <table class="bg-white w-[50%] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
                 <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
@@ -26,18 +26,29 @@
                         <a class="underline text-sm text-orange-500">Reject</a>
                     </td>
                     <td>
-                        <a class="underline text-sm text-purple-500">Preview</a>
+                        <a class="underline text-sm text-purple-500" @click="previewDocument(i.docName)">Preview</a>
                     </td>
                     <td>
-                        <a class="underline text-sm text-blue-500">Download</a>
+                        <a class="underline text-sm text-blue-500" :href="getDocumentSource(i.docName)" download>Download</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="col-span-6 w-[45%]" >  
+          <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
+          <div class="rounded-lg my-4" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT'">
+            <img class="max-w-full h-auto" :src="getDocumentSource(this.documentName)" alt="panImage">
+          </div>
+          <div v-else>
+            <iframe :src="getDocumentSource(this.documentName)" frameborder="1"></iframe>
+          </div>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -82,7 +93,19 @@ export default {
                 type: 'jpg'
                 }
             ],
+            documentName: 'PAN'
         }
+    },
+    computed: {
+      ...mapGetters('approval', ['getCustomerData']),
+    },
+    methods: {
+      getDocumentSource(docType) {
+        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}`
+      },
+      previewDocument(docName) {
+        this.documentName = docName
+      }
     },
 }
 </script>
