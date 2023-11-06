@@ -135,8 +135,8 @@ export default {
         this.emailId = this.cutomerData?.opportunity_data?.fsl_email_id
         this.startDate = window.formatDate(this.cutomerData?.opportunity_data?.creation,'D&T')
         this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified,'D&T')
-        this.modeOfApplication = ''
-        this.branch = this.cutomerData?.branch
+        this.modeOfApplication = this.cutomerData?.opportunity_data?.fsl_mode_of_application
+        this.branch = this.cutomerData?.opportunity_data?.fsl_branch
     },
 }
 </script>
