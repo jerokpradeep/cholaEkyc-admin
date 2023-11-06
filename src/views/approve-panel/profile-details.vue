@@ -85,11 +85,6 @@
 
         </div>
     </div>
-
-    <!-- <div class="flex gap-4 my-4 justify-end">
-        <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Approve</button>
-        <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Reject</button>
-    </div> -->
 </template>
 
 <script>
@@ -120,28 +115,19 @@ export default {
           this.getCustomerData.opportunity_data.fsl_occu  ? this.occupation =  this.getCustomerData.opportunity_data.fsl_occu : ''
           this.getCustomerData?.opportunity_data?.annual_revenue == 0 || this.getCustomerData?.opportunity_data?.annual_revenue  ? this.annualIncome = this.getCustomerData?.opportunity_data.annual_revenue : ''
           this.getCustomerData?.opportunity_data?.fsl_net_worth  ? this.netWorth = this.getCustomerData?.opportunity_data?.fsl_net_worth : ''
-          this.getCustomerData?.opportunity_data?.fsl_marital_status  ? this.maritalStatus = this.getCustomerData?.opportunity_data?.fsl_marital_status : ''
-          this.getCustomerData?.opportunity_data?.fsl_political_exposure  ? this.isPoliticalExposedPerson = this.getCustomerData?.opportunity_data?.fsl_political_exposure : ''
           this.getCustomerData?.opportunity_data?.fsl_fatca  ? this.fatca = this.getCustomerData?.opportunity_data?.fsl_fatca : ''
         }
         
         if(this.getCustomerData.profile_data){
           this.getCustomerData?.profile_data.father_name  ?  this.fathersName =  this.getCustomerData?.profile_data?.father_name : ''
+          this.getCustomerData?.profile_data?.marital_status  ? this.maritalStatus = this.getCustomerData?.profile_data?.marital_status : ''
+          this.getCustomerData?.profile_data?.political_exposure  ? this.isPoliticalExposedPerson = this.getCustomerData?.profile_data?.political_exposure : ''
+          this.getCustomerData?.profile_data?.tax_outside_india  ? this.taxOutSideIndia = this.getCustomerData?.profile_data?.tax_outside_india : ''
+          this.getCustomerData?.profile_data?.settlement_cycle  ? this.settlementCycle = this.getCustomerData?.profile_data?.settlement_cycle : ''
+          this.getCustomerData?.profile_data?.fatca  ? this.fatca = this.getCustomerData?.profile_data?.fatca : ''
+          this.getCustomerData?.profile_data?.mother_name ? this.mothersName = this.getCustomerData?.profile_data?.mother_name : ''
         }
-        
-        // this.getCustomerData?.profile_data  ? this.mothersName = this.getCustomerData?.profile_data : ''
-        
-        // this.getCustomerData?.profile_data  ? this.tradingExp = this.getCustomerData?.profile_data : ''
-        
-        
-
-        
-        // this.getCustomerData?.profile_data  ? this.taxOutSideIndia = this.getCustomerData?.profile_data : ''
-        // this.getCustomerData?.profile_data  ? this.settlementCycle = this.getCustomerData?.profile_data : ''
-        // this.getCustomerData?.profile_data  ? this.standingInstruction = this.getCustomerData?.profile_data : ''
-        
-        
-
+        // standingInstruction
       }
     }
 }

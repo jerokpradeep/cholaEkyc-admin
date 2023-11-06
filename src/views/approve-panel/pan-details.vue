@@ -81,7 +81,7 @@ export default {
         this.getCustomerData.opportunity_data?.fsl_user_name  ? this.nameAsPan = this.getCustomerData.opportunity_data?.fsl_user_name : ''
         this.getCustomerData.opportunity_data?.fsl_user_name  ? this.nameAsAadhar = this.getCustomerData.opportunity_data?.fsl_user_name : ''
         this.getCustomerData.opportunity_data?.fsl_pan_status_code  ? this.panStatusCode = this.getCustomerData.opportunity_data?.fsl_pan_status_code : ''
-        this.getCustomerData.opportunity_data?.fsl_kra_response_date  ? this.kraRespDate = this.getCustomerData.opportunity_data?.fsl_kra_response_date : ''
+        this.getCustomerData.opportunity_data?.fsl_kra_response_date  ? this.kraRespDate = window.formatDate(this.getCustomerData.opportunity_data?.fsl_kra_response_date , 'D') : ''
         this.getCustomerData.opportunity_data?.trackwizz_passkey ? this.trackWiz = this.getCustomerData.opportunity_data?.trackwizz_passkey : ''
       }
     }

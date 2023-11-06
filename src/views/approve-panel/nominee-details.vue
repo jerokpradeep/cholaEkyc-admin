@@ -212,7 +212,7 @@ export default {
 
             for (let item of this.getCustomerData.opportunity_data.fsl_nominee_table) {
 
-                this.nomineeList.push({ name: item.name, dob: item.date_of_birth, emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number })
+                this.nomineeList.push({ name: item.name, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number })
             }
             if (this.nomineeList.length > 0) {
                 this.expandNominee(0)
