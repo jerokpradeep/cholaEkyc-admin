@@ -79,7 +79,7 @@ export default {
     },
     methods: {
       getDocumentSource(docType) {
-        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}`
+        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login.userData['tempToken']}&sessId=${this.$store.state.login.userData['sid']}&token=${this.$store.state.login.userData['user']}`
       }
     },
     mounted(){
