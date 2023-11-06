@@ -27,7 +27,7 @@
                     DOB
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.opportunity_data?.fsl_dob }}
+                    {{ getFormat(getCustomerData?.opportunity_data?.fsl_dob) }}
                 </div>
             </div>
 
@@ -276,6 +276,9 @@ export default {
         stringTrim(data) {
             if(data)
             return data?.toString().trim()
+        },
+        getFormat(date){
+           return window.formatDate(date, 'D')
         }
     },
     created(){

@@ -131,10 +131,10 @@ export default {
       cutomerData: { type: Object }
     },
     mounted() {
-        this.mobileNo = this.cutomerData?.fsl_mobile_num
-        this.emailId = this.cutomerData?.fsl_email_id
-        this.startDate = window.formatDate(this.cutomerData?.creation,'D&T')
-        this.updatedOn = window.formatDate(this.cutomerData?.modified,'D&T')
+        this.mobileNo = this.cutomerData?.opportunity_data?.fsl_mobile_num
+        this.emailId = this.cutomerData?.opportunity_data?.fsl_email_id
+        this.startDate = window.formatDate(this.cutomerData?.opportunity_data?.creation,'D&T')
+        this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified,'D&T')
         this.modeOfApplication = ''
         this.branch = this.cutomerData?.branch
     },

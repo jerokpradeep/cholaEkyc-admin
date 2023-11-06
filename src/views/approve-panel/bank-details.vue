@@ -95,15 +95,15 @@ export default {
         ...mapGetters('approval', ['getCustomerData'])
     },
     mounted(){
-      if(this.getCustomerData){
-        this.getCustomerData.fsl_bank_name ? this.bankName  = this.getCustomerData.fsl_bank_name  : ''
-        // this.getCustomerData.fsl_bank_name ? this.branchName  = this.getCustomerData.fsl_bank_name  : ''
-        this.getCustomerData.fsl_bank_ifsc ? this.ifscCode  = this.getCustomerData.fsl_bank_ifsc  : ''
-        this.getCustomerData.fsl_bank_micr ? this.micrCode  = this.getCustomerData.fsl_bank_micr  : ''
-        this.getCustomerData.fsl_acc_hname ? this.acHolderName  = this.getCustomerData.fsl_acc_hname  : ''
-        this.getCustomerData.fsl_verify_acc_number ? this.acNo  = this.getCustomerData.fsl_verify_acc_number  : ''
-        this.getCustomerData.fsl_bank_status ? this.pennyVerifyStatus  = this.getCustomerData.fsl_bank_status  : ''
-        this.getCustomerData.fsl_bank_address ? this.address  = this.getCustomerData.fsl_bank_address  : ''
+      if(this.getCustomerData && this.getCustomerData.opportunity_data){
+        this.getCustomerData.opportunity_data.fsl_bank_name ? this.bankName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
+        // this.getCustomerData.opportunity_data.fsl_bank_name ? this.branchName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
+        this.getCustomerData.opportunity_data.fsl_bank_ifsc ? this.ifscCode  = this.getCustomerData.opportunity_data.fsl_bank_ifsc  : ''
+        this.getCustomerData.opportunity_data.fsl_bank_micr ? this.micrCode  = this.getCustomerData.opportunity_data.fsl_bank_micr  : ''
+        this.getCustomerData.opportunity_data.fsl_acc_hname ? this.acHolderName  = this.getCustomerData.opportunity_data.fsl_acc_hname  : ''
+        this.getCustomerData.opportunity_data.fsl_verify_acc_number ? this.acNo  = this.getCustomerData.opportunity_data.fsl_verify_acc_number  : ''
+        this.getCustomerData.opportunity_data.fsl_bank_status ? this.pennyVerifyStatus  = this.getCustomerData.opportunity_data.fsl_bank_status  : ''
+        this.getCustomerData.opportunity_data.fsl_bank_address ? this.address  = this.getCustomerData.opportunity_data.fsl_bank_address  : ''
       }
     }
 }
