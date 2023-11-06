@@ -61,7 +61,7 @@ export default {
             emailId: '',
             startDate: '',
             updatedOn: '',
-            modeOfApplication: 'DIRECT',
+            modeOfApplication: '',
             branch: 'NotMatch',
             tableHeads: [
                 { name: "S.No", class: "text-center" },
