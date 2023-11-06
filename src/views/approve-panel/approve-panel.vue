@@ -298,25 +298,31 @@ export default {
         },
 
         progress() {
-            let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'document status', 'Esign status']
-            let data = this.getStageData
-            let nomineesArray = this.getStageData.nominee
-            let percentage = 0
-            let isNomineeApproved = false
-            for (const property in data) {
-                statusArray.forEach((status)=> {
-                    if(property == status && data[property] == 'Approved') {
-                        percentage += 10
-                    }
-                })
+            if(this.getStageData.hasOwnProperty('nominee')) {
+                let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'document status', 'Esign status']
+                let data = this.getStageData
+                let nomineesArray = this.getStageData.nominee
+                let percentage = 0
+                let isNomineeApproved = false
+                for (const property in data) {
+                    statusArray.forEach((status)=> {
+                        if(property == status && data[property] == 'Approved') {
+                            percentage += 10
+                        }
+                    })
+                }
+                if(nomineesArray.length) {
+                    isNomineeApproved = nomineesArray.every(function(nominee){
+                        return nominee.status == 'Approved'
+                    })
+                }
+                if(isNomineeApproved) {
+                    percentage += 10
+                }
+                return percentage
+            } else {
+                return 0
             }
-            isNomineeApproved = nomineesArray.every(function(nominee){
-                return nominee.status == 'Approved'
-            })
-            if(isNomineeApproved) {
-                percentage += 10
-            }
-            return percentage
         },
     },
     created(){
