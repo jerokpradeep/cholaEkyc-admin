@@ -10,7 +10,8 @@ const actions = {
     async getApprovalList({ commit, dispatch, rootGetters }) {
         let json = {
             token : rootGetters['login/getUserData']['tempToken'],
-            sessId : rootGetters['login/getUserData']['sid']
+            sessId : rootGetters['login/getUserData']['sid'],
+            userId : rootGetters['login/getUserData']['user']
         }
         await httpService.getApprovalList(json).then(resp => {
             if(resp.status == 200 && resp.data?.message?.success_key == 1 && resp.data?.message?.Data?.length) {
