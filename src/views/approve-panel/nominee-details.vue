@@ -108,7 +108,7 @@
                             <div v-html="cancelSvg" v-else-if="getStatusForPage(i.nomineeId) == 'Rejected'"></div>
                             {{ getStatusForPage(i.nomineeId) }}
                         </div>
-                        <div class="flex gap-1 justify-center items-center min-w-[120px] ml-2  py-2 rounded-lg text-white font-bold bg-blue-700 cursor-pointer"
+                        <div class="flex gap-1 justify-center items-center min-w-[120px] ml-2  py-2 rounded-lg  text-blue-700 font-bold border border-blue-700 cursor-pointer"
                         v-if="getStatusForPage(i.nomineeId) && (getStatusForPage(i.nomineeId) == 'Approved' || getStatusForPage(i.nomineeId) == 'Rejected' || getStatusForPage(i.nomineeId) == 'Reset')" @click="callServiceApporve_Reject('Reset')">
                         <svg xmlns="
 http://www.w3.org/2000/svg"

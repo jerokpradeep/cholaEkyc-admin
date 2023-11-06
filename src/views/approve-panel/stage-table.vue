@@ -128,7 +128,7 @@
                        7
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        Nominees
+                        Nominees <span v-if="getStageData?.nominee?.length > 0">({{ getStageData?.nominee?.length }})</span>
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
                         <div v-if="getStageData?.nominee?.length">
