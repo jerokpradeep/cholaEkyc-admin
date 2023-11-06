@@ -48,7 +48,7 @@
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="rounded-lg my-4">
-            <img class="max-w-[50%] h-auto" :src="getDocumentSource('PAN')" alt="panImage">
+            <img class="max-w-[50%] h-auto" :src="getDocumentData" alt="panImage">
           </div>
         </div>        
     </div>
@@ -75,13 +75,9 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData']),
+        ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
     },
-    methods: {
-      getDocumentSource(docType) {
-        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}`
-      }
-    },
+
     mounted(){
       if(this.getCustomerData && this.getCustomerData?.opportunity_data){
         this.getCustomerData.opportunity_data?.fsl_pan_no  ? this.panNumber = this.getCustomerData.opportunity_data?.fsl_pan_no : ''
@@ -91,6 +87,7 @@ export default {
         this.getCustomerData.opportunity_data?.fsl_kra_response_date  ? this.kraRespDate = window.formatDate(this.getCustomerData.opportunity_data?.fsl_kra_response_date , 'D') : ''
         this.getCustomerData.opportunity_data?.trackwizz_passkey ? this.trackWiz = this.getCustomerData.opportunity_data?.trackwizz_passkey : ''
       }
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=PAN&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'PAN' })
     },
 }
 </script>

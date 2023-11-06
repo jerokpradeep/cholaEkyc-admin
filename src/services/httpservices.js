@@ -10,13 +10,13 @@ const ERPAXIOS = axios.create({
 });
 
 const httpService = {
-    getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData,callLogout, getStageDetails, assignOpportunity
+    getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData,callLogout, getStageDetails, assignOpportunity,getDocument
 }
 
 export default httpService
 
 function getOpportunityList(payload) {
-    return WRAPPERAXIOS.get(`get_oppr_details/?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
+    return WRAPPERAXIOS.get(`ekyc/get_oppr_details/?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
 }
 
 function login(payload) {
@@ -25,15 +25,15 @@ function login(payload) {
 
 
 function getApprovalList(payload) {
-  return WRAPPERAXIOS.get(`get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`)
+  return WRAPPERAXIOS.get(`ekyc/get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`)
 }
 
 function updateDocStatus(payload) {
-  return WRAPPERAXIOS.get(`update_document_details?${payload}`)
+  return WRAPPERAXIOS.get(`ekyc/update_document_details?${payload}`)
 }
 
 function getCustomerData(payload) {
-  return WRAPPERAXIOS.get(`opportunity?id=${payload.id}&token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
+  return WRAPPERAXIOS.get(`ekyc/opportunity?id=${payload.id}&token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
 }
 
 function callLogout(){
@@ -41,9 +41,13 @@ function callLogout(){
 }
 
 function getStageDetails(payload) {
-  return WRAPPERAXIOS.get(`get_approval_details?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
+  return WRAPPERAXIOS.get(`ekyc/get_approval_details?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
 }
 
 function assignOpportunity(payload) {
-  return WRAPPERAXIOS.get(`assignOpportunityLatest?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}&assignTo=${payload.assignTo}`)
+  return WRAPPERAXIOS.get(`ekyc/assignOpportunityLatest?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}&assignTo=${payload.assignTo}`)
+}
+
+function getDocument(payload){
+  return WRAPPERAXIOS.get(`Download/getFile?${payload}` , {responseType: 'blob'})
 }

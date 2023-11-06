@@ -167,7 +167,7 @@ export default {
     },
     mounted(){
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_equity_cash')){
-        this.tableData[0].value  =  this.getCustomerData.opportunity_data.fsl_equity_cash == 1 ? "Yes" : "No"
+        this.tableData[0].value  = this.tableData[1].value =  this.getCustomerData.opportunity_data.fsl_equity_cash == 1 ? "Yes" : "No"
       }
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_equity_derivative')){
          this.tableData[2].value = this.getCustomerData.opportunity_data.fsl_equity_derivative == 1 ? "Yes" : "No"

@@ -7,7 +7,8 @@ const state = {
     isLoader: false,
     isApproveLoader: false,
     isRejectLoader: false,
-    isResetLoader: false
+    isResetLoader: false,
+    documentData: ''
 }
 
 const actions = {
@@ -115,13 +116,34 @@ const actions = {
 
     async formatJson({state,commit, dispatch, rootGetters}, payload){
         let str = `userId=${rootGetters['login/getUserData']['user']}&id=${state.customerData?.opportunity_data?.name}&status=${payload.status}&document_type=${getDocmentType(payload.tab)}&remarks=${payload.remarks}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`
-        if(payload.tab == 7 || payload.tab == 8 || payload.tab == 9){
-            str += `&attachmentType=${payload.tab == 7 ? 'Document' : payload.tab == 8 ? 'IPV' : 'ESIGN_ DOCUMENT'}`
+        if(payload.tab == 8 || payload.tab == 9){
+            str += `&attachmentType=${payload.tab == 8 ? 'IPV' : 'ESIGN_ DOCUMENT'}`
+        }
+        if(payload.tab == 7){
+            str +=`&attachmentType=${payload.attachmentType}`
         }
         if(payload.tab == 6){
             str +=`&nominee_no=${payload.nomineeId}`
         }
         await dispatch('updateDocStatus', str)
+    },
+    getDocumentData({state, commit, dispatch}, payload){
+        httpService.getDocument(payload.str).then(resp =>{
+            if(payload.type == 'preview'){
+                commit('setDocumentData',  window.URL.createObjectURL(resp.data))
+            }else{
+                    const url = window.URL.createObjectURL(resp.data);
+                    const link = document.createElement('a');
+                    link.setAttribute('href', url);
+                        link.setAttribute('download', payload.docType);
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  })
     }
 };
 
@@ -152,6 +174,9 @@ const mutations = {
     setIsResetLoader(state, payload) {
         state.isResetLoader = payload
     },
+    setDocumentData(state, payload){
+        state.documentData = payload
+    }
 };
 
 const getters = {
@@ -161,7 +186,8 @@ const getters = {
     getIsLoader: state => state.isLoader,
     getIsApproveLoader: state => state.isApproveLoader,
     getIsRejectLoader: state => state.isRejectLoader,
-    getIsResetLoader: state => state.isResetLoader
+    getIsResetLoader: state => state.isResetLoader,
+    getDocumentData: state => state.documentData
 };
 
 const approval = {

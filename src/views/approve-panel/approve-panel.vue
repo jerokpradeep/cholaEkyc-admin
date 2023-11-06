@@ -109,7 +109,7 @@
                 </button>
             </div>
         </div>
-        <rejectDialog v-if="isRejectDialog && currentTab != 6" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
+        <rejectDialog v-if="isRejectDialog && currentTab != 6 && currentTab != 7" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
 </template>
 
 <script>
