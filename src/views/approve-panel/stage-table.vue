@@ -20,7 +20,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['pan status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['pan status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['pan status']) }}
@@ -39,7 +39,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['profile status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['profile status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['profile status']) }}
@@ -58,7 +58,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['address status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['address status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['address status']) }}
@@ -77,7 +77,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['bank status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['bank status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['bank status']) }}
@@ -96,7 +96,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['segment status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['segment status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['segment status']) }}
@@ -115,7 +115,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['IPV status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['IPV status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['IPV status']) }}
@@ -142,7 +142,7 @@
                                         <span class="flex gap-2">
                                             <div>
                                                 <div v-html="tickSvg" v-if="checkStatus(i.status) == 'Approved'"></div>
-                                                <div v-html="cancelSvg" v-else></div>
+                                                <div v-html="cancelSvg" v-if="checkStatus(i.status) == 'Rejected'"></div>
                                             </div>
                                             {{ checkStatus(i.status) }}
                                         </span> 
@@ -166,7 +166,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['document status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['document status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['document status']) }}
@@ -185,7 +185,7 @@
                         <div class="flex gap-2 items-center">
                             <div>
                                 <div v-html="tickSvg" v-if="checkStatus(getStageData['Esign status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-else></div>
+                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['Esign status']) == 'Rejected'"></div>
                             </div>
                             <div>
                                 {{ checkStatus(getStageData['Esign status']) }}

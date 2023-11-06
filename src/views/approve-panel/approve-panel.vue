@@ -36,7 +36,7 @@
                     Gender
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.opportunity_data?.fsl_gender }}
+                    {{ getCustomerData?.profile_data?.gender }}
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-12">
         <div class="col-span-6">
-          <div class="grid max-w-2xl grid-cols-1 gap-x-6 sm:grid-cols-6 md:col-span-2">
+          <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6 md:col-span-2">
             <div class="sm:col-span-3">
               <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Capture Date & Time</label>
               <div class="mt-2">
@@ -23,6 +23,10 @@
               </div>
             </div>
 
+            <div class="sm:col-span-3 flex items-end">
+              <button type="button" class="rounded-md bg-white border px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline">MAP View</button>
+            </div>
+
           </div>
 
         </div>
@@ -34,9 +38,9 @@
           </div>
         </div>
 
-        <div class="sm:col-span-3">
+        <!-- <div class="sm:col-span-3">
           <button type="button" class="rounded-md bg-white border px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline">MAP View</button>
-        </div>
+        </div> -->
     </div>
 
     <!-- <div class="flex gap-4 my-4 justify-end">
@@ -49,9 +53,9 @@
 export default {
     data() {
         return {
-            capturedDate: '2023-10-09 13:51:34.216000',
-            latitude: '12.9634631',
-            longitude: '80.1871322',
+            capturedDate: '',
+            latitude: '',
+            longitude: '',
         }
     },
 }

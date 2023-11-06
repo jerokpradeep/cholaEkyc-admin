@@ -61,10 +61,20 @@ export default {
         ...mapGetters('approval', ['getCustomerData'])
     },
     mounted() {
-      if(this.getCustomerData && this.getCustomerData?.address_data) {
-        this.getCustomerData.address_line1  ?  this.address=  this.getCustomerData.address_line1 : ''
+      
+
+      if(this.getCustomerData && this.getCustomerData.address_data?.fsl_is_kra == 1) {
+        this.getCustomerData.address_data?.fsl_kra_address_1  ?  this.address =  this.getCustomerData.address_data?.fsl_kra_address_1 + this.getCustomerData.address_data?.fsl_kra_address_2 : ''
         this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
-        this.getCustomerData  ? this.source =  this.getCustomerData : ''
+        this.source =  'KRA'
+        this.getCustomerData.address_data?.fsl_kra_address_proof  ? this.kraAddressProof = this.getCustomerData.address_data?.fsl_kra_address_proof : ''
+        this.getCustomerData.address_data?.fsl_kra_proof_idnumber  ? this.kraAddressProofId = this.getCustomerData.address_data?.fsl_kra_proof_idnumber : ''
+      }
+
+      if(this.getCustomerData && this.getCustomerData.address_data?.fsl_is_digi == 1) {
+        this.getCustomerData.address_data?.address_line1  ?  this.address=  this.getCustomerData.address_data?.address_line1 : ''
+        this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
+        this.source =  this.getCustomerData.address_data?.fsl_is_kra == 1 ? 'KRA' : 'DIGIO'
         this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
         this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
       }

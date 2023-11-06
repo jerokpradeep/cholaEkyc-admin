@@ -140,26 +140,24 @@ export default {
         ...mapGetters('approval', ['getCustomerData'])
     },
     mounted(){
-      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_equity_cash == 1){
+      if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.fsl_equity_cash && this.getCustomerData.opportunity_data.fsl_equity_cash == 1){
         this.tableData[0].value  = this.tableData[1].value = "Yes"
       }
-      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_equity_derivative == 1){
+      if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.fsl_equity_derivative && this.getCustomerData.opportunity_data.fsl_equity_derivative == 1){
          this.tableData[2].value = "Yes"
       }
-      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_slb == 1){
+      if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.fsl_slb && this.getCustomerData.opportunity_data.fsl_slb == 1){
         this.tableData[5].value = this.tableData[6].value = "Yes"
       }
-      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_currency_derivatives == 1){
+      if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.fsl_currency_derivatives && this.getCustomerData.opportunity_data.fsl_currency_derivatives == 1){
          this.tableData[7].value = "Yes"
       }
-      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_mutual_funds == 1){
+      if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.fsl_mutual_funds && this.getCustomerData.opportunity_data.fsl_mutual_funds == 1){
          this.tableData[9].value = "Yes"
       }
-      if(this.getCustomerData && this.getCustomerData.fsl_equity_cash && this.getCustomerData.fsl_consent == 1){
+      if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.fsl_consent && this.getCustomerData.opportunity_data.fsl_consent == 1){
          this.tableData[10].value = "Yes"
       }
-      
-      
     }
 }
 </script>
