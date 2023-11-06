@@ -3,6 +3,21 @@
   <router-view></router-view></div>
 </template>
 
+<script>
+function  formatDate(date , type){
+        let format = ''
+        if(date){
+          if(type == 'D&T'){
+            format = `${[new Date(date).getDate() < 10 ? `0${new Date(date).getDate()}` : new Date(date).getDate() , new Date(date).getMonth() < 10 ? `0${new Date(date).getMonth()}` : new Date(date).getMonth(), new Date(date).getFullYear()].join('-')} ${[new Date(date).getHours() < 10 ? `0${new Date(date).getHours()}` : new Date(date).getHours() , new Date(date).getMinutes() < 10 ? `0${new Date(date).getMinutes()}` : new Date(date).getMinutes() , new Date(date).getSeconds() < 10 ? `0${new Date(date).getSeconds()}` : new Date(date).getSeconds()].join(':')}`
+          }
+          if(type == 'D'){
+            format = [new Date(date).getDate() < 10 ? `0${new Date(date).getDate()}` : new Date(date).getDate() , new Date(date).getMonth() < 10 ? `0${new Date(date).getMonth()}` : new Date(date).getMonth(), new Date(date).getFullYear()].join('-')
+          }
+        }
+        return format
+      }
+window.formatDate = formatDate
+</script>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,300");
 
