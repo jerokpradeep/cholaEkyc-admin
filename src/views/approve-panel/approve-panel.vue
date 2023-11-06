@@ -1,6 +1,6 @@
 <template>
         <div>
-            <breadcrumbKyc :cutomerName="getCustomerData?.fsl_user_name" />
+            <breadcrumbKyc />
         </div>
 
         <div class="bg-white py-6 px-8 my-2 rounded-lg flex flex-wrap gap-4 justify-between mx-4">
@@ -9,7 +9,7 @@
                     Name
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.fsl_user_name }}
+                    {{ getCustomerData?.opportunity_data?.fsl_user_name }}
                 </div>
             </div>
 
@@ -18,7 +18,7 @@
                     Status
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.status }}
+                    {{ getCustomerData?.opportunity_data?.status }}
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
                     DOB
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.fsl_dob }}
+                    {{ getCustomerData?.opportunity_data?.fsl_dob }}
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                     Gender
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.fsl_gender }}
+                    {{ getCustomerData?.opportunity_data?.fsl_gender }}
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
                     Mobile
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.fsl_mobile_num }}
+                    {{ getCustomerData?.opportunity_data?.fsl_mobile_num }}
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
                     PAN
                 </div>
                 <div class="text-sm">
-                    {{ getCustomerData?.fsl_pan_no }}
+                    {{ getCustomerData?.opportunity_data?.fsl_pan_no }}
                 </div>
             </div>
         </div>
@@ -137,10 +137,6 @@ export default {
 
     computed: {
         ...mapGetters('approval', ['getCustomerData','getStageData'])
-    },
-
-    props: {
-        cutomerName: {type:String}
     },
 
     methods: {

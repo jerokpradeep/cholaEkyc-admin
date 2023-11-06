@@ -39,7 +39,7 @@ const actions = {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => { 
             commit('errorLog/setCounter', 0, { root: true })
-            dispatch('getStageDetails', state.customerData.name)
+            dispatch('getStageDetails', state.customerData?.opportunity_data?.name)
          })
     },
 
@@ -51,8 +51,8 @@ const actions = {
             userId : rootGetters['login/getUserData']['user'],
         }
         await httpService.getCustomerData(json).then(resp => {
-            if(resp.status == 200 && resp.data?.data) {
-                commit('setCustomerData', resp.data?.data)
+            if(resp.status == 200 && resp.data?.message) {
+                commit('setCustomerData', resp.data?.message)
             } else {
                 commit('setCustomerData', [])  
             }
@@ -89,7 +89,7 @@ const actions = {
     },
 
     formatJson({state,commit, dispatch, rootGetters}, payload){
-        let str = `userId=${rootGetters['login/getUserData']['user']}&id=${state.customerData.name}&status=${payload.status}&document_type=${getDocmentType(payload.tab)}&remarks=${payload.remarks}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`
+        let str = `userId=${rootGetters['login/getUserData']['user']}&id=${state.customerData?.opportunity_data?.name}&status=${payload.status}&document_type=${getDocmentType(payload.tab)}&remarks=${payload.remarks}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`
         if(payload.tab == 7 || payload.tab == 8 || payload.tab == 9){
             str += `&attachmentType=${payload.tab == 7 ? 'Document' : payload.tab == 8 ? 'IPV' : 'ESIGN_ DOCUMENT'}`
         }

@@ -17,7 +17,15 @@
                         PAN
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['pan status']) ? getStageData['pan status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['pan status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['pan status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -28,7 +36,15 @@
                         Profile
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['profile status']) ? getStageData['profile status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['profile status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['profile status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -39,7 +55,15 @@
                         Address
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['address status']) ? getStageData['address status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['address status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['address status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -50,7 +74,15 @@
                         Bank
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['bank status']) ? getStageData['bank status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['bank status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['bank status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -61,7 +93,15 @@
                         Segments
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['segment status']) ? getStageData['segment status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['segment status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['segment status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -72,7 +112,15 @@
                         IPV
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['IPV status']) ? getStageData['IPV status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['IPV status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['IPV status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -85,7 +133,21 @@
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
                         <div v-if="getStageData?.nominee?.length">
                             <div v-for="(i, id) in getStageData?.nominee" :key="id">
-                                 {{id + 1}}. {{ checkValid(i.status) ? i.status : 'Open' }}
+                                <div class="flex gap-2 items-center">
+                                    
+                                    <div class="flex gap-2 items-center">
+                                        <span>
+                                            Nominee {{id + 1}} :
+                                        </span>
+                                        <span class="flex gap-2">
+                                            <div>
+                                                <div v-html="tickSvg" v-if="checkStatus(i.status) == 'Approved'"></div>
+                                                <div v-html="cancelSvg" v-else></div>
+                                            </div>
+                                            {{ checkStatus(i.status) }}
+                                        </span> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div v-else>
@@ -101,7 +163,15 @@
                         Documents
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['document status']) ? getStageData['document status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['document status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['document status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="border-b cursor-pointer hover:bg-gray-50">
@@ -112,7 +182,15 @@
                         E-Sign Doc
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ checkValid(getStageData['Esign status']) ? getStageData['Esign status'] : 'Open' }}
+                        <div class="flex gap-2 items-center">
+                            <div>
+                                <div v-html="tickSvg" v-if="checkStatus(getStageData['Esign status']) == 'Approved'"></div>
+                                <div v-html="cancelSvg" v-else></div>
+                            </div>
+                            <div>
+                                {{ checkStatus(getStageData['Esign status']) }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -122,6 +200,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+const tickSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-600">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`
+const cancelSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`
 export default {
     data() {
         return {
@@ -187,15 +273,16 @@ export default {
                     status: 'Updated'
                 }
             ],
+            tickSvg, cancelSvg
         }
     },
     computed: {
         ...mapGetters('approval', ['getStageData'])
     },
     methods: {
-        checkValid(data) {
-            if(data)
-            return data.trim() != '' && data
+        checkStatus(data) {
+            let d = data?.trim()
+            return d ? d : 'Open'
         }
     },
     mounted() {

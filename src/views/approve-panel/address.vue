@@ -61,12 +61,12 @@ export default {
         ...mapGetters('approval', ['getCustomerData'])
     },
     mounted() {
-      if(this.getCustomerData) {
-        this.getCustomerData.fsl_bank_address  ?  this.address=  this.getCustomerData.fsl_bank_address : ''
+      if(this.getCustomerData && this.getCustomerData?.address_data) {
+        this.getCustomerData.address_line1  ?  this.address=  this.getCustomerData.address_line1 : ''
         this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
-        // this.getCustomerData  ? this.source =  this.getCustomerData : ''
-        // this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
-        // this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
+        this.getCustomerData  ? this.source =  this.getCustomerData : ''
+        this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
+        this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
       }
     }
 }

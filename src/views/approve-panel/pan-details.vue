@@ -76,12 +76,12 @@ export default {
         ...mapGetters('approval', ['getCustomerData']),
     },
     mounted(){
-      if(this.getCustomerData){
-        this.getCustomerData.fsl_pan_no  ? this.panNumber = this.getCustomerData.fsl_pan_no : ''
-        this.getCustomerData.fsl_user_name  ? this.nameAsPan = this.getCustomerData.fsl_user_name : ''
-        this.getCustomerData.fsl_user_name  ? this.nameAsAadhar = this.getCustomerData.fsl_user_name : ''
-        this.getCustomerData.fsl_pan_status  ? this.panStatusCode = this.getCustomerData.fsl_pan_status : ''
-        this.getCustomerData.fsl_kra_response_date  ? this.kraRespDate = this.getCustomerData.fsl_kra_response_date : ''
+      if(this.getCustomerData && this.getCustomerData?.opportunity_data){
+        this.getCustomerData.opportunity_data?.fsl_pan_no  ? this.panNumber = this.getCustomerData.opportunity_data?.fsl_pan_no : ''
+        this.getCustomerData.opportunity_data?.fsl_user_name  ? this.nameAsPan = this.getCustomerData.opportunity_data?.fsl_user_name : ''
+        this.getCustomerData.opportunity_data?.fsl_user_name  ? this.nameAsAadhar = this.getCustomerData.opportunity_data?.fsl_user_name : ''
+        this.getCustomerData.opportunity_data?.fsl_pan_status_code  ? this.panStatusCode = this.getCustomerData.opportunity_data?.fsl_pan_status_code : ''
+        this.getCustomerData.opportunity_data?.fsl_kra_response_date  ? this.kraRespDate = this.getCustomerData.opportunity_data?.fsl_kra_response_date : ''
       }
     }
 }
