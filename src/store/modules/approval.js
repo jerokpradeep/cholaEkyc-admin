@@ -3,11 +3,16 @@ const state = {
     approvalList: [],
     customerData: [],
     stageData: [],
-    isAssign: false
+    isAssign: false,
+    isLoader: false,
+    isApproveLoader: false,
+    isRejectLoader: false,
+    isResetLoader: false
 }
 
 const actions = {
     async getApprovalList({ commit, dispatch, rootGetters }) {
+        commit('setIsLoader', true)
         let json = {
             token : rootGetters['login/getUserData']['tempToken'],
             sessId : rootGetters['login/getUserData']['sid'],
@@ -21,10 +26,22 @@ const actions = {
             }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
-        }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
+        }).finally(() => { 
+            commit('setIsLoader', false)
+            commit('errorLog/setCounter', 0, { root: true })
+         })
     },
 
     async updateDocStatus({ state, commit, dispatch }, payload) {
+        let status = payload?.split('&')[2]
+        status = status?.split('=')[1]
+        if(status == 'Approved') {
+            commit('setIsApproveLoader', true)
+        } else if(status == 'Rejected') {
+            commit('setIsRejectLoader', true)
+        } else {
+            commit('setIsResetLoader', true)
+        }
         await httpService.updateDocStatus(payload).then(resp => {
             if(resp.status == 200) {
                 if(resp.data.message.success_key == 0 && resp.data.message.message)   {
@@ -39,6 +56,13 @@ const actions = {
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => { 
+            if(status == 'Approved') {
+                commit('setIsApproveLoader', false)
+            } else if(status == 'Rejected') {
+                commit('setIsRejectLoader', false)
+            } else {
+                commit('setIsResetLoader', false)
+            }
             commit('errorLog/setCounter', 0, { root: true })
             dispatch('getStageDetails', state.customerData?.opportunity_data?.name)
          })
@@ -89,7 +113,7 @@ const actions = {
         }).finally(() => {  })
     },
 
-    formatJson({state,commit, dispatch, rootGetters}, payload){
+    async formatJson({state,commit, dispatch, rootGetters}, payload){
         let str = `userId=${rootGetters['login/getUserData']['user']}&id=${state.customerData?.opportunity_data?.name}&status=${payload.status}&document_type=${getDocmentType(payload.tab)}&remarks=${payload.remarks}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`
         if(payload.tab == 7 || payload.tab == 8 || payload.tab == 9){
             str += `&attachmentType=${payload.tab == 7 ? 'Document' : payload.tab == 8 ? 'IPV' : 'ESIGN_ DOCUMENT'}`
@@ -97,7 +121,7 @@ const actions = {
         if(payload.tab == 6){
             str +=`&nominee_no=${payload.nomineeId}`
         }
-        dispatch('updateDocStatus', str)
+        await dispatch('updateDocStatus', str)
     }
 };
 
@@ -115,13 +139,29 @@ const mutations = {
     },
     setIsAssign(state, payload){
         state.isAssign = payload
-    }
+    },
+    setIsLoader(state, payload) {
+        state.isLoader = payload
+    },
+    setIsApproveLoader(state, payload) {
+        state.isApproveLoader = payload
+    },
+    setIsRejectLoader(state, payload) {
+        state.isRejectLoader = payload
+    },
+    setIsResetLoader(state, payload) {
+        state.isResetLoader = payload
+    },
 };
 
 const getters = {
     getApprovalList: state => state.approvalList,
     getCustomerData: state => state.customerData,
-    getStageData: state => state.stageData
+    getStageData: state => state.stageData,
+    getIsLoader: state => state.isLoader,
+    getIsApproveLoader: state => state.isApproveLoader,
+    getIsRejectLoader: state => state.isRejectLoader,
+    getIsResetLoader: state => state.isResetLoader
 };
 
 const approval = {

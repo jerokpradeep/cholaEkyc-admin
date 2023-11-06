@@ -24,7 +24,7 @@
             </div>
 
             <div class="sm:col-span-3 flex items-end">
-              <button type="button" class="rounded-md bg-white border px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline">MAP View</button>
+              <button type="button" class="rounded-md bg-white border px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline" @click="openMap()">MAP View</button>
             </div>
 
           </div>
@@ -33,8 +33,8 @@
         
         <div class="col-span-6">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg my-4">
-            <img class="max-w-[50%] h-auto" :src="getDocumentSource('Photo')" alt="panImage">
+          <div class="rounded-lg my-4" id="map">
+            <img class="max-w-[50%] h-auto" :src="getDocumentSource('IPV')" alt="panImage">
           </div>
         </div>
 
@@ -65,7 +65,24 @@ export default {
     methods: {
       getDocumentSource(docType) {
         return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}`
+      },
+      openMap() {
+          // var map = new google.maps.Map(document.getElementById('map'), {
+          //    center: {lat: this.latitude, lng: this.longitude},
+          //    zoom: 8
+          //  });
+          if(this.latitude && this.longitude) {
+            window.open(`https://www.google.com/maps/?q=${this.latitude},${this.longitude}`, "_target")
+          }
       }
+    },
+    mounted() {
+      if(this.getCustomerData && this.getCustomerData.document_data) {
+        this.capturedDate =  window.formatDate(this.getCustomerData?.document_data?.creation,'D&T')
+        this.latitude =  this.getCustomerData.document_data?.latitude
+        this.longitude =  this.getCustomerData.document_data?.longitude
+        
+      } 
     },
 }
 </script>

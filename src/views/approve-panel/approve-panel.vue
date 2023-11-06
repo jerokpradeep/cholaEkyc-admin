@@ -63,7 +63,7 @@
             <div class="my-4">
               <div class="w-full mb-2 secondary-color dark:text-[#94A3B8] font-medium text-sm">Progress ({{ progress() }}%)</div> 
               <div class="flex items-center">
-                <div class="progress-bar bg-[#f3f3f3] dark:bg-gray-600">
+                <div class="progress-bar bg-[#d9d7d7] dark:bg-gray-600">
                 <div class="progress" :style="{width: progress() + '%'}"></div>
               </div>
               </div>
@@ -82,6 +82,8 @@
             <nominee_details v-if="currentTab == 6"/>
             <document_details v-if="currentTab == 7"/>
             <ipv_details v-if="currentTab == 8"/>
+            <esign_details v-if="currentTab == 9"/>
+            <pushto_bo v-if="currentTab == 10"/>
         </div>
 
         <div class="flex gap-4 my-4 justify-between absolute right-4 bottom-2 " v-if="currentTab != 0 && currentTab != 7 && currentTab != 6 && currentTab != 10">
@@ -91,12 +93,20 @@
                 {{ getStatusForPage(getStageData) }}
             </div>
             <div class="flex gap-1 justify-center items-center min-w-[120px] ml-2  py-2 rounded-lg text-blue-700 font-bold border border-blue-700 cursor-pointer" v-if="getStatusForPage(getStageData) && (getStatusForPage(getStageData) == 'Approved' || getStatusForPage(getStageData) == 'Rejected' || getStatusForPage(getStageData) == 'Reset')" @click="approveOrRejectDoc('Reset')">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white-500"> <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path> </svg>
-                {{ 'Reset'  }}
+                <span class="flex gap-1 items-center" v-if="!getIsResetLoader">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white-500"> <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path> </svg>
+                    {{ 'Reset'  }}
+                </span>
+                <btnLoader v-else/>
             </div>
             <div class="flex gap-4" v-else>
-                <button type="button" class="rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">Approve</button>
-                <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">Reject</button>
+                <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">
+                    <span v-if="!getIsApproveLoader">Approve</span>
+                    <btnLoader v-else />
+                </button>
+                <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">
+                    Reject
+                </button>
             </div>
         </div>
         <rejectDialog v-if="isRejectDialog && currentTab != 6" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
@@ -115,6 +125,8 @@ import document_details from "./document-details.vue"
 import ipv_details from "./ipv-details.vue"
 import user_details from "./details.vue"
 import rejectDialog from '../rejectDialog.vue';
+import esign_details from "./esign-details.vue"
+import pushto_bo from "./pushto-BO.vue"
 import { mapGetters } from 'vuex';
 
 const tickSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white font-bold">
@@ -126,7 +138,7 @@ const cancelSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
 </svg>
 `
 export default {
-    components: { breadcrumbKyc, tabs, user_details, pan_details, address_details, profile_details, bank_details, segment_details, nominee_details, document_details, ipv_details, rejectDialog },
+    components: { breadcrumbKyc, tabs, user_details, pan_details, address_details, profile_details, bank_details, segment_details, nominee_details, document_details, ipv_details, rejectDialog, esign_details, pushto_bo },
     
     data() {
         return {
@@ -152,7 +164,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters('approval', ['getCustomerData','getStageData'])
+        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader'])
     },
 
     methods: {
@@ -163,8 +175,9 @@ export default {
             this.remarks = ''
         },
 
-        approveOrRejectDoc(status) {
-            this.$store.dispatch('approval/formatJson', {tab: this.currentTab , status: status , remarks: status == 'Rejected' ? this.remarks : ''})
+        async approveOrRejectDoc(status) {
+            await this.$store.dispatch('approval/formatJson', {tab: this.currentTab , status: status , remarks: status == 'Rejected' ? this.remarks : ''})
+            this.remarks = ''
         },
 
         getDocmentType() {
@@ -246,12 +259,12 @@ export default {
             }
             return attachType;
         },
-        getRemarks(data){
+        async getRemarks(data){
             this.remarks = data.remarks
-            this.isRejectDialog = data.isOpen
             if(this.remarks){
-                this.approveOrRejectDoc('Rejected')
+                await this.approveOrRejectDoc('Rejected')
             }
+            this.isRejectDialog = data.isOpen
         },
         getStatusForPage(data) {
             let status = ''
@@ -307,7 +320,7 @@ export default {
                 for (const property in data) {
                     statusArray.forEach((status)=> {
                         if(property == status && data[property] == 'Approved') {
-                            percentage += 10
+                            percentage += 11.10
                         }
                     })
                 }
@@ -317,9 +330,9 @@ export default {
                     })
                 }
                 if(isNomineeApproved) {
-                    percentage += 10
+                    percentage += 11.10
                 }
-                return percentage
+                return Math.round(percentage)
             } else {
                 return 0
             }
@@ -329,7 +342,6 @@ export default {
         this.currentTab = this.$store.state.queries['approvepanel'].query.tab
         this.$store.commit('setActiveTab', this.currentTab)
     }
-    
 }
 </script>
 

@@ -18,8 +18,9 @@
                   </DialogTitle>
   
                   <div class="mt-8 flex justify-end gap-2">
-                    <button type="button" class="themeBtn" id="logout_btn" @click="sentRemarks('call')">
-                      Confirm
+                    <button type="button" class="themeBtn flex items-center justify-center min-w-[86px]" id="logout_btn" @click="sentRemarks('call')">
+                      <span v-if="!getIsRejectLoader">Confirm</span>
+                      <btnLoader v-else/>
                     </button>
                     <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="sentRemarks('close')" >
                       Cancel
@@ -35,6 +36,7 @@
 
 <script>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { mapGetters } from 'vuex'
 export default {
   emits:['send-remarks'],
   name: 'reject-dialog',
@@ -52,6 +54,9 @@ export default {
     },
 
   },
+  computed: {
+        ...mapGetters('approval', ['getIsRejectLoader'])
+    },
   methods:{
     sentRemarks(key){
       key == 'close' ? this.remarks = '' : ''

@@ -43,7 +43,7 @@
           </div>
       </div>
   </div>
-  <div class="my-4" v-if="currentTab == 1">
+  <div class="my-4" v-if="currentTab == 1 && !getIsLoader">
     <table class="w-full rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
@@ -188,7 +188,7 @@ export default {
       }
   },
   computed: {
-        ...mapGetters('approval', ['getApprovalList']),
+        ...mapGetters('approval', ['getApprovalList', 'getIsLoader']),
         ...mapState('approval', ['isAssign'])
     },
   methods: {

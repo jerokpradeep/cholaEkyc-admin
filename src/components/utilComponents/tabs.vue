@@ -1,5 +1,5 @@
 <template>
-  <div class="" :class="{ 'secondary-violet-bg rounded-t': isBgBlue }">
+  <div class="flex gap-2 items-center" :class="{ 'secondary-violet-bg rounded-t': isBgBlue }">
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab">
       <li class="mr-2" role="presentation" v-for="(b, id) in getTabs()" :key="id" @click="changeActive(b.id)"
         :id="`${$route.name}_${id}_b.name`">
@@ -11,6 +11,7 @@
         </button>
       </li>
     </ul>
+    <spinner v-if="getIsLoader"/>
   </div>
 </template>
 <script>
@@ -43,6 +44,7 @@ export default {
       "getOpportunityTabs"
     ]),
     ...mapGetters(["getWindowWidth"]),
+    ...mapGetters('approval', ['getIsLoader'])
   },
 };
 </script>
