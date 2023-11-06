@@ -59,8 +59,8 @@ export default {
         return {
             mobileNo: '',
             emailId: '',
-            startDate: '09-10-2023 13:05:58',
-            updatedOn: '09-10-2023 13:59:59',
+            startDate: '',
+            updatedOn: '',
             modeOfApplication: 'DIRECT',
             branch: 'NotMatch',
             tableHeads: [
@@ -133,8 +133,8 @@ export default {
     mounted() {
         this.mobileNo = this.cutomerData?.fsl_mobile_num
         this.emailId = this.cutomerData?.fsl_email_id
-        this.startDate = this.cutomerData?.creation
-        this.updatedOn = this.cutomerData?.modified
+        this.startDate = window.formatDate(this.cutomerData?.creation,'D&T')
+        this.updatedOn = window.formatDate(this.cutomerData?.modified,'D&T')
         this.modeOfApplication = ''
         this.branch = this.cutomerData?.branch
     },
