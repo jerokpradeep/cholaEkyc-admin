@@ -34,7 +34,7 @@
         <div class="col-span-6">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="rounded-lg my-4">
-            <img class="max-w-[50%] h-auto" :src="getDocumentSource('Photo')" alt="panImage">
+            <img class="max-w-[50%] h-auto" :src="getDocumentData" alt="panImage">
           </div>
         </div>
 
@@ -60,12 +60,10 @@ export default {
         }
     },
     computed: {
-      ...mapGetters('approval', ['getCustomerData']),
+      ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
     },
-    methods: {
-      getDocumentSource(docType) {
-        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}`
-      }
-    },
+    mounted(){
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=IPV&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'IPV' })
+    }
 }
 </script>

@@ -99,7 +99,7 @@
                 <button type="button" class="rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">Reject</button>
             </div>
         </div>
-        <rejectDialog v-if="isRejectDialog && currentTab != 6" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
+        <rejectDialog v-if="isRejectDialog && currentTab != 6 && currentTab != 7" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
 </template>
 
 <script>

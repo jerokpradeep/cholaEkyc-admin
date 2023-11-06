@@ -3,7 +3,7 @@ import store from "../store";
 export function getUrl(){
     return {
         ERPBASEURL: isLive ? 'https://erp.cholasecurities.com/' : 'https://erp.cholasecurities.com/',
-        WRAPPERBASEURL: isLive ? 'https://uattrade.cholasecurities.com/uat/ekycAdmin/ekyc' : 'https://uattrade.cholasecurities.com/uat/ekycAdmin/ekyc'
+        WRAPPERBASEURL: isLive ? 'https://uattrade.cholasecurities.com/uat/ekycAdmin/' : 'https://uattrade.cholasecurities.com/uat/ekycAdmin/'
     }
 }
 

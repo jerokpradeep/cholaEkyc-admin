@@ -11,25 +11,22 @@
             <tbody>
                 <tr v-for="(i, id) in tableData" :key="id" class="border-b cursor-pointer hover:bg-gray-50">
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-                        {{ i.sno }}
+                        {{ id + 1 }}
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
                         {{ i.docName }}
                     </td>
-                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        {{ i.type }}
+                    <td>
+                        <a class="underline text-sm text-teal-500" @click="$store.dispatch('approval/formatJson', {tab: 7 , status: 'Approved' , remarks: '' , attachmentType : i.docName})">Approve</a>
                     </td>
                     <td>
-                        <a class="underline text-sm text-teal-500">Approve</a>
-                    </td>
-                    <td>
-                        <a class="underline text-sm text-orange-500">Reject</a>
+                        <a class="underline text-sm text-orange-500" @click="callReject(i.docName)">Reject</a>
                     </td>
                     <td>
                         <a class="underline text-sm text-purple-500" @click="previewDocument(i.docName)">Preview</a>
                     </td>
                     <td>
-                        <a class="underline text-sm text-blue-500" :href="getDocumentSource(i.docName)" download>Download</a>
+                        <a class="underline text-sm text-blue-500"  download @click="getDocumentSource(i.docName, 'download')">Download</a>
                     </td>
                 </tr>
             </tbody>
@@ -37,25 +34,28 @@
 
         <div class="col-span-6 w-[45%]" >  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg my-4" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT'">
-            <img class="max-w-full h-auto" :src="getDocumentSource(this.documentName)" alt="panImage">
+          <div class="rounded-lg my-4" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData">
+            <!-- <iframe :src="getDocumentData" frameborder="1" class="w-full" style="height: 350px !important;"></iframe> -->
+            <img class="max-w-full h-auto" :src="getDocumentData" alt="panImage">
           </div>
           <div v-else>
-            <iframe :src="getDocumentSource(this.documentName)" frameborder="1"></iframe>
+            <iframe :src="getDocumentData" frameborder="1" class="w-full" style="height: 370px !important;"></iframe>
           </div>
         </div>
     </div>
+    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
 </template>
 
 <script>
+
 import { mapGetters } from 'vuex';
+import rejectDialog from '../rejectDialog.vue';
 export default {
     data() {
         return {
             tableHeads: [
                 { name: "S.No", class: "text-center" },
                 { name: "Document Name", class: "text-left" },
-                { name: "Type", class: "text-left" },
                 { name: "Approve", class: "text-left" },
                 { name: "Reject", class: "text-left" },
                 { name: "Preview", class: "text-left" },
@@ -63,49 +63,60 @@ export default {
             ],
             tableData: [
                 {
-                sno: "1",
                 docName: 'PAN',
-                type: 'jpg'
                 },
                 {
-                sno: "2",
                 docName: 'CANCELLED_CHEQUE_OR_STATEMENT',
-                type: 'jpg'
                 },
                 {
-                sno: "3",
                 docName: 'SIGNATURE',
-                type: 'jpg'
                 },
                 {
-                sno: "4",
                 docName: 'IPV',
-                type: 'jpg'
                 },
                 {
-                sno: "5",
                 docName: 'ESIGN_DOCUMENT',
-                type: 'jpg'
                 },
                 {
-                sno: "6",
                 docName: 'PROTECTED_ESIGN_DOCUMENT',
-                type: 'jpg'
                 }
             ],
-            documentName: 'PAN'
+            documentName: 'PAN',
+            isRejectDialog: false,
+            remarks: '',
+            currentDoc: ''
         }
     },
     computed: {
-      ...mapGetters('approval', ['getCustomerData']),
+      ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
+    },
+    components:{
+        rejectDialog
     },
     methods: {
-      getDocumentSource(docType) {
-        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}`
+      getDocumentSource(docType , type) {
+        this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: type , docType : docType })
       },
       previewDocument(docName) {
         this.documentName = docName
-      }
+        this.getDocumentSource(docName, 'preview')
+      },
+      getRemarks(data){
+        this.remarks = data.remarks
+            this.isRejectDialog = data.isOpen
+            if(this.remarks){
+                this.$store.dispatch('approval/formatJson', {tab: 7 , status: 'Rejected' , remarks: this.remarks , attachmentType: this.currentDoc})
+            }
+      },
+      callReject(item){
+        this.currentDoc = item
+        this.remarks = ''
+        this.isRejectDialog = true
+      },
+      
     },
+    mounted(){
+        this.previewDocument(this.documentName)
+    }
 }
 </script>

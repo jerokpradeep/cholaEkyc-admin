@@ -16,8 +16,4 @@ export default {
         document.cookie = cookie;
     },
 
-    // getDocumentSource(docType) {
-    //     return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${store.state.approval.customerData?.opportunity_data?.name}&documentType=${docType}`
-    // }
-
 }
