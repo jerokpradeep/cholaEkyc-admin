@@ -103,10 +103,17 @@
                         <div class="w-full flex justify-end">
                             <div class="flex gap-1 justify-center items-center min-w-[120px]  py-2 rounded-lg text-white font-bold"
                             :class="getStatusForPage(i.nomineeId) == 'Approved' ? 'bg-green-700' : 'bg-red-700'"
-                            v-if="getStatusForPage(i.nomineeId) != '' && getStatusForPage(i.nomineeId) != 'Reset' && getStatusForPage(i.nomineeId)">
+                            v-if="getStatusForPage(i.nomineeId) && (getStatusForPage(i.nomineeId) == 'Approved' || getStatusForPage(i.nomineeId) == 'Rejected')">
                             <div v-html="tickSvg" v-if="getStatusForPage(i.nomineeId) == 'Approved'"></div>
                             <div v-html="cancelSvg" v-else-if="getStatusForPage(i.nomineeId) == 'Rejected'"></div>
                             {{ getStatusForPage(i.nomineeId) }}
+                        </div>
+                        <div class="flex gap-1 justify-center items-center min-w-[120px] ml-2  py-2 rounded-lg text-white font-bold bg-blue-700"
+                        v-if="getStatusForPage(i.nomineeId) && (getStatusForPage(i.nomineeId) == 'Approved' || getStatusForPage(i.nomineeId) == 'Rejected' || getStatusForPage(i.nomineeId) == 'Reset')" @click="callServiceApporve_Reject('Reset')">
+                        <svg xmlns="
+http://www.w3.org/2000/svg"
+fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white-500"> <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path> </svg>
+                            {{ 'Reset'  }}
                         </div>
                         <div class="flex gap-4 my-4 justify-end " v-else>
                             <button type="button"
@@ -201,9 +208,9 @@ export default {
         },
     },
     mounted() {
-        if (this.getCustomerData && this.getCustomerData.fsl_nominee_table) {
+        if (this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.fsl_nominee_table) {
 
-            for (let item of this.getCustomerData.fsl_nominee_table) {
+            for (let item of this.getCustomerData.opportunity_data.fsl_nominee_table) {
 
                 this.nomineeList.push({ name: item.name, dob: item.date_of_birth, emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number })
             }

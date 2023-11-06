@@ -116,19 +116,30 @@ export default {
     },
     mounted() {
       if(this.getCustomerData) {
-        // this.getCustomerData  ?  this.fathersName =  this.getCustomerData : ''
-        // this.getCustomerData  ? this.mothersName = this.getCustomerData : ''
-        this.getCustomerData?.fsl_occu  ? this.occupation =  this.getCustomerData?.fsl_occu : ''
-        // this.getCustomerData  ? this.tradingExp = this.getCustomerData : ''
-        this.getCustomerData?.annual_revenue == 0 || this.getCustomerData?.annual_revenue  ? this.annualIncome = this.getCustomerData.annual_revenue : ''
-        this.getCustomerData?.fsl_net_worth  ? this.netWorth = this.getCustomerData?.fsl_net_worth : ''
+        if(this.getCustomerData.opportunity_data){
+          this.getCustomerData.opportunity_data.fsl_occu  ? this.occupation =  this.getCustomerData.opportunity_data.fsl_occu : ''
+          this.getCustomerData?.opportunity_data?.annual_revenue == 0 || this.getCustomerData?.opportunity_data?.annual_revenue  ? this.annualIncome = this.getCustomerData?.opportunity_data.annual_revenue : ''
+          this.getCustomerData?.opportunity_data?.fsl_net_worth  ? this.netWorth = this.getCustomerData?.opportunity_data?.fsl_net_worth : ''
+          this.getCustomerData?.opportunity_data?.fsl_marital_status  ? this.maritalStatus = this.getCustomerData?.opportunity_data?.fsl_marital_status : ''
+          this.getCustomerData?.opportunity_data?.fsl_political_exposure  ? this.isPoliticalExposedPerson = this.getCustomerData?.opportunity_data?.fsl_political_exposure : ''
+          this.getCustomerData?.opportunity_data?.fsl_fatca  ? this.fatca = this.getCustomerData?.opportunity_data?.fsl_fatca : ''
+        }
+        
+        if(this.getCustomerData.profile_data){
+          this.getCustomerData?.profile_data.father_name  ?  this.fathersName =  this.getCustomerData?.profile_data?.father_name : ''
+        }
+        
+        // this.getCustomerData?.profile_data  ? this.mothersName = this.getCustomerData?.profile_data : ''
+        
+        // this.getCustomerData?.profile_data  ? this.tradingExp = this.getCustomerData?.profile_data : ''
+        
+        
 
-        this.getCustomerData?.fsl_marital_status  ? this.maritalStatus = this.getCustomerData?.fsl_marital_status : ''
-        this.getCustomerData?.fsl_political_exposure  ? this.isPoliticalExposedPerson = this.getCustomerData?.fsl_political_exposure : ''
-        // this.getCustomerData  ? this.taxOutSideIndia = this.getCustomerData : ''
-        // this.getCustomerData  ? this.settlementCycle = this.getCustomerData : ''
-        // this.getCustomerData  ? this.standingInstruction = this.getCustomerData : ''
-        this.getCustomerData?.fsl_fatca  ? this.fatca = this.getCustomerData?.fsl_fatca : ''
+        
+        // this.getCustomerData?.profile_data  ? this.taxOutSideIndia = this.getCustomerData?.profile_data : ''
+        // this.getCustomerData?.profile_data  ? this.settlementCycle = this.getCustomerData?.profile_data : ''
+        // this.getCustomerData?.profile_data  ? this.standingInstruction = this.getCustomerData?.profile_data : ''
+        
         
 
       }
