@@ -203,8 +203,8 @@ export default {
         this.paymentTableData[2].value = this.getCustomerData.trading_scheme.ddpi == 1 ? "Yes" : 'No'
       }
 
-      if(this.getCustomerData && this.getCustomerData.trading_scheme && this.getCustomerData.trading_scheme.hasOwnProperty('scheme_consent')){
-        this.paymentTableData[3].value = this.getCustomerData.trading_scheme.scheme_consent
+      if(this.getCustomerData && this.getCustomerData.trading_scheme && this.getCustomerData.trading_scheme.hasOwnProperty('ddpi')){
+        this.paymentTableData[3].value = "Yes" 
       }
     }
 }

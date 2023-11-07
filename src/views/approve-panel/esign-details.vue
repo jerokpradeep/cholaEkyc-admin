@@ -37,6 +37,7 @@ export default {
         let docType = 'ESIGN_DOCUMENT'
         let type = 'preview'
         this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: type , docType : docType })
+        this.nameAsEsign = this.getCustomerData?.opportunity_data?.fsl_esiged_name
     },
 }
 
