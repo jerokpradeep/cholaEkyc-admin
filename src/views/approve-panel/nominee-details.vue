@@ -156,14 +156,6 @@ import rejectDialog from '../rejectDialog.vue'
 export default {
     data() {
         return {
-            bankName: 'ICICI Bank',
-            branchName: 'CHENNAIDLF IT PARK, TAMIL NADU',
-            ifscCode: 'ICIC0001547',
-            micrCode: '600229061',
-            acHolderName: 'T VINOTHKUMAR',
-            acNo: '154701501195',
-            pennyVerifyStatus: 'Yes',
-            address: 'ICICI BANK LTD, DLF IT SEZ PARK, BLOCK-12, NO. 1/12A SHIVAJI GARDENS, NANDAMBAKKAM, POST MOUNT POONAMALEE ROAD, MANAPAKKAM, CHENNAI, TAMIL NADU - 600089',
             upArrow, downArrow,
             isOpen: false,
             nomineeList: [],
@@ -211,7 +203,9 @@ export default {
 
             for (let item of this.getCustomerData.opportunity_data.fsl_nominee_table) {
 
-                this.nomineeList.push({ name: item.name, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number })
+                this.nomineeList.push({ name: item.name, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number,
+                address: `${item?.address} ${item?.address_2}`
+            })
             }
             if (this.nomineeList.length > 0) {
                 this.expandNominee(0)
