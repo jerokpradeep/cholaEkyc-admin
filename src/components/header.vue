@@ -81,6 +81,7 @@
             <img :src="clientLogo" class="h-6 " alt="logo" />
         </div>
         <div>
+          <div class="mb-1 text-sm">{{ getUserName }}</div>
           <p class="text-blue-500 cursor-pointer text-xs" @click="$store.commit('setLogout',  true)">Logout</p>
         </div>
       </div>
@@ -90,11 +91,15 @@
 <script>
 import clientLogo from "../assets/image/chola_head.png";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { mapGetters } from "vuex"
 export default {
   data() {
     return {
       clientLogo,
     };
+  },
+  computed: {
+    ...mapGetters('login', ['getUserName'])
   },
   components: { Menu, MenuButton, MenuItems, MenuItem },
 };

@@ -40,5 +40,9 @@ router.beforeEach(async (to, from, next) => {
   if(stageData) {
     store.commit('approval/setStageData' , stageData)
   }
+  let userName = JSON.parse(localStorage.getItem('userName'))
+  if(userName) {
+    store.commit('login/setUserName' , userName)
+  }
   next()
 })

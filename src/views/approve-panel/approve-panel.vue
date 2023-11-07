@@ -87,12 +87,12 @@
         </div>
 
         <div class="flex gap-4 my-4 justify-between absolute right-4 bottom-2 " v-if="currentTab != 0 && currentTab != 7 && currentTab != 6 && currentTab != 10">
-            <div class="flex gap-1 justify-center items-center min-w-[120px] py-2 rounded-lg text-white font-bold" :class="getStatusForPage(getStageData) == 'Approved' ? 'bg-green-700' : 'bg-red-700'" v-if="getStatusForPage(getStageData) != '' && getStatusForPage(getStageData) != 'Reset' && getStatusForPage(getStageData)">
+            <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] py-2 rounded-lg text-white font-bold" :class="getStatusForPage(getStageData) == 'Approved' ? 'bg-green-700' : 'bg-red-700'" v-if="getStatusForPage(getStageData) != '' && getStatusForPage(getStageData) != 'Reset' && getStatusForPage(getStageData)">
                 <div v-html="tickSvg" v-if="getStatusForPage(getStageData) == 'Approved'"></div>
                 <div v-html="cancelSvg" v-else-if="getStatusForPage(getStageData) == 'Rejected'"></div>
                 {{ getStatusForPage(getStageData) }}
             </div>
-            <div class="flex gap-1 justify-center items-center min-w-[120px] ml-2  py-2 rounded-lg text-blue-700 font-bold border border-blue-700 cursor-pointer" v-if="getStatusForPage(getStageData) && (getStatusForPage(getStageData) == 'Approved' || getStatusForPage(getStageData) == 'Rejected' || getStatusForPage(getStageData) == 'Reset')" @click="approveOrRejectDoc('Reset')">
+            <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] ml-2 bg-white  py-2 rounded-lg text-blue-700 font-bold border border-blue-700 cursor-pointer" v-if="getStatusForPage(getStageData) && (getStatusForPage(getStageData) == 'Approved' || getStatusForPage(getStageData) == 'Rejected' || getStatusForPage(getStageData) == 'Reset')" @click="approveOrRejectDoc('Reset')">
                 <span class="flex gap-1 items-center" v-if="!getIsResetLoader">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white-500"> <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path> </svg>
                     {{ 'Reset'  }}
@@ -172,6 +172,7 @@ export default {
             this.currentTab = id
             this.$store.commit('setActiveTab', id)
             this.$store.commit('setQuries', {data: {tab: id}, action: 'change'})
+            this.$store.commit('approval/setDocumentData', '')
             this.remarks = ''
         },
 
@@ -259,6 +260,7 @@ export default {
             }
             return attachType;
         },
+
         async getRemarks(data){
             this.remarks = data.remarks
             if(this.remarks){
@@ -266,6 +268,7 @@ export default {
             }
             this.isRejectDialog = data.isOpen
         },
+
         getStatusForPage(data) {
             let status = ''
             switch (this.currentTab) {
@@ -301,11 +304,13 @@ export default {
                     break;
             }
             return status
-    },
+        },
+
         stringTrim(data) {
             if(data)
             return data?.toString().trim()
         },
+
         getFormat(date){
            return window.formatDate(date, 'D')
         },

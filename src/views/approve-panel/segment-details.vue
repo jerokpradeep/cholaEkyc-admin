@@ -190,7 +190,22 @@ export default {
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_consent')){
         this.tableData[10].value = this.getCustomerData.opportunity_data.fsl_consent == 1 ? "Yes" : 'No'
       }
-      
+
+      if(this.getCustomerData && this.getCustomerData.trading_scheme && this.getCustomerData.trading_scheme.hasOwnProperty('trading_scheme')){
+        this.paymentTableData[0].value = this.getCustomerData.trading_scheme.trading_scheme
+      }
+
+      if(this.getCustomerData && this.getCustomerData.trading_scheme && this.getCustomerData.trading_scheme.hasOwnProperty('db_scheme')){
+        this.paymentTableData[1].value = this.getCustomerData.trading_scheme.db_scheme
+      }
+
+      if(this.getCustomerData && this.getCustomerData.trading_scheme && this.getCustomerData.trading_scheme.hasOwnProperty('ddpi')){
+        this.paymentTableData[2].value = this.getCustomerData.trading_scheme.ddpi == 1 ? "Yes" : 'No'
+      }
+
+      if(this.getCustomerData && this.getCustomerData.trading_scheme && this.getCustomerData.trading_scheme.hasOwnProperty('scheme_consent')){
+        this.paymentTableData[3].value = this.getCustomerData.trading_scheme.scheme_consent
+      }
     }
 }
 </script>

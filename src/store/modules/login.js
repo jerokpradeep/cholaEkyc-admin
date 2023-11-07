@@ -2,7 +2,8 @@ import httpService from "../../services/httpservices";
 import common from "../../mixins/common";
 const state = {
     userData: '',
-    isLoading: false
+    isLoading: false,
+    userName: ''
 }
 
 const actions = {
@@ -10,8 +11,9 @@ const actions = {
         commit('setIsLoading' , true)
         httpService.login(payload).then(resp => {
             if(resp.status == 200 && resp.data.message.success_key == 1) {
-                commit('setUserData', resp.data.message.data)
-                dispatch('navigateSteps', resp.data.message.data.Role, {root: true})
+                commit('setUserName', resp.data?.full_name)
+                commit('setUserData', resp.data?.message?.data)
+                dispatch('navigateSteps', resp.data.message?.data?.Role, { root: true })
             } else {
                 commit('setUserData', '')
                 dispatch('errorLog/toaster', {
@@ -41,12 +43,17 @@ const mutations = {
     }, 
     setIsLoading(state, payload) {
         state.isLoading = payload
+    },
+    setUserName(state, payload) {
+        state.userName = payload
+        localStorage.setItem('userName', JSON.stringify(payload))
     }
 };
 
 const getters = {
     getUserData: state => state.userData,
-    getIsLoading: state => state.isLoading
+    getIsLoading: state => state.isLoading,
+    getUserName: state => state.userName
 };
 
 const login = {
