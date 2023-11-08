@@ -16,8 +16,8 @@
   </div>
   <div class="p-4">
     <breadcrumb v-if="getIsStageDetails"/>
-    <Allopportunity v-if="currentTab == 'All Opportunities'" />
-    <myOpportunity v-if="currentTab == 'My Opportunity'"/>
+    <Allopportunity v-if="currentTab == 1" />
+    <myOpportunity v-if="currentTab == 2"/>
   </div>
 </template>
 
@@ -51,11 +51,11 @@ export default {
           route: "/tab2.vue",
         },
       ],
-      currentTab: "All Opportunities",
+      currentTab: 0,
     };
   },
   computed: {
-    ...mapGetters('opportunity', ['getIsStageDetails'])
+    ...mapGetters('opportunity', ['getIsStageDetails', 'getAllOpportunities'])
   },
   methods: {
     changeActive(tab) {
@@ -65,11 +65,16 @@ export default {
       this.currentTab = tab;
     },
     changeTab(id) {
-
-    }
+      this.currentTab = id
+      this.$store.commit('setActiveTab', id)
+      this.$store.commit('setQuries', { data: { tab: id }, action: 'change' })
+      if(this.currentTab == 1) {
+        this.$store.dispatch('opportunity/getOpportunityList')
+      }
+    },
   },
-  created(){
-    // this.$store.dispatch('opportunity/getOpportunityList')
+  mounted() {
+    this.changeTab(0)
   }
 };
 </script>

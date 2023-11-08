@@ -132,7 +132,7 @@ const store = createStore({
     },
     navigateSteps({state, commit}, payload){
       if(payload == 'EKYC Employee'){
-        let approval = state.tempSteps.filter((el)=>el.name == 'Approval')
+        let approval = state.tempSteps.filter((el)=>el.name == 'Approval' || el.name == 'Opportunity')
         approval[0].active = true
         commit('setValidSteps', [...approval])
         router.push(approval[0].route).catch(()=>{})

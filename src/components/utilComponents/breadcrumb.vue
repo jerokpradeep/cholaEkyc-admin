@@ -1,5 +1,5 @@
 <template>
-    <nav class="flex p-5" aria-label="Breadcrumb">
+    <nav class="flex p-3" aria-label="Breadcrumb">
       <ol role="list" class="flex items-center space-x-4">
         <li v-for="(page, id) in pages" :key="page.name" @click="handleClick(page)">
           <div class="flex items-center">

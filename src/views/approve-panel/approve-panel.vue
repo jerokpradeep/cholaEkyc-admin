@@ -3,7 +3,7 @@
             <breadcrumbKyc />
         </div>
 
-        <div class="bg-white py-6 px-8 my-2 rounded-lg flex flex-col flex-wrap gap-4 justify-between mx-4">
+        <div class="bg-white py-4 px-4 my-2 rounded-lg flex flex-col flex-wrap gap-4 justify-between mx-4">
             <div class="flex flex-wrap gap-4 justify-between">
                 <div>
                 <div class="text-xs mb-2 secondaryColor">
