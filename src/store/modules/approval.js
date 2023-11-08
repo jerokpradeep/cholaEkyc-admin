@@ -8,7 +8,8 @@ const state = {
     isApproveLoader: false,
     isRejectLoader: false,
     isResetLoader: false,
-    documentData: ''
+    documentData: '',
+    backOfficeLoader: false
 }
 
 const actions = {
@@ -144,6 +145,22 @@ const actions = {
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => {  })
+    },
+    callBo({state, commit,dispatch, rootGetters}){
+        commit('setBackOfficeLoader', true)
+        httpService.pushToBo(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            console.log(resp , 'sadvdsv dfsbdf');
+            if(resp.status == 200 && resp.data.stat == 0 && resp.data.message == "Failed"){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "danger",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  commit('setBackOfficeLoader', false) })
     }
 };
 
@@ -176,6 +193,9 @@ const mutations = {
     },
     setDocumentData(state, payload){
         state.documentData = payload
+    },
+    setBackOfficeLoader(state, payload){
+        state.backOfficeLoader = payload
     }
 };
 

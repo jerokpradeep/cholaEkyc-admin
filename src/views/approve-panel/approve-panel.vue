@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="my-4">
+            <div>
               <div class="w-full mb-2 secondary-color dark:text-[#94A3B8] font-medium text-sm">Progress ({{ progress() }}%)</div> 
               <div class="flex items-center">
                 <div class="progress-bar bg-[#d9d7d7] dark:bg-gray-600">
@@ -352,10 +352,10 @@ export default {
 
 <style>
 .progress-bar {
-  width: 100%;
-  height: 14px;
-  border-radius: 6px;
-  overflow: hidden;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
 }
 .progress {
   height: 100%;
