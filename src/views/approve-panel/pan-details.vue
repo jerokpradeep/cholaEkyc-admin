@@ -48,7 +48,11 @@
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="rounded-lg my-4">
-            <img class="max-w-[50%] h-auto" :src="getDocumentData" alt="panImage">
+            <!-- <img class="h-full w-full cursor-pointer object-contain" :src="getDocumentData" alt="panImage" @click="goToPreview()"> -->
+            <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
+                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
+                :outputSize="1" alt="Source Image" class="cropper" >
+            </VueCropper>
           </div>
         </div>        
     </div>
@@ -62,7 +66,10 @@
 <script>
 import {mapGetters} from "vuex"
 import commonJs from "../../mixins/common"
+import 'vue-cropper/dist/index.css'
+import { VueCropper }  from "vue-cropper";
 export default {
+  components: { VueCropper },
   mixins: [commonJs],
     data() {
         return {
@@ -76,6 +83,11 @@ export default {
     },
     computed:{
         ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
+    },
+    methods: {
+      goToPreview() {
+        this.$router.push('/preview')
+      }
     },
 
     mounted(){

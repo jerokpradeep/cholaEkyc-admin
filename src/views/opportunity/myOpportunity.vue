@@ -48,13 +48,14 @@
           </tr>
         </tbody>
       </table> -->
-  
+      <div class="flex justify-center items-center min-h-[300px]">
+        Coming Soon
+      </div>
       <StageDetails v-if="getIsStageDetails"/>
     </div>
   </template>
   <script>
   import Progress from "../../assets/image/process.svg";
-  import completed from "../../assets/image/100percent.svg";
   import chevronSvg from "../../assets/image/Chevron.svg"
   import StageDetails from "./stage-details.vue";
   import { mapGetters } from "vuex"
@@ -63,7 +64,6 @@
     data() {
       return {
         Progress,
-        completed,
         chevronSvg,
         tableHeads: [
           { name: "S.No", class: "text-center" },

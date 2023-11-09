@@ -4,7 +4,7 @@
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
           <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class"
-            class="py-3.5 px-3 text-sm font-medium primaryColor whitespace-nowrap">
+            class="py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">
             {{ head.name }}
           </th>
         </tr>
@@ -24,13 +24,13 @@
               {{ i['phase'] }}
             </td>
             <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative items-center justify-center">
-              <div class="flex items-center justify-center">
-                <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="chevronSvg"
-                  alt="star" v-for="nId in 13" :key="nId" />
+              <div class="flex items-center justify-center" v-if="i?.stage">
+                <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="filledSvg" alt="greenstar" v-for="idx in getGreenStarCount(i?.stage)" :key="idx" />
+                <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="chevronSvg" alt="graystar" v-for="idx in getGrayStarCount(i?.stage, i.phase)" :key="idx" />
               </div>
             </td>
             <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-              {{ i?.time ? getHours(getFormat(i?.time)) : getFormat(i?.time) }}
+              {{ i?.time ? getHours(i.time) : i?.time }}
             </td>
             <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
               <button depressed class="tracking-[0.4px] px-3 min-h-[1.625rem] text-xs rounded min-w-[100px] cursor-default" :class="i['current phase'] == 'In-Progress'
@@ -47,16 +47,16 @@
 </template>
 <script>
 import Progress from "../../assets/image/process.svg";
-import completed from "../../assets/image/100percent.svg";
 import chevronSvg from "../../assets/image/Chevron.svg"
+import filledSvg from "../../assets/image/filledSvg.svg"
 import { mapGetters } from "vuex"
 export default {
   components: {  },
   data() {
     return {
       Progress,
-      completed,
       chevronSvg,
+      filledSvg,
       tableHeads: [
         { name: "S.No", class: "text-center" },
         { name: "Customer Name", class: "text-left" },
@@ -77,17 +77,51 @@ export default {
       return window.formatDate(date, 'D&T')
     },
     getHours(dt2) {
-      let date1 = new Date();
-      let date2 = new Date(dt2);
-      var diff =(date1.getTime() - date2.getTime()) / 1000;
-      diff /= (60 * 60);
-      diff = Math.abs(Math.round(diff))
-      var h = Math.floor(diff / 60);
-      var m = diff % 60;
-      h = h < 10 ? '0' + h : h; 
-      m = m < 10 ? '0' + m : m; 
-      return h + ':' + m;
+      let diffTime = Math.abs(new Date().valueOf() - new Date(dt2).valueOf());
+      let days = diffTime / (24*60*60*1000);
+      let hours = (days % 1) * 24;
+      let minutes = (hours % 1) * 60;
+      let secs = (minutes % 1) * 60;
+      [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
+      if(Number(days) != 0) {
+        return `${days}d, ${hours}h : ${minutes}m`
+      } else if(Number(hours) != 0) {
+        return `${hours}h:${minutes}m`
+      } else {
+        return `${minutes}m`
+      }
     },
+
+    getGrayStarCount(stars, name) {
+      if(stars == 13) {
+        return []
+      }
+      let s = Number(stars)
+      let arr = []
+      s = Math.round(s)
+      s = 13 - s
+      if(stars && s) {
+        for (let index = 0; index < s; index++) {
+          arr.push(index)
+        }
+        return arr
+      } else {
+        return 12
+      }
+    },
+
+    getGreenStarCount(stars) {
+      let s = Math.round(Number(stars))
+      let arr = []
+      if(stars && s) {
+        for (let index = 0; index < s; index++) {
+          arr.push(index)
+        }
+        return arr
+      } else {
+        return 13
+      }
+    }
   },
 };
 </script>

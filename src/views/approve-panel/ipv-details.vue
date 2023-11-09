@@ -33,8 +33,12 @@
         
         <div class="col-span-6">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg my-4">
-            <img class="max-w-[50%] h-auto" :src="getDocumentData" alt="panImage">
+          <div class="rounded-lg my-4 h-[320px]">
+            <!-- <img class="h-full w-full cursor-pointer object-contain" :src="getDocumentData" alt="panImage"> -->
+            <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
+                :info="true" :canMove="true" :canScale="true" :autoCrop="false"
+                :outputSize="5" alt="Source Image" class="cropper" >
+            </VueCropper>
           </div>
         </div>
 
@@ -51,7 +55,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import 'vue-cropper/dist/index.css'
+import { VueCropper }  from "vue-cropper";
 export default {
+  components: { VueCropper },
     data() {
         return {
             capturedDate: '',

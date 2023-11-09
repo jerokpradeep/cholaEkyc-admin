@@ -16,6 +16,7 @@
   </div>
   <div class="p-4">
     <breadcrumb v-if="getIsStageDetails"/>
+    <reports v-if="currentTab == 0" />
     <Allopportunity v-if="currentTab == 1" />
     <myOpportunity v-if="currentTab == 2"/>
   </div>
@@ -25,10 +26,11 @@
 import Allopportunity from "./Allopportunity.vue";
 import breadcrumb from "../../components/utilComponents/breadcrumb.vue"
 import myOpportunity from "./myOpportunity.vue";
+import reports from "./reports.vue"
 import { mapGetters } from "vuex"
 import tabs from "../../components/utilComponents/tabs.vue"
 export default {
-  components: { Allopportunity, breadcrumb, myOpportunity, tabs },
+  components: { Allopportunity, breadcrumb, myOpportunity, reports, tabs },
   data() {
     return {
       tabheaders: [

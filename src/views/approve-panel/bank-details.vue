@@ -62,8 +62,11 @@
       </div>
       <div class="col-span-6">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg my-4">
-            <img class="max-w-[50%] h-auto" :src="getDocumentSource('CANCELLED_CHEQUE_OR_STATEMENT')" alt="panImage">
+          <div class="rounded-lg my-4 h-[320px]">
+            <VueCropper v-if="getDocumentSource('CANCELLED_CHEQUE_OR_STATEMENT')" ref="image1" :img="getDocumentSource('CANCELLED_CHEQUE_OR_STATEMENT')" 
+                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
+                :outputSize="1" alt="Source Image" class="cropper" >
+            </VueCropper>
           </div>
         </div>
     </div>
@@ -71,7 +74,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import 'vue-cropper/dist/index.css'
+import { VueCropper }  from "vue-cropper";
 export default {
+  components: { VueCropper },
     data() {
         return {
             bankName: '',

@@ -17,6 +17,14 @@ function  formatDate(date , type){
         return format
       }
 window.formatDate = formatDate
+
+// document.addEventListener('visibilitychange', function (event) {
+//   if (document.hidden) {
+//     document.title = 'Un Active'
+//   } else {
+//     document.title = 'EKYC - Admin'
+//   }
+// });
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,300");
@@ -185,6 +193,11 @@ input[type="text"] {
 }
 .cancelBtn {
   @apply min-h-[32px] px-4 text-sm rounded bg-[#ffffff] border border-[#a2a2a2] text-[#17181A] tracking-[0.2px] outline-none;
+}
+.cropper {
+	height: 50vh !important;
+  width: auto !important;
+	background: transparent !important;
 }
 </style>
 

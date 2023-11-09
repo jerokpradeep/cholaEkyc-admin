@@ -193,6 +193,7 @@ const mutations = {
     },
     setDocumentData(state, payload){
         state.documentData = payload
+        localStorage.setItem('setCurrentImage', JSON.stringify(payload))
     },
     setBackOfficeLoader(state, payload){
         state.backOfficeLoader = payload

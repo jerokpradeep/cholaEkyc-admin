@@ -81,6 +81,12 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- <img src="https://ekyc.cholasecurities.com/uat/assets/login-8bc20a78.png" alt=""> -->
+    <!-- <VueCropper ref="cropper" :img="imageTest" 
+        :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
+         alt="Source Image" class="cropper" :original="true">
+    </VueCropper> -->
   </div>
   <assigneeDialog v-if="isAssign" :assigneeData="currentAssigneeData"/>
   </div>
@@ -90,13 +96,14 @@
 import { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 import Progress from "../assets/image/process.svg";
-import completed from "../assets/image/100percent.svg";
 import chevronSvg from "../assets/image/Chevron.svg"
 import tabs from "../components/utilComponents/tabs.vue"
 import { mapGetters,mapState } from 'vuex';
 import assigneeDialog from './approve-panel/assigneeDialog.vue';
+import 'vue-cropper/dist/index.css'
+import { VueCropper }  from "vue-cropper";
 export default {
-  components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog },
+  components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog, VueCropper },
   data() {
       return {
           fromDate: '',
@@ -182,9 +189,11 @@ export default {
               mobileNo: '8783423442'
             },
           ],
-          Progress, completed, chevronSvg,
+          Progress,
+            chevronSvg,
           currentTab : 0,
-          currentAssigneeData: ''
+          currentAssigneeData: '',
+          imageTest: 'https://ekyc.cholasecurities.com/uat/assets/headTree-a3444e58.svg'
       }
   },
   computed: {

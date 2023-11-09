@@ -32,12 +32,15 @@
             </tbody>
         </table>
 
-        <div class="col-span-6 w-[45%]" >  
+        <div class="col-span-6 w-[45%]">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg my-4" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData">
-            <!-- <iframe :src="getDocumentData" frameborder="1" class="w-full" style="height: 350px !important;"></iframe> -->
-            <img class="max-w-full h-auto" :src="getDocumentData" alt="panImage">
-          </div>
+          <div class="rounded-lg h-[320px]" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData">
+            <!-- <img class="h-full w-full cursor-pointer object-contain" :src="getDocumentData" alt="panImage"> -->
+            <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
+                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
+                :outputSize="1" alt="Source Image" class="cropper" >
+            </VueCropper>
+        </div>
           <div v-else>
             <iframe :src="getDocumentData" frameborder="1" class="w-full" style="height: 370px !important;"></iframe>
           </div>
@@ -50,7 +53,10 @@
 
 import { mapGetters } from 'vuex';
 import rejectDialog from '../rejectDialog.vue';
+import 'vue-cropper/dist/index.css'
+import { VueCropper }  from "vue-cropper";
 export default {
+  components: { VueCropper },
     data() {
         return {
             tableHeads: [
@@ -113,6 +119,14 @@ export default {
         this.remarks = ''
         this.isRejectDialog = true
       },
+      goToPreview(type) {
+        if(type == 'pdf') {
+            this.$router.push('/preview?ispdf=true')
+        } else {
+            this.$router.push('/preview')
+        }
+        
+      }
       
     },
     mounted(){

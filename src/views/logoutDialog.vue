@@ -15,10 +15,11 @@
                   </DialogTitle>
   
                   <div class="mt-8 flex justify-end gap-2">
-                    <button type="button" class="themeBtn" id="logout_btn" @click="$store.dispatch('callLogout')">
-                      Logout
+                    <button type="button" class="themeBtn min-w-[80px]" id="logout_btn" @click="$store.dispatch('callLogout')">
+                      <span v-if="!getIsLogoutLoader">Logout</span>
+                      <btnLoader v-else/>
                     </button>
-                    <button type="button" class="cancelBtn" id="logout_cancel_btn" @click="close()" >
+                    <button type="button" class="cancelBtn min-w-[80px]" id="logout_cancel_btn" @click="close()" >
                       Cancel
                     </button>
                   </div>
@@ -32,10 +33,14 @@
 
 <script>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { mapGetters } from 'vuex';
 export default {
   name: 'logout-dialog',
   components:{
       Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot
+  },
+  computed: {
+    ...mapGetters(['getIsLogoutLoader'])
   },
   methods:{
     close(){

@@ -19,6 +19,7 @@ const router = createRouter({
         { path: '/re', component: () => import('../views/reconcellation.vue') },
         { path: '/lead', component: () => import('../views/lead.vue') },
         { path: '/approvepanel', component: () => import('../views/approve-panel/approve-panel.vue') },
+        { path: '/preview', component: () => import('../views/image-preview.vue') },
       ],
     },
   ]
@@ -43,6 +44,10 @@ router.beforeEach(async (to, from, next) => {
   let userName = JSON.parse(localStorage.getItem('userName'))
   if(userName) {
     store.commit('login/setUserName' , userName)
+  }
+  let data = JSON.parse(localStorage.getItem('setCurrentImage'))
+  if(data) {
+    store.commit('approval/setDocumentData', data)
   }
   next()
 })

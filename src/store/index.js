@@ -9,7 +9,7 @@ import router from "../router/index.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '07_11_2023_17_30',
+    buildDate: '09_11_2023_19_45',
     isLogout: false,
     tempSteps: [
       {
@@ -70,7 +70,8 @@ const store = createStore({
         query: { tab: 0 },
       }
     },
-    activeTab: 0
+    activeTab: 0,
+    isLogoutLoader: false
   },
   mutations: {
     setLogout(state, payload){
@@ -115,20 +116,25 @@ const store = createStore({
     },
     setActiveTab(state, payload){
       state.activeTab = payload
+    },
+    setIsLogoutLoader(state, payload) {
+      state.isLogoutLoader = payload
     }
   },
   actions: {
-    callLogout({commit, dispatch}, payload){
-      httpService.callLogout().then((res)=>{
-        if(res.status == 200){
+    callLogout({ commit, dispatch }) {
+      commit('setIsLogoutLoader', true)
+      httpService.callLogout().then((res) => {
+        if (res.status == 200) {
           commit('setLogout', false)
-          dispatch('errorLog/resetLocal', '', {root: true})
+          dispatch('errorLog/resetLocal', '', { root: true })
         }
       }, (err) => {
-            dispatch('errorLog/checkRouter', err, { root: true })
+        dispatch('errorLog/checkRouter', err, { root: true })
 
-        }).finally(() => { 
-         })
+      }).finally(() => {
+        commit('setIsLogoutLoader', false)
+      })
     },
     navigateSteps({state, commit}, payload){
       if(payload == 'EKYC Employee'){
@@ -139,7 +145,9 @@ const store = createStore({
       }
     }
   },
-  getters: {},
+  getters: {
+    getIsLogoutLoader: (state) => state.isLogoutLoader
+  },
   modules: { opportunity, tabs, errorLog, login, approval },
 });
 export default store
