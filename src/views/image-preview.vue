@@ -1,22 +1,34 @@
 <template>
-    <div class="flex gap-4 mx-5 my-4">
+  <div v-if="!getIsDocsLoader"></div>
+    <div class="mx-5 my-4">
         <!-- <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow" @click="setImage1()">Select Image 1</button> -->
         <!-- <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow" @click="setImage2()">Select Image 2</button> -->
-        Preview
+        <div>
+          Compare Documents
+        </div>
+        <div class="flex gap-4 my-4" >
+            <select v-model="select1" class="py-2 px-2 rounded" @change="previewDocument(select1, 'preview')">
+              <option :value="i['Document Type']" v-for="(i, id) in getDocuments" :key="id">{{ i['Document Type'] }}</option>
+            </select>
+
+            <select v-model="select2" class="py-2 px-2 rounded" @change="previewDocument(select2, 'clone')">
+              <option :value="i['Document Type']" v-for="(i, id) in getDocuments" :key="id">{{ i['Document Type'] }}</option>
+            </select>
+        </div>
     </div>
-    <div v-if="$route.query?.ispdf == 'true'">
+    <!-- <div v-if="$route.query?.ispdf == 'true'">
         <iframe :src="getDocumentData" frameborder="1" class="w-full h-[80vh] px-4"></iframe>
-    </div>
-    <div class="flex w-[97%] m-5 bg-white" v-else>
-            <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
-                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
-                :outputSize="1" alt="Source Image" class="cropper !w-[50%]" >
-            </VueCropper>
-       
-            <VueCropper v-if="imageTest2" ref="image2" :img="imageTest2" 
-                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
-                :outputSize="1" alt="Source Image" class="cropper !w-[50%]" >
-            </VueCropper>
+    </div> -->
+    <div class="flex w-[97%] m-5 bg-white p-5 min-h-[500px]">
+      <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
+          :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
+          :outputSize="1" alt="Source Image" class="cropper !w-[50%]" >
+      </VueCropper>
+  
+      <VueCropper v-if="getDocumentDataClone" ref="image2" :img="getDocumentDataClone" 
+          :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
+          :outputSize="1" alt="Source Image" class="cropper !w-[50%]" >
+      </VueCropper>
     </div>
 </template>
 
@@ -35,30 +47,71 @@ export default {
       return {
         imageTest1: '',
         imageTest2: '',
-        rotateSvg
+        rotateSvg,
+        selectData: [
+        {
+          docName: 'PAN',
+        },
+        {
+          docName: 'CANCELLED_CHEQUE_OR_STATEMENT',
+        },
+        {
+          docName: 'SIGNATURE',
+        },
+        {
+          docName: 'IPV',
+        },
+        // {
+        //   docName: 'ESIGN_DOCUMENT',
+        // },
+        // {
+        //   docName: 'PROTECTED_ESIGN_DOCUMENT',
+        // }
+        ],
+        documentName: 'PAN',
+        select1: '',
+        select2: ''
       }
   },
   computed:{
-        ...mapGetters('approval', ['getDocumentData']),
+        ...mapGetters('approval', ['getDocumentData','getDocumentDataClone', 'getCustomerData', 'getDocuments', 'getIsDocsLoader']),
     },
   methods: {
     async setImage1(what) {
-            let globalPic = new Image();
-            globalPic.onload = function () {
-                document.getElementById(image).src = globalPic.src;
-            }
-            globalPic.src =await what.value;
-            this.imageTest1 = what.value
-        },
-    setImage2() {
-        this.imageTest2 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAeix9Joye7BLUw3MYp4_8eeBuEy1ulEkYjnWl9lE&s'
+      let globalPic = new Image();
+      globalPic.onload = function () {
+          document.getElementById(image).src = globalPic.src;
+      }
+      globalPic.src =await what.value;
+      this.imageTest1 = what.value
     },
-    rotateImage1() {
-        this.$refs.image1.rotateRight()	
-    }
+
+    setImage2() {
+      this.imageTest2 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAeix9Joye7BLUw3MYp4_8eeBuEy1ulEkYjnWl9lE&s'
+    },
+
+    getDocumentSource(docType , type) {
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: type , docType : docType })
+    },
+
+    previewDocument(docName, type) {
+      this.documentName = docName
+      this.getDocumentSource(docName, type)
+    },
   },
+
   unmounted() {
     localStorage.setItem('setCurrentImage', JSON.stringify(this.getDocumentData))
   },
+  
+  async created() {
+    await this.$store.dispatch('approval/getDocuments')
+    if(this.getDocuments.length) {
+      this.select1 = this.getDocuments[0]['Document Type']
+      this.select2 = this.getDocuments[1]['Document Type']
+      this.previewDocument(this.select1, 'preview')
+      this.previewDocument(this.select2, 'clone')
+    }
+  }
 }
 </script>

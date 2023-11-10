@@ -346,7 +346,12 @@ export default {
     created(){
         this.currentTab = this.$store.state.queries['approvepanel'].query.tab
         this.$store.commit('setActiveTab', this.currentTab)
-    }
+    },
+    mounted() {
+        if(this.$route.query?.id) {
+            this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
+        }
+    },
 }
 </script>
 

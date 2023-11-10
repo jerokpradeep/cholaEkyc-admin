@@ -3,8 +3,9 @@ import store from "../store";
 export function getUrl(){
     return {
         ERPBASEURL: isLive ? 'https://erp.cholasecurities.com/' : 'https://erp.cholasecurities.com/',
-        WRAPPERBASEURL: isLive ? 'https://uattrade.cholasecurities.com/uat/ekycAdmin/' : 'https://uattrade.cholasecurities.com/uat/ekycAdmin/'
-    }
+        // WRAPPERBASEURL: isLive ? 'https://uattrade.cholasecurities.com/uat/ekycAdmin/' : 'https://uattrade.cholasecurities.com/uat/ekycAdmin/'
+        WRAPPERBASEURL: isLive ?  `https://devekyc.cholasecurities.com/uat/ekycAdmin/` : `https://devekyc.cholasecurities.com/uat/ekycAdmin/`
+      }
 }
 
 export function authHeader() {

@@ -10,7 +10,7 @@ const ERPAXIOS = axios.create({
 });
 
 const httpService = {
-    getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData,callLogout, getStageDetails, assignOpportunity,getDocument,pushToBo
+  getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity, getDocument, pushToBo, getDocs, approveDocs
 }
 
 export default httpService
@@ -54,4 +54,12 @@ function getDocument(payload){
 
 function pushToBo(payload){
   return WRAPPERAXIOS.post(`LDIntegration/ldCheckPan?${payload}`, {}, {headers: {'X-AUTH-TOKEN' :'Bearer Y2hvbGFfYXBpfFZsWlNTMkp0VmtaTldFWlZZa1ZLY0ZWc1ZrWmtNVkp6VlcxR1VtSlZOVWRaVkVvd1ZFZEdkRlJVUWxWTlZuQkVWVlpXZDFKR1ZsVk5SREE5'}})
+}
+
+function getDocs(payload) {
+  return WRAPPERAXIOS.get(`ekyc/getStatus?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}&assignTo=${payload.assignTo}`)
+}
+
+function approveDocs(payload) {
+  return WRAPPERAXIOS.get(`ekyc/getDocStatus?${payload}`)
 }

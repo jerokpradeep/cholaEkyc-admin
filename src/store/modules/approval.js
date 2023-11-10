@@ -9,7 +9,9 @@ const state = {
     isRejectLoader: false,
     isResetLoader: false,
     documentData: '',
-    backOfficeLoader: false
+    documentDataClone: '',
+    backOfficeLoader: false,
+    isDocsLoader: false
 }
 
 const actions = {
@@ -132,7 +134,10 @@ const actions = {
         httpService.getDocument(payload.str).then(resp =>{
             if(payload.type == 'preview'){
                 commit('setDocumentData',  window.URL.createObjectURL(resp.data))
-            }else{
+
+            } else if(payload.type == 'clone') {
+                commit('setDocumentDataClone',  window.URL.createObjectURL(resp.data))
+            } else {
                     const url = window.URL.createObjectURL(resp.data);
                     const link = document.createElement('a');
                     link.setAttribute('href', url);
@@ -169,7 +174,76 @@ const actions = {
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => {  commit('setBackOfficeLoader', false) })
-    }
+    },
+    async getDocuments({state, dispatch, commit, rootGetters}) {
+        commit('setIsDocsLoader', true) 
+        let json = { 
+            id: state.customerData?.opportunity_data?.name,
+            userId: rootGetters['login/getUserData'].user,
+            sessId: rootGetters['login/getUserData'].sid,
+            token: rootGetters['login/getUserData'].tempToken
+        }
+        await httpService.getDocs(json).then(resp => {
+            if(resp.status == 200 && resp.data?.message?.success_key == 1) {
+                commit('setDocuments', resp.data?.message?.data)
+            } else {
+                commit('setDocuments', [])  
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {
+            commit('setIsDocsLoader', false)
+            commit('errorLog/setCounter', 0, { root: true }) 
+        })
+    },
+
+    async formatJsonDoc({ state, dispatch, rootGetters }, payload) {
+        let str = `userId=${rootGetters['login/getUserData']['user']}&id=${state.customerData?.opportunity_data?.name}&status=${payload.status}&document_type=${payload.attachmentType}&remarks=${payload.remarks}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`
+        await dispatch('approveDocs', str)
+    },
+
+    async approveDocs({ state, commit, dispatch }, payload) {
+        let status = payload?.split('&')[2]
+        status = status?.split('=')[1]
+        if(status == 'Approved') {
+            commit('setIsApproveLoader', true)
+        } else if(status == 'Rejected') {
+            commit('setIsRejectLoader', true)
+        } else {
+            commit('setIsResetLoader', true)
+        }
+        await httpService.approveDocs(payload).then(resp => {
+            if(resp.status == 200) {
+                if(resp.data.message.success_key == 0 && resp.data.message.status)   {
+                    dispatch('errorLog/toaster',{data: {
+                        "title": resp.data.message.status,
+                        "type": "danger",
+                        "message": '',
+                        "duration": 4500
+                    },position: ''}, {root: true})
+                } else if(resp.data.message.success_key == 1 && status) {
+                    dispatch('errorLog/toaster',{data: {
+                        "title": `Proof ${status} successfully`,
+                        "type": "success",
+                        "message": '',
+                        "duration": 4500
+                    },position: ''}, {root: true})
+                }
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => { 
+            if(status == 'Approved') {
+                commit('setIsApproveLoader', false)
+            } else if(status == 'Rejected') {
+                commit('setIsRejectLoader', false)
+            } else {
+                commit('setIsResetLoader', false)
+            }
+            commit('errorLog/setCounter', 0, { root: true })
+            dispatch('getDocuments')
+         })
+    },
 };
 
 const mutations = {
@@ -203,8 +277,17 @@ const mutations = {
         state.documentData = payload
         localStorage.setItem('setCurrentImage', JSON.stringify(payload))
     },
+    setDocumentDataClone(state, payload){
+        state.documentDataClone = payload
+    },
     setBackOfficeLoader(state, payload){
         state.backOfficeLoader = payload
+    },
+    setDocuments(state, payload) {
+        state.documents = payload
+    },
+    setIsDocsLoader(state, payload) {
+        state.isDocsLoader = payload
     }
 };
 
@@ -216,7 +299,10 @@ const getters = {
     getIsApproveLoader: state => state.isApproveLoader,
     getIsRejectLoader: state => state.isRejectLoader,
     getIsResetLoader: state => state.isResetLoader,
-    getDocumentData: state => state.documentData
+    getDocumentData: state => state.documentData,
+    getDocumentDataClone: state => state.documentDataClone,
+    getDocuments: state => state.documents,
+    getIsDocsLoader: state => state.isDocsLoader
 };
 
 const approval = {
@@ -265,3 +351,40 @@ function getDocmentType(currentTab) {
     }
     return docType;
 }
+
+// function getAttachmentType(currentTab) {
+//     let docType = ''
+//     switch (currentTab) {
+//         case 1:
+//             docType = 'Pan'
+//             break;
+//         case 2:
+//             docType = 'Address'
+//             break;
+//         case 3:
+//             docType = 'Profile'
+//             break;
+//         case 4:
+//             docType = 'Bank'
+//             break;
+//         case 5:
+//             docType = 'Segment'
+//             break;
+//         case 6:
+//             docType = 'Nominee'
+//             break;
+//         case 7:
+//             docType = 'Document'
+//             break;
+//         case 8:
+//             docType = 'IPV'
+//             break;
+//         case 9:
+//             docType = 'E-Sign'
+//             break;
+//         default:
+//             docType
+//             break;
+//     }
+//     return docType;
+// }

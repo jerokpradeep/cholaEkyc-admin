@@ -13,7 +13,6 @@
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="rounded-lg my-4">
-            <a class="text-blue-400 underline text-xs ml-auto mb-4 cursor-pointer" @click="goToPreview('pdf')">Full page view</a>
             <iframe :src="getDocumentData" frameborder="1" class="w-full" style="height: 370px !important;"></iframe>
           </div>
         </div>        
