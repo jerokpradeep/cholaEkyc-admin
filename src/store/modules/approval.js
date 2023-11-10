@@ -158,6 +158,14 @@ const actions = {
                     "duration": 4500
                 },position: ''}, {root: true})
             }
+            if(resp.status == 200 && resp.data.stat == 1 && resp.data.message == "Success"){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => {  commit('setBackOfficeLoader', false) })
