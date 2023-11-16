@@ -100,13 +100,13 @@ export default {
     },
     mounted(){
       if(this.getCustomerData && this.getCustomerData.opportunity_data){
-        this.getCustomerData.opportunity_data.fsl_bank_name ? this.bankName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
-        // this.getCustomerData.opportunity_data.fsl_bank_name ? this.branchName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
+        // this.getCustomerData.opportunity_data.fsl_bank_name ? this.bankName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
+        this.getCustomerData.opportunity_data.fsl_bank_name ? this.branchName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
         this.getCustomerData.opportunity_data.fsl_bank_ifsc ? this.ifscCode  = this.getCustomerData.opportunity_data.fsl_bank_ifsc  : ''
         this.getCustomerData.opportunity_data.fsl_bank_micr ? this.micrCode  = this.getCustomerData.opportunity_data.fsl_bank_micr  : ''
         this.getCustomerData.opportunity_data.fsl_acc_hname ? this.acHolderName  = this.getCustomerData.opportunity_data.fsl_acc_hname  : ''
         this.getCustomerData.opportunity_data.fsl_verify_acc_number ? this.acNo  = this.getCustomerData.opportunity_data.fsl_verify_acc_number  : ''
-        this.getCustomerData.opportunity_data.fsl_bank_status ? this.pennyVerifyStatus  = this.getCustomerData.opportunity_data.fsl_bank_status  : ''
+        this.getCustomerData.opportunity_data.hasOwnProperty('fsl_penny_confirm') ? this.pennyVerifyStatus  = this.getCustomerData.opportunity_data.fsl_penny_confirm == 1 ? 'Success' : 'Failed'  : ''
         this.getCustomerData.opportunity_data.fsl_bank_address ? this.address  = this.getCustomerData.opportunity_data.fsl_bank_address  : ''
       }
     }
