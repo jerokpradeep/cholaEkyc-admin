@@ -87,7 +87,7 @@
         </div>
 
         <div class="flex gap-4 my-4 justify-between absolute right-4 bottom-2 " v-if="currentTab != 0 && currentTab != 7 && currentTab != 6 && currentTab != 10">
-            <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] py-2 rounded-lg text-white font-bold" :class="getStatusForPage(getStageData) == 'Approved' ? 'bg-green-700' : 'bg-red-700'" v-if="getStatusForPage(getStageData) != '' && getStatusForPage(getStageData) != 'Reset' && getStatusForPage(getStageData)">
+            <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] py-2 rounded-lg text-white font-bold" :class="getStatusForPage(getStageData) == 'Approved' ? 'bg-teal-400' : 'bg-red-700'" v-if="getStatusForPage(getStageData) != '' && getStatusForPage(getStageData) != 'Reset' && getStatusForPage(getStageData)">
                 <div v-html="tickSvg" v-if="getStatusForPage(getStageData) == 'Approved'"></div>
                 <div v-html="cancelSvg" v-else-if="getStatusForPage(getStageData) == 'Rejected'"></div>
                 {{ getStatusForPage(getStageData) }}
@@ -100,12 +100,12 @@
                 <btnLoader v-else/>
             </div>
             <div class="flex gap-4" v-else>
-                <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">
-                    <span v-if="!getIsApproveLoader">Approve</span>
+                <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">
+                    <span v-if="!getIsApproveLoader" class="flex items-center justify-center gap-1"><div v-html="tickSvg"></div>Approve </span>
                     <btnLoader v-else />
                 </button>
-                <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">
-                    Reject
+                <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">
+                    <span class="flex items-center justify-center gap-1"><div v-html="cancelSvg"></div>Reject </span> 
                 </button>
             </div>
         </div>
@@ -324,18 +324,22 @@ export default {
                 let isNomineeApproved = false
                 for (const property in data) {
                     statusArray.forEach((status)=> {
-                        if(property == status && data[property] == 'Approved') {
+                        if(property == status && data[property]) {
                             percentage += 11.10
                         }
                     })
                 }
                 if(nomineesArray.length) {
+                    let temp = nomineesArray.filter(el => {
+                        return el.status == 'Approved' || el.status == 'Rejected'
+                    })
+                    if(temp.length > 0){
+                        let val = parseFloat(3.70 * temp.length)
+                        percentage += val
+                    }
                     isNomineeApproved = nomineesArray.every(function(nominee){
                         return nominee.status == 'Approved'
                     })
-                }
-                if(isNomineeApproved) {
-                    percentage += 11.10
                 }
                 return Math.round(percentage)
             } else {

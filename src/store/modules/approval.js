@@ -28,6 +28,14 @@ const actions = {
             } else {
                 commit('setApprovalList', [])  
             }
+            if(resp.data?.message?.error){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data?.message?.error,
+                    "type": "danger",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => { 

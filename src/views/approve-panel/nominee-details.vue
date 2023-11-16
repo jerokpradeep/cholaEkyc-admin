@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div class="">
-            <div class="my-4 flex flex-col gap-4 ">
+            <div class="my-4 flex flex-col gap-4 " v-if="nomineeList.length > 0">
                 <div v-for="(i, id) in nomineeList" :key="id"
                     class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full">
                     <div class="flex justify-between gap-3" @click="expandNominee(id)">
@@ -102,7 +102,7 @@
                         </div>
                         <div class="w-full flex justify-end">
                             <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] py-2 rounded-lg text-white font-bold"
-                            :class="getStatusForPage(i.nomineeId) == 'Approved' ? 'bg-green-700' : 'bg-red-700'"
+                            :class="getStatusForPage(i.nomineeId) == 'Approved' ? 'bg-teal-400' : 'bg-red-700'"
                             v-if="getStatusForPage(i.nomineeId) && (getStatusForPage(i.nomineeId) == 'Approved' || getStatusForPage(i.nomineeId) == 'Rejected')">
                             <div v-html="tickSvg" v-if="getStatusForPage(i.nomineeId) == 'Approved'"></div>
                             <div v-html="cancelSvg" v-else-if="getStatusForPage(i.nomineeId) == 'Rejected'"></div>
@@ -116,11 +116,11 @@
                             <btnLoader v-else/>
                         </div>
                         <div class="flex gap-4 my-4 justify-end " v-else>
-                            <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="callServiceApporve_Reject('Approved')">
-                                <span v-if="!getIsApproveLoader">Approve</span>
+                            <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="callServiceApporve_Reject('Approved')">
+                                <span v-if="!getIsApproveLoader" class="flex items-center justify-center gap-1"><div v-html="tickSvg"></div>Approve </span>
                                 <btnLoader v-else />
                             </button>
-                            <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="remarks ? callServiceApporve_Reject('Rejected') : isRejectDialog = true">Reject</button>
+                            <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="remarks ? callServiceApporve_Reject('Rejected') : isRejectDialog = true"><span class="flex items-center justify-center gap-1"><div v-html="cancelSvg"></div>Reject </span></button>
                         </div>
                         </div>
                     </div>
@@ -129,6 +129,7 @@
                 </div>
 
             </div>
+            <div v-else>No Nominees Found</div>
         </div>
     </div>
     <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks" />
