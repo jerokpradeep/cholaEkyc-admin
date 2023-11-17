@@ -59,7 +59,7 @@
         </div>
     </div>
    
-    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
+    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" :active-tab="'7'" @send-remarks="getRemarks"/>
 </template>
 
 <script>

@@ -63,7 +63,7 @@
       <div class="col-span-6">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="rounded-lg my-4 h-[320px]">
-            <VueCropper v-if="getDocumentSource('CANCELLED_CHEQUE_OR_STATEMENT')" ref="image1" :img="getDocumentSource('CANCELLED_CHEQUE_OR_STATEMENT')" 
+            <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
                 :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
                 :outputSize="1" alt="Source Image" class="cropper" >
             </VueCropper>
@@ -91,17 +91,12 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData'])
-    },
-    methods: {
-      getDocumentSource(docType) {
-        return `https://uattrade.cholasecurities.com/uat/ekycAdmin/Download/getFile?applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}`
-      }
+        ...mapGetters('approval', ['getCustomerData', 'getDocumentData'])
     },
     mounted(){
       if(this.getCustomerData && this.getCustomerData.opportunity_data){
-        // this.getCustomerData.opportunity_data.fsl_bank_name ? this.bankName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
-        this.getCustomerData.opportunity_data.fsl_bank_name ? this.branchName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
+        this.getCustomerData.opportunity_data.fsl_bank_name ? this.bankName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
+        // this.getCustomerData.opportunity_data.fsl_bank_name ? this.branchName  = this.getCustomerData.opportunity_data.fsl_bank_name  : ''
         this.getCustomerData.opportunity_data.fsl_bank_ifsc ? this.ifscCode  = this.getCustomerData.opportunity_data.fsl_bank_ifsc  : ''
         this.getCustomerData.opportunity_data.fsl_bank_micr ? this.micrCode  = this.getCustomerData.opportunity_data.fsl_bank_micr  : ''
         this.getCustomerData.opportunity_data.fsl_acc_hname ? this.acHolderName  = this.getCustomerData.opportunity_data.fsl_acc_hname  : ''
@@ -109,6 +104,7 @@ export default {
         this.getCustomerData.opportunity_data.hasOwnProperty('fsl_penny_confirm') ? this.pennyVerifyStatus  = this.getCustomerData.opportunity_data.fsl_penny_confirm == 1 ? 'Success' : 'Failed'  : ''
         this.getCustomerData.opportunity_data.fsl_bank_address ? this.address  = this.getCustomerData.opportunity_data.fsl_bank_address  : ''
       }
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=CANCELLED_CHEQUE_OR_STATEMENT&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'CANCELLED_CHEQUE_OR_STATEMENT' })
     }
 }
 </script>

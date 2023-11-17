@@ -88,12 +88,12 @@
                                     </div>
                                 </div>
 
-                                <div class="sm:col-span-3">
+                                <div class="sm:col-span-12">
                                     <label for="panNumber"
                                         class="block text-sm font-medium leading-6 text-gray-900">Address</label>
-                                    <div class="mt-2">
-                                        <input type="text" id="panNumber"
-                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                    <div class="mt-2 max-w-[425px]">
+                                        <textarea type="text" id="panNumber"  readonly
+                                            class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                                             disabled v-model="i.address" />
                                     </div>
                                 </div>
@@ -129,10 +129,10 @@
                 </div>
 
             </div>
-            <div v-else>No Nominees Found</div>
+            <div v-else class="flex items-center justify-center min-h-[50vh]">No Nominees Found</div>
         </div>
     </div>
-    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks" />
+    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" :active-tab="'6'" @send-remarks="getRemarks" />
 </template>
 
 <script>

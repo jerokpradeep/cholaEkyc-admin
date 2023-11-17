@@ -162,7 +162,6 @@ const actions = {
     callBo({state, commit,dispatch, rootGetters}){
         commit('setBackOfficeLoader', true)
         httpService.pushToBo(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
-            console.log(resp , 'sadvdsv dfsbdf');
             if(resp.status == 200 && resp.data.stat == 0 && resp.data.message == "Failed"){
                 dispatch('errorLog/toaster',{data: {
                     "title": resp.data.reason,
