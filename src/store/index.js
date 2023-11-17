@@ -9,7 +9,7 @@ import router from "../router/index.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '17_11_2023_11_15',
+    buildDate: '17_11_2023_18_35',
     isLogout: false,
     tempSteps: [
       {

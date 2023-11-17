@@ -164,7 +164,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader'])
+        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader', 'getDocuments'])
     },
 
     methods: {
@@ -317,7 +317,7 @@ export default {
 
         progress() {
             if(this.getStageData.hasOwnProperty('nominee')) {
-                let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'document status', 'Esign status']
+                let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'Esign status']
                 let data = this.getStageData
                 let nomineesArray = this.getStageData.nominee
                 let percentage = 0
@@ -341,6 +341,12 @@ export default {
                         return nominee.status == 'Approved'
                     })
                 }
+                if(this.getDocuments && this.getDocuments.length > 0){
+                    let indivualVal = parseFloat(11.10) / this.getDocuments.length
+                    let selectedArr = this.getDocuments.filter((el)=> el.status)
+                    let percentageVal = parseFloat(indivualVal * selectedArr.length) 
+                    percentage += percentageVal  
+                }
                 return Math.round(percentage)
             } else {
                 return 0
@@ -352,6 +358,7 @@ export default {
         this.$store.commit('setActiveTab', this.currentTab)
     },
     mounted() {
+        this.$store.dispatch('approval/getDocuments')
         if(this.$route.query?.id) {
             this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
         }

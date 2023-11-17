@@ -108,7 +108,7 @@ export default {
     await this.$store.dispatch('approval/getDocuments')
     if(this.getDocuments.length) {
       this.select1 = this.getDocuments[0]['Document Type']
-      this.select2 = this.getDocuments[1]['Document Type']
+      this.select2 = this.getDocuments.length > 1 ? this.getDocuments[1]['Document Type'] : this.getDocuments[0]['Document Type']
       this.previewDocument(this.select1, 'preview')
       this.previewDocument(this.select2, 'clone')
     }
