@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div class="">
-            <div class="my-4 flex flex-col gap-4 ">
+            <div class="my-4 flex flex-col gap-4 " v-if="nomineeList.length > 0">
                 <div v-for="(i, id) in nomineeList" :key="id"
                     class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full">
                     <div class="flex justify-between gap-3" @click="expandNominee(id)">
@@ -88,12 +88,12 @@
                                     </div>
                                 </div>
 
-                                <div class="sm:col-span-3">
+                                <div class="sm:col-span-12">
                                     <label for="panNumber"
                                         class="block text-sm font-medium leading-6 text-gray-900">Address</label>
-                                    <div class="mt-2">
-                                        <input type="text" id="panNumber"
-                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                    <div class="mt-2 max-w-[425px]">
+                                        <textarea type="text" id="panNumber"  readonly
+                                            class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                                             disabled v-model="i.address" />
                                     </div>
                                 </div>
@@ -116,11 +116,11 @@
                             <btnLoader v-else/>
                         </div>
                         <div class="flex gap-4 my-4 justify-end " v-else>
-                            <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="callServiceApporve_Reject('Approved')">
-                                <span v-if="!getIsApproveLoader">Approve</span>
+                            <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="callServiceApporve_Reject('Approved')">
+                                <span v-if="!getIsApproveLoader" class="flex items-center justify-center gap-1"><div v-html="tickSvg"></div>Approve </span>
                                 <btnLoader v-else />
                             </button>
-                            <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="remarks ? callServiceApporve_Reject('Rejected') : isRejectDialog = true">Reject</button>
+                            <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="remarks ? callServiceApporve_Reject('Rejected') : isRejectDialog = true"><span class="flex items-center justify-center gap-1"><div v-html="cancelSvg"></div>Reject </span></button>
                         </div>
                         </div>
                     </div>
@@ -129,9 +129,10 @@
                 </div>
 
             </div>
+            <div v-else class="flex items-center justify-center min-h-[50vh]">No Nominees Found</div>
         </div>
     </div>
-    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks" />
+    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" :active-tab="'6'" @send-remarks="getRemarks" />
 </template>
 
 <script>

@@ -17,8 +17,8 @@
                        <div class="flex gap-2 items-center">
                             <div> {{ i['Document Type'] }}</div>
                             <div>
-                                <span title="Approved" v-if="i.status == 'Approved'" v-html="tickSvg"></span>
-                                <span :title="i.remarks"  v-if="i.status == 'Rejected'" v-html="cancelSvg"></span>
+                                <span v-if="i.status == 'Approved'" class="flex items-center gap-1 text-sm text-teal-500"><span title="Approved"  v-html="tickSvg"> </span>Approved</span>
+                                <span v-if="i.status == 'Rejected'" class="flex items-center gap-1 text-sm text-orange-500"> <span :title="i.remarks"   v-html="cancelSvg"></span>Rejected</span>
                             </div>
                        </div>
                     </td>
@@ -59,7 +59,7 @@
         </div>
     </div>
    
-    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
+    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" :active-tab="'7'" @send-remarks="getRemarks"/>
 </template>
 
 <script>

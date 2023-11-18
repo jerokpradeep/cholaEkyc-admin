@@ -100,16 +100,16 @@
                 <btnLoader v-else/>
             </div>
             <div class="flex gap-4" v-else>
-                <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">
-                    <span v-if="!getIsApproveLoader">Approve</span>
+                <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-teal-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="approveOrRejectDoc('Approved')">
+                    <span v-if="!getIsApproveLoader" class="flex items-center justify-center gap-1"><div v-html="tickSvg"></div>Approve </span>
                     <btnLoader v-else />
                 </button>
-                <button type="button" class="min-w-[86px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">
-                    Reject
+                <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="this.remarks ? approveOrRejectDoc('Rejected') : isRejectDialog = true">
+                    <span class="flex items-center justify-center gap-1"><div v-html="cancelSvg"></div>Reject </span> 
                 </button>
             </div>
         </div>
-        <rejectDialog v-if="isRejectDialog && currentTab != 6 && currentTab != 7" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
+        <rejectDialog v-if="isRejectDialog && currentTab != 6 && currentTab != 7" :active-tab="currentTab" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
 </template>
 
 <script>
@@ -164,7 +164,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader'])
+        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader', 'getDocuments'])
     },
 
     methods: {
@@ -317,25 +317,35 @@ export default {
 
         progress() {
             if(this.getStageData.hasOwnProperty('nominee')) {
-                let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'document status', 'Esign status']
+                let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'Esign status']
                 let data = this.getStageData
                 let nomineesArray = this.getStageData.nominee
                 let percentage = 0
                 let isNomineeApproved = false
                 for (const property in data) {
                     statusArray.forEach((status)=> {
-                        if(property == status && data[property] == 'Approved') {
+                        if(property == status && data[property]) {
                             percentage += 11.10
                         }
                     })
                 }
                 if(nomineesArray.length) {
+                    let temp = nomineesArray.filter(el => {
+                        return el.status == 'Approved' || el.status == 'Rejected'
+                    })
+                    if(temp.length > 0){
+                        let val = parseFloat(3.70 * temp.length)
+                        percentage += val
+                    }
                     isNomineeApproved = nomineesArray.every(function(nominee){
                         return nominee.status == 'Approved'
                     })
                 }
-                if(isNomineeApproved) {
-                    percentage += 11.10
+                if(this.getDocuments && this.getDocuments.length > 0){
+                    let indivualVal = parseFloat(11.10) / this.getDocuments.length
+                    let selectedArr = this.getDocuments.filter((el)=> el.status)
+                    let percentageVal = parseFloat(indivualVal * selectedArr.length) 
+                    percentage += percentageVal  
                 }
                 return Math.round(percentage)
             } else {
@@ -348,6 +358,7 @@ export default {
         this.$store.commit('setActiveTab', this.currentTab)
     },
     mounted() {
+        this.$store.dispatch('approval/getDocuments')
         if(this.$route.query?.id) {
             this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
         }

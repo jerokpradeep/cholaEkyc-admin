@@ -43,7 +43,7 @@
           </div>
       </div>
   </div>
-  <div class="my-4" v-if="currentTab == 1 && !getIsLoader">
+  <div class="my-4" v-if="currentTab == 1 && !getIsLoader && getApprovalList.length > 0">
     <table class="w-full border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
@@ -76,7 +76,7 @@
             {{ i.assigned_person_name ? i.assigned_person_name : '' }}
           </td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.time && i.time != " "  ? i.time : 'NA' }}
+            {{ i.time && i.time != " "  ? getHours(i.time) : 'NA' }}
           </td>
         </tr>
       </tbody>
@@ -88,6 +88,7 @@
          alt="Source Image" class="cropper" :original="true">
     </VueCropper> -->
   </div>
+  <div v-else class="flex items-center justify-center min-h-[50vh]">No Records Found</div>
   <assigneeDialog v-if="isAssign" :assigneeData="currentAssigneeData"/>
   </div>
 </template>
@@ -219,7 +220,22 @@ export default {
       this.$store.commit('setQuries', {data: {tab: id}, action: 'change'})
       id == 1 ?  this.$store.dispatch('approval/getApprovalList') : ''
       this.currentTab = id
-    }
+    },
+    getHours(dt2) {
+      let diffTime = Math.abs(new Date().valueOf() - new Date(dt2).valueOf());
+      let days = diffTime / (24*60*60*1000);
+      let hours = (days % 1) * 24;
+      let minutes = (hours % 1) * 60;
+      let secs = (minutes % 1) * 60;
+      [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
+      if(Number(days) != 0) {
+        return `${days}d, ${hours}h : ${minutes}m`
+      } else if(Number(hours) != 0) {
+        return `${hours}h:${minutes}m`
+      } else {
+        return `${minutes}m`
+      }
+    },
   },
   created() {
     this.$store.commit('setActiveTab', this.$store.state.queries['kycapproval'].query.tab)

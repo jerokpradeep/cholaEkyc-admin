@@ -95,9 +95,12 @@ export default {
         this.getCustomerData.opportunity_data?.fsl_pan_no  ? this.panNumber = this.getCustomerData.opportunity_data?.fsl_pan_no : ''
         this.getCustomerData.opportunity_data?.fsl_user_name  ? this.nameAsPan = this.getCustomerData.opportunity_data?.fsl_user_name : ''
         this.getCustomerData.opportunity_data?.fsl_user_name  ? this.nameAsAadhar = this.getCustomerData.opportunity_data?.fsl_user_name : ''
-        this.getCustomerData.opportunity_data?.fsl_pan_status_code  ? this.panStatusCode = this.getCustomerData.opportunity_data?.fsl_pan_status_code : ''
+        this.getCustomerData.opportunity_data?.fsl_pan_status_code && this.getCustomerData.opportunity_data?.fsl_pan_status_code_description  ? this.panStatusCode = `${this.getCustomerData.opportunity_data?.fsl_pan_status_code} - ${this.getCustomerData.opportunity_data?.fsl_pan_status_code_description}` : ''
         this.getCustomerData.opportunity_data?.fsl_kra_response_date  ? this.kraRespDate = window.formatDate(this.getCustomerData.opportunity_data?.fsl_kra_response_date , 'D') : ''
-        this.getCustomerData.opportunity_data?.trackwizz_passkey ? this.trackWiz = this.getCustomerData.opportunity_data?.trackwizz_passkey : ''
+        
+      }
+      if(this.getCustomerData && this.getCustomerData?.profile_data){
+        this.getCustomerData.profile_data?.trackwizz_passkey ? this.trackWiz = this.getCustomerData.profile_data?.trackwizz_passkey : ''
       }
       this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=PAN&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'PAN' })
     },

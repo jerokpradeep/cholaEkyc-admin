@@ -163,14 +163,27 @@
                         Documents
                     </td>
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
-                        <div class="flex gap-2 items-center">
-                            <div>
-                                <div v-html="tickSvg" v-if="checkStatus(getStageData['document status']) == 'Approved'"></div>
-                                <div v-html="cancelSvg" v-if="checkStatus(getStageData['document status']) == 'Rejected'"></div>
+                        <div v-if="getDocuments?.length">
+                            <div v-for="(i, id) in getDocuments" :key="id">
+                                <div class="flex gap-2 items-center">
+                                    
+                                    <div class="flex gap-2 items-center ">
+                                        <span class="min-w-[260px] flex gap-2 items-center justify-between">
+                                           <span>{{ i['Document Type'] }} </span> <span>:</span>
+                                        </span>
+                                        <span class="flex gap-2">
+                                            <div>
+                                                <div v-html="tickSvg" v-if="checkStatus(i.status) == 'Approved'"></div>
+                                                <div v-html="cancelSvg" v-if="checkStatus(i.status) == 'Rejected'"></div>
+                                            </div>
+                                            {{ checkStatus(i.status) }}
+                                        </span> 
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                {{ checkStatus(getStageData['document status']) }}
-                            </div>
+                        </div>
+                        <div v-else>
+                            NA
                         </div>
                     </td>
                 </tr>
@@ -277,7 +290,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('approval', ['getStageData'])
+        ...mapGetters('approval', ['getStageData', 'getDocuments', 'getDocumentData'])
     },
     methods: {
         checkStatus(data) {
@@ -289,6 +302,6 @@ export default {
         if(this.$route.query?.id) {
             this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
         }
-    },
+    }
 }
 </script>
