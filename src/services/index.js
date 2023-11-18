@@ -3,7 +3,7 @@ import store from "../store";
 export function getUrl(){
     return {
         ERPBASEURL: isLive ? 'https://erp.cholasecurities.com/' : 'https://erp.cholasecurities.com/',
-        // WRAPPERBASEURL: isLive ? 'https://uattrade.cholasecurities.com/uat/ekycAdmin/' : 'https://uattrade.cholasecurities.com/uat/ekycAdmin/'
+        // BOBASEURL: isLive ? 'https://uattrade.cholasecurities.com/uat/ekycAdmin/' : 'https://uattrade.cholasecurities.com/uat/ekycAdmin/',
         WRAPPERBASEURL: isLive ?  `https://devekyc.cholasecurities.com/uat/ekycAdmin/` : `https://devekyc.cholasecurities.com/uat/ekycAdmin/`
       }
 }
@@ -14,6 +14,15 @@ export function authHeader() {
   if (userToken) {
     header = { 'Authorization': `${userToken}` };
   }
+  const requestOptions = {
+    headers: header,
+  };
+  return requestOptions
+}
+
+
+export function xHeader() {
+  let header = { 'X-AUTH-TOKEN': 'Bearer Y2hvbGFfYXBpfFZsWlNTMkp0VmtaTldFWlZZa1ZLY0ZWc1ZrWmtNVkp6VlcxR1VtSlZOVWRaVkVvd1ZFZEdkRlJVUWxWTlZuQkVWVlpXZDFKR1ZsVk5SREE5' }
   const requestOptions = {
     headers: header,
   };

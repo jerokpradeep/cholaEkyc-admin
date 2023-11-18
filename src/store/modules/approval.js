@@ -160,7 +160,7 @@ const actions = {
                     "title": resp.data.reason,
                     "type": "danger",
                     "message": '',
-                    "duration": 4500
+                    "duration": 5000
                 },position: ''}, {root: true})
             }
             if(resp.status == 200 && resp.data.stat == 1 && resp.data.message == "Success"){

@@ -1,4 +1,4 @@
-import { getUrl, authHeader } from './index.js';
+import { getUrl, authHeader, xHeader } from './index.js';
 import axios from 'axios';
 
 const WRAPPERAXIOS = axios.create({
@@ -33,6 +33,7 @@ function updateDocStatus(payload) {
 }
 
 function getCustomerData(payload) {
+  console.log(authHeader());
   return WRAPPERAXIOS.get(`ekyc/opportunity?id=${payload.id}&token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
 }
 
@@ -53,7 +54,7 @@ function getDocument(payload){
 }
 
 function pushToBo(payload){
-  return WRAPPERAXIOS.post(`LDIntegration/ldCheckPan?${payload}`, {}, {headers: {'X-AUTH-TOKEN' :'Bearer Y2hvbGFfYXBpfFZsWlNTMkp0VmtaTldFWlZZa1ZLY0ZWc1ZrWmtNVkp6VlcxR1VtSlZOVWRaVkVvd1ZFZEdkRlJVUWxWTlZuQkVWVlpXZDFKR1ZsVk5SREE5'}})
+  return WRAPPERAXIOS.post(`LDIntegration/ldCheckPan?${payload}`, {}, xHeader())
 }
 
 function getDocs(payload) {
