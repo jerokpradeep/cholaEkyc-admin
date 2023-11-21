@@ -11,7 +11,10 @@ const state = {
     documentData: '',
     documentDataClone: '',
     backOfficeLoader: false,
-    isDocsLoader: false
+    isDocsLoader: false,
+    isMailLoader: false,
+    progressPercentage: 0,
+    isReject: false
 }
 
 const actions = {
@@ -59,6 +62,13 @@ const actions = {
                 if(resp.data.message.success_key == 0 && resp.data.message.message)   {
                     dispatch('errorLog/toaster',{data: {
                         "title": resp.data.message.message,
+                        "type": "danger",
+                        "message": '',
+                        "duration": 4500
+                    },position: ''}, {root: true})
+                } else if(resp.data?.message?.error == 'Document Not Found') {
+                    dispatch('errorLog/toaster',{data: {
+                        "title": resp.data.message.error,
                         "type": "danger",
                         "message": '',
                         "duration": 4500
@@ -251,6 +261,41 @@ const actions = {
             dispatch('getDocuments')
          })
     },
+
+    async sendRejectionMail({ state, commit, dispatch, rootGetters }) {
+        commit('setIsMailLoader', true)
+        httpService.sendRejectionMail(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            commit('setIsMailLoader', false)
+         })
+    },
+
+    async retryBo({ state, commit, dispatch, rootGetters }) {
+        httpService.retryBo(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                // dispatch('errorLog/toaster',{data: {
+                //     "title": resp.data.reason,
+                //     "type": "success",
+                //     "message": '',
+                //     "duration": 4500
+                // },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+         })
+    },
 };
 
 const mutations = {
@@ -295,6 +340,15 @@ const mutations = {
     },
     setIsDocsLoader(state, payload) {
         state.isDocsLoader = payload
+    },
+    setIsMailLoader(state, payload) {
+        state.isMailLoader = payload
+    },
+    setProgressPercentage(state, payload) {
+        state.progressPercentage = payload
+    },
+    setIsReject(state, payload) {
+        state.isReject = payload
     }
 };
 
@@ -309,7 +363,10 @@ const getters = {
     getDocumentData: state => state.documentData,
     getDocumentDataClone: state => state.documentDataClone,
     getDocuments: state => state.documents,
-    getIsDocsLoader: state => state.isDocsLoader
+    getIsDocsLoader: state => state.isDocsLoader,
+    getIsMailLoader: state => state.isMailLoader,
+    getProgressPercentage: state => state.progressPercentage,
+    getIsReject: state => state.isReject
 };
 
 const approval = {

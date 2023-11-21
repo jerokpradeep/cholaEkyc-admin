@@ -162,7 +162,7 @@ export default {
         this.previewDocument(this.documentName)
     },
     async created() {
-    await this.$store.dispatch('approval/getDocuments')
-  }
+      await this.$store.dispatch('approval/getDocuments')
+    }
 }
 </script>

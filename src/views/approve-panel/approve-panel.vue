@@ -322,6 +322,9 @@ export default {
                 let nomineesArray = this.getStageData.nominee
                 let percentage = 0
                 let isNomineeApproved = false
+                let isRejectAll = false
+                let isRejectNominee = false
+                let isRejectDoc = false
                 for (const property in data) {
                     statusArray.forEach((status)=> {
                         if(property == status && data[property]) {
@@ -329,24 +332,40 @@ export default {
                         }
                     })
                 }
+                isRejectAll = Object.values(this.getStageData).some(function(status) {
+                    return status == 'Rejected'
+                })
+
                 if(nomineesArray.length) {
                     let temp = nomineesArray.filter(el => {
                         return el.status == 'Approved' || el.status == 'Rejected'
                     })
                     if(temp.length > 0){
-                        let val = parseFloat(3.70 * temp.length)
-                        percentage += val
+                        let indivualVal = parseFloat(11.10) / temp.length
+                        percentage += indivualVal
                     }
                     isNomineeApproved = nomineesArray.every(function(nominee){
                         return nominee.status == 'Approved'
                     })
+                    // 
+                    isRejectNominee = nomineesArray.some(function(nominee){
+                        return nominee.status == 'Rejected'
+                    })
                 }
-                if(this.getDocuments && this.getDocuments.length > 0){
+                if(this.getDocuments && this.getDocuments.length > 0) {
                     let indivualVal = parseFloat(11.10) / this.getDocuments.length
                     let selectedArr = this.getDocuments.filter((el)=> el.status)
                     let percentageVal = parseFloat(indivualVal * selectedArr.length) 
-                    percentage += percentageVal  
+                    percentage += percentageVal
+                    // 
+                    if(selectedArr?.length) {
+                        isRejectDoc = selectedArr.some(function(el) {
+                            return el.status == 'Rejected'
+                        })
+                    }
                 }
+
+                this.$store.commit('approval/setIsReject', isRejectAll || isRejectNominee || isRejectDoc)
                 return Math.round(percentage)
             } else {
                 return 0

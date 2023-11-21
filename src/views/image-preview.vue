@@ -1,8 +1,6 @@
 <template>
   <div v-if="!getIsDocsLoader"></div>
     <div class="mx-5 my-4">
-        <!-- <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow" @click="setImage1()">Select Image 1</button> -->
-        <!-- <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow" @click="setImage2()">Select Image 2</button> -->
         <div>
           Compare Documents
         </div>
@@ -16,9 +14,6 @@
             </select>
         </div>
     </div>
-    <!-- <div v-if="$route.query?.ispdf == 'true'">
-        <iframe :src="getDocumentData" frameborder="1" class="w-full h-[80vh] px-4"></iframe>
-    </div> -->
     <div class="flex w-[97%] m-5 bg-white p-5 min-h-[500px]">
       <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
           :info="true" :canMove="true" :canScale="true" :autoCrop="false" 

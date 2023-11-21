@@ -19,7 +19,7 @@ const actions = {
 
     errorLog({state,commit ,dispatch} , payload ){
         let tempToaster 
-        if (payload.response.status && payload.response.status == 404){
+        if (payload?.response?.status && payload?.response?.status == 404){
             tempToaster = {
                 "title": "",
                 "type": "danger",

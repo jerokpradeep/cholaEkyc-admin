@@ -10,7 +10,7 @@ const ERPAXIOS = axios.create({
 });
 
 const httpService = {
-  getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity, getDocument, pushToBo, getDocs, approveDocs
+  getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity, getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, retryBo
 }
 
 export default httpService
@@ -33,7 +33,6 @@ function updateDocStatus(payload) {
 }
 
 function getCustomerData(payload) {
-  console.log(authHeader());
   return WRAPPERAXIOS.get(`ekyc/opportunity?id=${payload.id}&token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`, authHeader())
 }
 
@@ -63,4 +62,12 @@ function getDocs(payload) {
 
 function approveDocs(payload) {
   return WRAPPERAXIOS.get(`ekyc/getDocStatus?${payload}`)
+}
+
+function sendRejectionMail(payload) {
+  return WRAPPERAXIOS.get(`admin/sendRejectionMail?${payload}`)
+}
+
+function retryBo(payload) {
+  return WRAPPERAXIOS.get(`${payload}`)
 }

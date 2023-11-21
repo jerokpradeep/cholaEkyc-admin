@@ -4,7 +4,6 @@
     <div class="flex gap-3 flex-wrap">
       <input type="date" v-model="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8">
       <input type="date" v-model="toDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8">
-      <!-- <input type="text" v-model="status" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: status"> -->
       <div>
         <Listbox v-model="statusType">
           <div class="relative">
@@ -33,7 +32,7 @@
       <input type="text" v-model="application" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: Application">
       <input type="text" v-model="panNo" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: PAN No.">
       <input type="text" v-model="mobileNo" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: Mobile No.">
-  </div>
+    </div>
 
   <div class="bg-white py-4 px-8 my-6 rounded-lg flex gap-2 flex-wrap justify-between" v-if="currentTab == 0">
       <div v-for="(item,id) in applicationSummary" :key="id">
@@ -81,14 +80,8 @@
         </tr>
       </tbody>
     </table>
-
-    <!-- <img src="https://ekyc.cholasecurities.com/uat/assets/login-8bc20a78.png" alt=""> -->
-    <!-- <VueCropper ref="cropper" :img="imageTest" 
-        :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
-         alt="Source Image" class="cropper" :original="true">
-    </VueCropper> -->
   </div>
-  <div v-else class="flex items-center justify-center min-h-[50vh]">No Records Found</div>
+  <div v-else-if="!getIsLoader" class="flex items-center justify-center min-h-[50vh]">No Records Found</div>
   <assigneeDialog v-if="isAssign" :assigneeData="currentAssigneeData"/>
   </div>
 </template>
@@ -101,10 +94,8 @@ import chevronSvg from "../assets/image/Chevron.svg"
 import tabs from "../components/utilComponents/tabs.vue"
 import { mapGetters,mapState } from 'vuex';
 import assigneeDialog from './approve-panel/assigneeDialog.vue';
-import 'vue-cropper/dist/index.css'
-import { VueCropper }  from "vue-cropper";
 export default {
-  components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog, VueCropper },
+  components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog },
   data() {
       return {
           fromDate: '',

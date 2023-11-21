@@ -44,6 +44,13 @@
             </div>
           </div>
       </div>
+      <div class="my-6" v-if="getIsReject">
+        <button @click="sendMail()" class="flex justify-center items-center min-w-[130px] h-[36px] py-2 px-4 rounded-lg text-xs text-white font-bold bg-[#753ED7]">
+          <btnLoader v-if="getIsMailLoader"/>
+          <span v-else>Send Rejection Mail</span>
+        </button>
+      </div>
+      
     </div>
     <div class="col-span-6">
       <stage_table />
@@ -53,6 +60,7 @@
 
 <script>
 import stage_table from "./stage-table.vue"
+import { mapGetters } from 'vuex'
 export default {
     components: { stage_table },
     data() {
@@ -129,6 +137,14 @@ export default {
     },
     props: {
       cutomerData: { type: Object }
+    },
+    computed: {
+      ...mapGetters('approval', ['getIsMailLoader', 'getProgressPercentage','getIsReject'])
+    },
+    methods: {
+      sendMail() {
+        this.$store.dispatch('approval/sendRejectionMail')
+      }
     },
     mounted() {
         this.mobileNo = this.cutomerData?.opportunity_data?.fsl_mobile_num

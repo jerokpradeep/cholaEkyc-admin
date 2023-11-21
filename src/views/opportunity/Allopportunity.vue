@@ -1,5 +1,10 @@
 <template>
   <div>
+    <form @submit.prevent="getAllOppertunities()" class="flex gap-3 flex-wrap mb-2">
+      <input type="date" v-model="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
+      <input type="date" v-model="toDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
+      <button type="submit" class="flex justify-center items-center min-w-[100px] h-[32px] py-2 px-4 rounded-lg text-xs text-white font-bold bg-[#753ED7]">Submit</button>
+    </form>
     <table v-if="!getIsStageDetails && !getIsLoader"  class="w-full border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
@@ -45,6 +50,7 @@
     </table>
   </div>
 </template>
+
 <script>
 import Progress from "../../assets/image/process.svg";
 import chevronSvg from "../../assets/image/Chevron.svg"
@@ -66,6 +72,12 @@ export default {
         { name: "Hours consumed", class: "text-center" },
         { name: "Progress State", class: "text-center" },
       ],
+      fromDate: '',
+      toDate: '',
+      status: '',
+      application: '',
+      panNo: '',
+      mobileNo: '',
     };
   },
   computed: {
@@ -121,6 +133,10 @@ export default {
       } else {
         return 13
       }
+    },
+
+    getAllOppertunities() {
+
     }
   },
 };
