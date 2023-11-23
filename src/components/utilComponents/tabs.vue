@@ -26,9 +26,13 @@ export default {
     changeActive(id) {
       this.$emit("activeTab", id);
     },
-    getTabs() {
+    getTabs() { 
       if (this.$route.path == "/approvepanel") {
-        return this.getKycApprovalTabs;
+        if(this.getUserData?.Role == 'RM' || this.$route.query.path == '/opportunity'){
+          return this.getKycApprovalTabs.slice(0, -1);
+        }else{
+          return this.getKycApprovalTabs
+        }
       } else if (this.$route.path == "/kycapproval") {
         return this.getKycPanelTabs;
       } else if(this.$route.path == "/opportunity") {
@@ -44,7 +48,8 @@ export default {
       "getOpportunityTabs"
     ]),
     ...mapGetters(["getWindowWidth"]),
-    ...mapGetters('approval', ['getIsLoader'])
+    ...mapGetters('approval', ['getIsLoader']),
+    ...mapGetters('login', ["getUserData"])
   },
 };
 </script>

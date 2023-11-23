@@ -93,7 +93,7 @@ import Progress from "../assets/image/process.svg";
 import chevronSvg from "../assets/image/Chevron.svg"
 import tabs from "../components/utilComponents/tabs.vue"
 import { mapGetters,mapState } from 'vuex';
-import assigneeDialog from './approve-panel/assigneeDialog.vue';
+import assigneeDialog from './approve-panel/assigneedialog.vue';
 export default {
   components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog },
   data() {
@@ -190,19 +190,30 @@ export default {
   },
   computed: {
         ...mapGetters('approval', ['getApprovalList', 'getIsLoader']),
-        ...mapState('approval', ['isAssign'])
+        ...mapState('approval', ['isAssign']),
+        ...mapGetters('login', ["getUserData"])
     },
   methods: {
     async goToApprovalPage(data) {
       if(data && data.fsl_assign_to && data.opportunity_id) {
         await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
-          this.$router.push(`/approvepanel?id=${data?.opportunity_id}`).catch(() => { })
+          this.$router.push(`/approvepanel?id=${data?.opportunity_id}&&path=${this.$route.fullPath}`).catch(() => { })
           this.$store.commit('setQuries', {data: {tab: 0}, action: 'change' , overRideKey : 'approvepanel'})
           
         })
       }else{
-        this.currentAssigneeData = data
-        this.$store.commit('approval/setIsAssign',  true)
+        if(this.getUserData?.Role != 'RM'){
+          this.currentAssigneeData = data
+          this.$store.commit('approval/setIsAssign',  true)
+        }else{
+          let tempToaster = {
+                "title": "",
+                "type": "danger",
+                "message":  "The Approval Journey of this has not begun yet. Please wait for the KYC team to start their approval process.",
+                "duration": 4500
+              }
+          this.$store.dispatch('errorLog/toaster' ,{data:tempToaster, position: ''})
+        }
       }
     },
 

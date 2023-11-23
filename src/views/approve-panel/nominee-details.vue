@@ -100,7 +100,7 @@
 
                             </div>
                         </div>
-                        <div class="w-full flex justify-end">
+                        <div class="w-full flex justify-end" v-if="$route.query?.path != '/opportunity' && getUserData?.Role != 'RM'">
                             <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] py-2 rounded-lg text-white font-bold"
                             :class="getStatusForPage(i.nomineeId) == 'Approved' ? 'bg-green-700' : 'bg-red-700'"
                             v-if="getStatusForPage(i.nomineeId) && (getStatusForPage(i.nomineeId) == 'Approved' || getStatusForPage(i.nomineeId) == 'Rejected')">
@@ -171,7 +171,8 @@ export default {
         rejectDialog
     },
     computed: {
-        ...mapGetters('approval', ['getCustomerData', 'getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader'])
+        ...mapGetters('approval', ['getCustomerData', 'getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader']),
+        ...mapGetters('login', ['getUserData'])
     },
     methods: {
         callServiceApporve_Reject(status) {
