@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-          <tr v-for="(i, id) in getAllOpportunities" :key="id" class="border-b hover:bg-gray-50" @click="goToApprovalPage(i)">
+          <tr v-for="(i, id) in getAllOpportunities" :key="id" class="border-b hover:bg-gray-50 cursor-pointer" @click="goToApprovalPage(i)">
             <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
               {{ id + 1 }}
             </td>
@@ -141,8 +141,8 @@ export default {
     async goToApprovalPage(data) {
       if(data && data.opportunity_id) {
         await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
-          this.$router.push(`/approvepanel?id=${data?.opportunity_id}&&path=${this.$route.fullPath}`).catch(() => { })
-          this.$store.commit('setQuries', {data: {tab: 0}, action: 'change' , overRideKey : 'approvepanel', from : 'Allopurtunity'})
+          this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })
+          this.$store.commit('setQuries', {data: {tab: 0}, action: 'change' , overRideKey : 'approvepanel'})
           
         })
       }

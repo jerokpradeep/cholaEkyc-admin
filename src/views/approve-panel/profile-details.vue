@@ -78,7 +78,7 @@
 
         </div>
     </div>
-    <div class="my-4 flex flex-col gap-4 ">
+    <div class="my-4 flex flex-col gap-4 " v-if="isStandingInstrutions">
                 <div class="cursor-pointer p-4 shadow rounded-lg bg-white transition duration-1000 ease-in-out w-full">
                     <div class="flex justify-between gap-3" @click="isOpen = !isOpen">
                         <div class="text-sm font-semibold">
@@ -188,7 +188,8 @@ export default {
                 content: 'I/We would like to receive the Annual Report of companies held by me/us. (Tick the appropriate box. If not marked the default option would be in Physical).',
                 value:''
               }
-            ]
+            ],
+            isStandingInstrutions: false
         }
     },
     computed:{
@@ -214,6 +215,7 @@ export default {
           this.getCustomerData?.profile_data?.occupation  ? this.occupation =  this.getCustomerData?.profile_data?.occupation : ''
           this.getCustomerData?.profile_data?.trading_experience  ? this.tradingExp =  this.getCustomerData?.profile_data?.trading_experience : ''
           this.getCustomerData?.profile_data?.net_worth ? this.netWorth = this.getCustomerData?.profile_data?.net_worth : ''
+          this.getCustomerData?.profile_data?.standinginstructios && this.getCustomerData?.profile_data?.standinginstructios == "Yes" ? this.isStandingInstrutions = true : ''
           for(let item of this.standingInstrationsArray){
             if(this.getCustomerData.profile_data[item.key]){
               item.value = this.getCustomerData.profile_data[item.key]

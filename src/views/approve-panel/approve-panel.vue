@@ -85,7 +85,7 @@
             <esign_details v-if="currentTab == 9"/>
             <pushto_bo v-if="currentTab == 10"/>
         </div>
-        <div v-if="$route.query?.path != '/opportunity' && getUserData?.Role != 'RM'">
+        <div v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM'">
             <div class="flex gap-4 my-4 justify-between absolute right-4 bottom-2 " v-if="currentTab != 0 && currentTab != 7 && currentTab != 6 && currentTab != 10">
                 <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] py-2 rounded-lg text-white font-bold" :class="getStatusForPage(getStageData) == 'Approved' ? 'bg-green-700' : 'bg-red-700'" v-if="getStatusForPage(getStageData) != '' && getStatusForPage(getStageData) != 'Reset' && getStatusForPage(getStageData)">
                     <div v-html="tickSvg" v-if="getStatusForPage(getStageData) == 'Approved'"></div>

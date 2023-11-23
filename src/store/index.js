@@ -9,7 +9,7 @@ import router from "../router/index.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '23_11_2023_14_10',
+    buildDate: '23_11_2023_19_20',
     isLogout: false,
     tempSteps: [
       {
@@ -143,6 +143,16 @@ const store = createStore({
         commit('setValidSteps', [...approval])
         router.push(approval[0].route).catch(()=>{})
       }
+    },
+    changeTab({state, commit}, payload){
+      state.validSteps.forEach((el) => {
+        if (el.route == payload.route) {
+          el.active = true;
+        } else {
+          el.active = false;
+        }
+      });
+      commit('setValidSteps', state.validSteps)
     }
   },
   getters: {

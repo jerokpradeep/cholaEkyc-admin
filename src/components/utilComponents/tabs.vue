@@ -28,7 +28,7 @@ export default {
     },
     getTabs() { 
       if (this.$route.path == "/approvepanel") {
-        if(this.getUserData?.Role == 'RM' || this.$route.query.path == '/opportunity'){
+        if(this.getUserData?.Role == 'RM' || this.$route.query.from == 'opportunity'){
           return this.getKycApprovalTabs.slice(0, -1);
         }else{
           return this.getKycApprovalTabs

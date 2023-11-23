@@ -229,63 +229,6 @@ export default {
                 { name: "Stage", class: "text-left" },
                 { name: "Status", class: "text-left" },
             ],
-            tableData: [
-                {
-                    sno: "1",
-                    stage: 'Mobile',
-                    status: 'Approved'
-                },
-                {
-                    sno: "2",
-                    stage: 'Email',
-                    status: 'Approved'
-                },
-                {
-                    sno: "3",
-                    stage: 'PAN',
-                    status: 'Updated'
-                },
-                {
-                    sno: "4",
-                    stage: 'Profile',
-                    status: 'Updated'
-                },
-                {
-                    sno: "5",
-                    stage: 'Address',
-                    status: 'Approved'
-                },
-                {
-                    sno: "6",
-                    stage: 'Bank',
-                    status: 'Updated'
-                },
-                {
-                    sno: "7",
-                    stage: 'Segments',
-                    status: 'Updated'
-                },
-                {
-                    sno: "8",
-                    stage: 'IPV',
-                    status: 'Updated'
-                },
-                {
-                    sno: "9",
-                    stage: 'Nominees',
-                    status: 'Updated'
-                },
-                {
-                    sno: "10",
-                    stage: 'Documents',
-                    status: 'Updated'
-                },
-                {
-                    sno: "11",
-                    stage: 'E-Sign Doc',
-                    status: 'Updated'
-                }
-            ],
             tickSvg, cancelSvg
         }
     },
@@ -295,7 +238,7 @@ export default {
     methods: {
         checkStatus(data) {
             let d = data?.trim()
-            return d ? d : 'Open'
+            return d && d != "null" ? d : 'Open'
         }
     },
     mounted() {

@@ -63,7 +63,7 @@ export default {
 
       if(this.getCustomerData && this.getCustomerData.address_data?.fsl_is_kra == 1) {
         this.getCustomerData.address_data?.fsl_kra_address_1  ?  this.address =  this.getCustomerData.address_data?.fsl_kra_address_1 + this.getCustomerData.address_data?.fsl_kra_address_2 + this.getCustomerData.address_data?.fsl_kra_address_3 : ''
-        this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
+         this.aadharNo = ''
         this.source =  'KRA'
         this.getCustomerData.address_data?.fsl_kra_address_proof  ? this.kraAddressProof = this.getCustomerData.address_data?.fsl_kra_address_proof : ''
         this.getCustomerData.address_data?.fsl_kra_proof_idnumber  ? this.kraAddressProofId = this.getCustomerData.address_data?.fsl_kra_proof_idnumber : ''
@@ -71,10 +71,11 @@ export default {
 
       if(this.getCustomerData && this.getCustomerData.address_data?.fsl_is_digi == 1) {
         this.getCustomerData.address_data?.fsl_digi_cur_address  ?  this.address =  this.getCustomerData.address_data?.fsl_digi_cur_address : ''
-        this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
-        this.source =  this.getCustomerData.address_data?.fsl_is_kra == 1 ? 'KRA' : 'DIGIO'
+        this.source =  'DIGIO'
         this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
         this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
+
+        this.getCustomerData.opportunity_data.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.opportunity_data.fsl_aadhar_no : ''
       }
     }
 }

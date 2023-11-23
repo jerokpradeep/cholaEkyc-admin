@@ -39,19 +39,7 @@ export default {
   methods: {
     activeTab(val) {
       this.$router.push(val.route);
-      this.setActiveTab(val);
-      localStorage.setItem("sidebarTab", val.name);
-    },
-    setActiveTab(val) {
-      let test = this.$store.state.validSteps
-      test.forEach((el) => {
-        if (el.route == val.route) {
-          el.active = true;
-        } else {
-          el.active = false;
-        }
-      });
-      this.$store.commit('setValidSteps', test)
+      this.$store.dispatch('changeTab', val)
     },
     retainCurrentTab() {
       let tab = localStorage.getItem("sidebarTab");
@@ -69,7 +57,7 @@ export default {
   },
   created(){
     let item = this.$store.state.validSteps.filter((el)=> el.route == this.$router.currentRoute.value.path)
-    item.length > 0 ? this.setActiveTab(item[0]) : ''
+    item.length > 0 ? this.$store.dispatch('changeTab', item[0]) : ''
     
   }
 };

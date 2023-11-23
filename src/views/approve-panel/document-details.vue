@@ -3,7 +3,7 @@
         <table class="bg-white w-[50%] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
-                <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class,(($route.query?.path == '/opportunity' || getUserData?.Role == 'RM') && head.name == 'Actions' ? 'hidden' : '')" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
+                <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class,(($route.query?.from == '/opportunity' || getUserData?.Role == 'RM') && head.name == 'Actions' ? 'hidden' : '')" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
                     {{ head.name }}
                 </th>
                 </tr>
@@ -22,7 +22,7 @@
                             </div>
                        </div>
                     </td>
-                    <td v-if="$route.query?.path != '/opportunity' && getUserData?.Role != 'RM'">
+                    <td v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM'">
                         <div class="flex gap-3 items-center">
                             <a v-if="i.status != 'Approved' &&  i.status != 'Rejected'" class="underline text-sm text-teal-500" @click="$store.dispatch('approval/formatJsonDoc', {tab: 7 , status: 'Approved' , remarks: '' , attachmentType :  i['Document Type'], isDoc: true})">Approve</a>
                             <a v-if="i.status != 'Approved' &&  i.status != 'Rejected'" class="underline text-sm text-orange-500" @click="callReject( i['Document Type'])">Reject</a>

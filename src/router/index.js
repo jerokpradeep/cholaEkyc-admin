@@ -50,5 +50,10 @@ router.beforeEach(async (to, from, next) => {
   if(data) {
     store.commit('approval/setDocumentData', data)
   }
+  
+  if(to.path != '/'){
+    let item = store.state.validSteps.filter((el)=> el.route == to.path)
+    item.length > 0 ? store.dispatch('changeTab', item[0]) : ''
+  }
   next()
 })
