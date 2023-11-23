@@ -70,12 +70,13 @@ export default {
       }
 
       if(this.getCustomerData && this.getCustomerData.address_data?.fsl_is_digi == 1) {
-        this.getCustomerData.address_data?.address_line1  ?  this.address=  this.getCustomerData.address_data?.address_line1 : ''
+        this.getCustomerData.address_data?.fsl_digi_cur_address  ?  this.address =  this.getCustomerData.address_data?.fsl_digi_cur_address : ''
         this.getCustomerData.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.fsl_aadhar_no : ''
         this.source =  this.getCustomerData.address_data?.fsl_is_kra == 1 ? 'KRA' : 'DIGIO'
         this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
         this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
       }
+      console.log(this.getCustomerData);
     }
 }
 </script>

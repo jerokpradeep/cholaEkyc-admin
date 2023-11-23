@@ -197,9 +197,8 @@ export default {
     mounted() {
       if(this.getCustomerData) {
         if(this.getCustomerData.opportunity_data){
-          this.getCustomerData.opportunity_data.fsl_occu  ? this.occupation =  this.getCustomerData.opportunity_data.fsl_occu : ''
+          
           this.getCustomerData?.opportunity_data?.annual_revenue == 0 || this.getCustomerData?.opportunity_data?.annual_revenue  ? this.annualIncome = this.getCustomerData?.opportunity_data.annual_revenue : ''
-          this.getCustomerData?.opportunity_data?.fsl_net_worth  ? this.netWorth = this.getCustomerData?.opportunity_data?.fsl_net_worth : ''
           this.getCustomerData?.opportunity_data?.fsl_fatca  ? this.fatca = this.getCustomerData?.opportunity_data?.fsl_fatca : ''
         }
         
@@ -212,7 +211,9 @@ export default {
           this.getCustomerData?.profile_data?.fatca  ? this.fatca = this.getCustomerData?.profile_data?.fatca : ''
           this.getCustomerData?.profile_data?.mother_name ? this.mothersName = this.getCustomerData?.profile_data?.mother_name : ''
           this.getCustomerData?.profile_data?.standinginstructios ? this.standingInstruction = this.getCustomerData?.profile_data?.standinginstructios : '' 
-
+          this.getCustomerData?.profile_data?.occupation  ? this.occupation =  this.getCustomerData?.profile_data?.occupation : ''
+          this.getCustomerData?.profile_data?.trading_experience  ? this.tradingExp =  this.getCustomerData?.profile_data?.trading_experience : ''
+          this.getCustomerData?.profile_data?.net_worth ? this.netWorth = this.getCustomerData?.profile_data?.net_worth : ''
           for(let item of this.standingInstrationsArray){
             if(this.getCustomerData.profile_data[item.key]){
               item.value = this.getCustomerData.profile_data[item.key]
