@@ -10,7 +10,9 @@ const ERPAXIOS = axios.create({
 });
 
 const httpService = {
-  getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity, getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, retryBo
+  getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity,
+  getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, checkBoStatus, nseUccUpload, bseUccUpload, kraUpload, kraFileUpload,
+  bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush
 }
 
 export default httpService
@@ -22,7 +24,6 @@ function getOpportunityList(payload) {
 function login(payload) {
   return ERPAXIOS.get(`api/method/cs_bo.custom_api.ekyc_login.login?email=${payload.emailId}&password=${payload.password}`)
 }
-
 
 function getApprovalList(payload) {
   return WRAPPERAXIOS.get(`ekyc/get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`)
@@ -68,6 +69,46 @@ function sendRejectionMail(payload) {
   return WRAPPERAXIOS.get(`admin/sendRejectionMail?${payload}`)
 }
 
-function retryBo(payload) {
-  return WRAPPERAXIOS.get(`${payload}`)
+function checkBoStatus(payload) {
+  return WRAPPERAXIOS.get(`CheckApi/checkApiStatus?${payload}`)
+}
+
+function nseUccUpload(payload) {
+  return WRAPPERAXIOS.get(`nse/nseUpload?${payload}`)
+}
+
+function bseUccUpload(payload) {
+  return WRAPPERAXIOS.get(`bse/bseUpload?${payload}`)
+}
+
+function kraUpload(payload) {
+  return WRAPPERAXIOS.get(`kra/kraUpload?${payload}`)
+}
+
+function kraFileUpload(payload) {
+  return WRAPPERAXIOS.get(`kra/kraFileUpload?${payload}`)
+}
+
+function bseMfUccUpload(payload) {
+  return WRAPPERAXIOS.get(`BSEMF/BSE?${payload}`)
+}
+
+function bseFatcaUpload(payload) {
+  return WRAPPERAXIOS.get(`BSEFatca/Upload?${payload}`)
+}
+
+function bseStarAOF(payload) {
+  return WRAPPERAXIOS.get(`bse/bseStarAOF?${payload}`)
+}
+
+function pushIwapp(payload) {
+  return WRAPPERAXIOS.get(`iWapp/pushIwapp?${payload}`)
+}
+
+function sendFinalMail(payload) {
+  return WRAPPERAXIOS.get(`account/sendAccDocMail?${payload}`)
+}
+
+function boThreadPush(query, payload) {
+  return WRAPPERAXIOS.post(`Thread/pushMethods?${query}`, payload)
 }

@@ -14,7 +14,8 @@ const state = {
     isDocsLoader: false,
     isMailLoader: false,
     progressPercentage: 0,
-    isReject: false
+    isReject: false,
+    boStatusList: []
 }
 
 const actions = {
@@ -280,21 +281,192 @@ const actions = {
          })
     },
 
-    async retryBo({ state, commit, dispatch, rootGetters }) {
-        httpService.retryBo(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+    async nseUccUpload({ state, commit, dispatch, rootGetters }) {
+        httpService.nseUccUpload(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
             if(resp.status == 200 && resp.data.message == 'Success'){
-                // dispatch('errorLog/toaster',{data: {
-                //     "title": resp.data.reason,
-                //     "type": "success",
-                //     "message": '',
-                //     "duration": 4500
-                // },position: ''}, {root: true})
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
             }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => {  
             
-         })
+        })
+    },
+
+    async bseUccUpload({ state, commit, dispatch, rootGetters }) {
+        httpService.bseUccUpload(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async kraUpload({ state, commit, dispatch, rootGetters }) {
+        httpService.kraUpload(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async kraFileUpload({ state, commit, dispatch, rootGetters }) {
+        httpService.kraFileUpload(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async bseMfUccUpload({ state, commit, dispatch, rootGetters }) {
+        httpService.bseMfUccUpload(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+    
+    async bseFatcaUpload({ state, commit, dispatch, rootGetters }) {
+        httpService.bseFatcaUpload(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async bseStarAOF({ state, commit, dispatch, rootGetters }) {
+        httpService.bseStarAOF(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async pushIwapp({ state, commit, dispatch, rootGetters }) {
+        httpService.pushIwapp(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async boThreadPush({ state, commit, dispatch, rootGetters }) {
+        let data = {
+            "ids":  [state.customerData?.opportunity_data?.name]
+        }
+        let query = `userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`
+        httpService.boThreadPush(query, data).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async sendFinalMail({ state, commit, dispatch, rootGetters }) {
+        httpService.sendFinalMail(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
+    },
+
+    async checkBoStatus({ state, commit, dispatch, rootGetters }) {
+        await httpService.checkBoStatus(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success' && resp.data.result?.length){
+                commit('setBoStatusList', resp.data.result)
+            } else {
+                commit('setBoStatusList', [])
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
     },
 };
 
@@ -349,6 +521,9 @@ const mutations = {
     },
     setIsReject(state, payload) {
         state.isReject = payload
+    },
+    setBoStatusList(state, payload) {
+        state.boStatusList = payload
     }
 };
 
@@ -366,7 +541,8 @@ const getters = {
     getIsDocsLoader: state => state.isDocsLoader,
     getIsMailLoader: state => state.isMailLoader,
     getProgressPercentage: state => state.progressPercentage,
-    getIsReject: state => state.isReject
+    getIsReject: state => state.isReject,
+    getBoStatusList: state => state.boStatusList
 };
 
 const approval = {

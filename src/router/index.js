@@ -15,6 +15,7 @@ const router = createRouter({
       children: [
         { path: '/dashboard', component: () => import('../views/dashboard.vue') },
         { path: '/opportunity', component: () => import('../views/opportunity/opportunity.vue')},
+        { path: '/viewOpportunity', component: () => import('../views/opportunity/viewOpportunity.vue')},
         { path: '/kycapproval', component: () => import('../views/kyc-approval.vue') },
         { path: '/re', component: () => import('../views/reconcellation.vue') },
         { path: '/lead', component: () => import('../views/lead.vue') },
