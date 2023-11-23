@@ -137,7 +137,7 @@ const store = createStore({
       })
     },
     navigateSteps({state, commit}, payload){
-      if(payload == 'EKYC Employee'){
+      if(payload == 'EKYC Employee' || payload == 'RM'){
         let approval = state.tempSteps.filter((el)=>el.name == 'Approval' || el.name == 'Opportunity')
         approval[0].active = true
         commit('setValidSteps', [...approval])

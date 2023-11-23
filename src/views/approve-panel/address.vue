@@ -76,7 +76,6 @@ export default {
         this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
         this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
       }
-      console.log(this.getCustomerData);
     }
 }
 </script>
