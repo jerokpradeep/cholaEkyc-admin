@@ -58,6 +58,22 @@
                         {{ getCustomerData?.opportunity_data?.fsl_pan_no }}
                     </div>
                 </div>
+                <div>
+                    <div class="text-xs mb-2 secondaryColor">
+                        Branch
+                    </div>
+                    <div class="text-sm">
+                        {{ getCustomerData?.opportunity_data?.fsl_branch }}
+                    </div>
+                </div>
+                <div>
+                    <div class="text-xs mb-2 secondaryColor">
+                        Refer By
+                    </div>
+                    <div class="text-sm">
+                        {{ getCustomerData?.opportunity_data?.fsl_referral_by }}
+                    </div>
+                </div>
             </div>
 
             <div>

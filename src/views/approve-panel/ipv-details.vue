@@ -72,9 +72,16 @@ export default {
     },
     mounted() {
       if(this.getCustomerData && this.getCustomerData.document_data) {
-        this.capturedDate =  window.formatDate(this.getCustomerData?.document_data?.creation,'D&T')
-        this.latitude =  this.getCustomerData.document_data?.latitude
-        this.longitude =  this.getCustomerData.document_data?.longitude
+      let ipvArray = this.getCustomerData.document_data.filter((el)=>{
+        return el.document_type.toString().toLowerCase() == 'ipv'
+      })
+      let ipvData;
+      ipvArray && ipvArray.length > 0 ? ipvData = ipvArray[0] : ''
+      if(ipvData){
+        this.capturedDate =  window.formatDate(ipvData?.creation,'D&T')
+        this.latitude =  ipvData?.latitude
+        this.longitude =  ipvData?.longitude
+      }
         
       } 
       this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=IPV&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'IPV' })

@@ -37,7 +37,7 @@ const actions = {
               } : tempToaster = {
                 "title": "",
                 "type": "danger",
-                "message":  payload.response.data,
+                "message":  payload.response.data ? payload.response.data : payload.response.status,
                 "duration": 4500
               }
             dispatch('resetLocal', true)

@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
 
-                                <div class="sm:col-span-12">
+                                <!-- <div class="sm:col-span-12">
                                     <label for="panNumber"
                                         class="block text-sm font-medium leading-6 text-gray-900">Address</label>
                                     <div class="mt-2 max-w-[425px]">
@@ -96,10 +96,112 @@
                                             class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                                             disabled v-model="i.address" />
                                     </div>
+                                </div> -->
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                                    <div class="mt-2">
+                                        <textarea type="text" id="panNumber"  readonly
+                                            class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.address" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="i.guardian">
+                            <div class="flex justify-between gap-3">
+                        <div class="text-sm font-semibold">
+                            Guardian
+                        </div>
+                    </div>
+                            <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-gray-900/10 pb-12 md:grid-cols-2 my-4">
+                            <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 md:col-span-2">
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="nameAsPan"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.name" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="nameAsPan"
+                                        class="block text-sm font-medium leading-6 text-gray-900">DOB</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="nameAsPan"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.dob" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Mobile
+                                        No.</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="panNumber"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.mobNo" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Email
+                                        ID</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="panNumber"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.emailId" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Proof
+                                        Type</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="panNumber"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.proofType" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Proof
+                                        ID</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="panNumber"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.proofId" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Relation OF
+                                        Nominee</label>
+                                    <div class="mt-2">
+                                        <input type="text" id="panNumber"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.relationOfNominee" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                                    <div class="mt-2">
+                                        <textarea type="text" id="panNumber"  readonly
+                                            class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.guardian.address" />
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
+                        </div>
+                        
                         <div class="w-full flex justify-end" v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM'">
                             <div class="flex gap-1 justify-center items-center min-w-[120px] h-[36px] py-2 rounded-lg text-white font-bold"
                             :class="getStatusForPage(i.nomineeId) == 'Approved' ? 'bg-green-700' : 'bg-red-700'"
@@ -206,7 +308,8 @@ export default {
             for (let item of this.getCustomerData.opportunity_data.fsl_nominee_table) {
 
                 this.nomineeList.push({ name: item.name, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number,
-                address: `${item?.address} ${item?.address_2}`
+                address: `${item?.address},${item?.address_2}`, guardian: underAgeValidate(window.formatDate(item.date_of_birth, 'D')) && !item.proof_id && !item.proof_type ? {name: item.name, dob: window.formatDate(item.guardian_dob, 'D'), emailId: item.guardian_email_id, mobNo: item.guardian_phone_no, proofId: item.guardian_proof_id, proofType: item.guardian_prooftype, relationOfNominee: item.guardian_relationship,
+                address: `${item?.guardian_address1}`} : null
             })
             }
             if (this.nomineeList.length > 0) {
@@ -215,4 +318,20 @@ export default {
         }
     }
 }
+function underAgeValidate(birthday){
+	// it will accept two types of format yyyy-mm-dd and yyyy/mm/dd
+    birthday = [new Date(birthday).getFullYear(), new Date(birthday).getMonth() > 9 ? new Date(birthday).getMonth() : `0${new Date(birthday).getMonth()}`, new Date(birthday).getDate() > 9 ? new Date(birthday).getDate() : `0${new Date(birthday).getDate()}`].join('-')
+	var optimizedBirthday = birthday.toString().replace(/-/g, "/");
+	//set date based on birthday at 01:00:00 hours GMT+0100 (CET)
+	var myBirthday = new Date(optimizedBirthday);
+
+	// set current day on 01:00:00 hours GMT+0100 (CET)
+	var currentDate = new Date().toJSON().slice(0,10)+' 01:00:00';
+    
+	// calculate age comparing current date and borthday
+	var myAge = ~~((Date.now(currentDate) - myBirthday) / (31557600000));
+    let isUnderAge
+    myAge < 18 ? isUnderAge = true : isUnderAge = false
+    return isUnderAge;
+} 
 </script>

@@ -62,7 +62,7 @@ export default {
       
 
       if(this.getCustomerData && this.getCustomerData.address_data?.fsl_is_kra == 1) {
-        this.getCustomerData.address_data?.fsl_kra_address_1  ?  this.address =  this.getCustomerData.address_data?.fsl_kra_address_1 + this.getCustomerData.address_data?.fsl_kra_address_2 + this.getCustomerData.address_data?.fsl_kra_address_3 : ''
+        this.address = `${this.getCustomerData.address_data?.fsl_kra_address_1 ? this.getCustomerData.address_data?.fsl_kra_address_1 : ''}, ${this.getCustomerData.address_data?.fsl_kra_address_2  ? this.getCustomerData.address_data?.fsl_kra_address_2 : ''}, ${this.getCustomerData.address_data?.fsl_kra_address_3 ? this.getCustomerData.address_data?.fsl_kra_address_3 : ''}`
          this.aadharNo = ''
         this.source =  'KRA'
         this.getCustomerData.address_data?.fsl_kra_address_proof  ? this.kraAddressProof = this.getCustomerData.address_data?.fsl_kra_address_proof : ''

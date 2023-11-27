@@ -37,12 +37,12 @@
             </div>
           </div>
 
-          <div class="sm:col-span-3">
+          <!-- <div class="sm:col-span-3">
             <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Branch</label>
             <div class="mt-2">
               <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="branch"/>
             </div>
-          </div>
+          </div> -->
       </div>
       <div class="my-6" v-if="getIsReject">
         <button @click="sendMail()" class="flex justify-center items-center min-w-[130px] h-[36px] py-2 px-4 rounded-lg text-xs text-white font-bold bg-[#753ED7]">
@@ -90,7 +90,7 @@ export default {
         this.startDate = window.formatDate(this.cutomerData?.opportunity_data?.creation,'D&T')
         this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified,'D&T')
         this.modeOfApplication = this.cutomerData?.opportunity_data?.fsl_mode_of_application || this.cutomerData?.opportunity_data?.fsl_modeofapplication
-        this.branch = this.cutomerData?.opportunity_data?.fsl_branch
+        // this.branch = this.cutomerData?.opportunity_data?.fsl_branch
     },
 }
 </script>
