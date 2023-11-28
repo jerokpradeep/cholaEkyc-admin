@@ -10,7 +10,7 @@ import bo from "./modules/bo.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '28_11_2023_20_20',
+    buildDate: '28_11_2023_21_20',
     isLogout: false,
     tempSteps: [
       {
@@ -56,6 +56,14 @@ const store = createStore({
         {
           name: "Ckyc Download",
           route: "/ckycReport",
+          icon: "Reports",
+          status: "active",
+          active: false,
+          svg: "download",
+        },
+        {
+          name: "URL Generation",
+          route: "/urlgeneration",
           icon: "Reports",
           status: "active",
           active: false,
@@ -153,7 +161,10 @@ const store = createStore({
     },
     navigateSteps({state, commit}, payload){
       if(payload == 'EKYC Employee' || payload == 'RM'){
-        let approval = state.tempSteps.filter((el)=>el.name == 'Approval' || el.name == 'Opportunity')
+        let empArr = ['Approval' , 'Opportunity']
+        let rmArr = ['Approval' , 'Opportunity', 'URL Generation']
+        let validArr = payload == 'EKYC Employee'? empArr : payload == 'RM' ? rmArr : []
+        let approval = state.tempSteps.filter((el)=> validArr.includes(el.name))
         approval[0].active = true
         commit('setValidSteps', [...approval])
         router.push(approval[0].route).catch(()=>{})

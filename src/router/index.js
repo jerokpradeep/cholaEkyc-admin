@@ -22,6 +22,7 @@ const router = createRouter({
         { path: '/approvepanel', component: () => import('../views/approve-panel/approve-panel.vue') },
         { path: '/preview', component: () => import('../views/image-preview.vue') },
         { path: '/ckycReport', component: () => import('../views/ckycReport.vue') },
+        { path: '/urlgeneration', component: () => import('../views/urlGeneration.vue') },
       ],
     },
   ]

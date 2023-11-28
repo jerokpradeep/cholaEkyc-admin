@@ -32,6 +32,30 @@ const actions = {
         }).finally(() => {  
             
         })
+    },
+   async callGenUrl({dispatch}, payload){
+      await  httpService.genrateUrl(payload.query, payload.json).then(async resp =>{
+            if(resp.status == 200 && resp.data.stat == 0){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.message ? resp.data.message : resp.data.reason,
+                    "type": "danger",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+            if(resp.status == 200 && resp.data.stat == 1){
+                dispatch('errorLog/toaster',{data: {
+                    "title": resp.data.reason,
+                    "type": "success",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+            }
+          }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  
+            
+        })
     }
 }
 
