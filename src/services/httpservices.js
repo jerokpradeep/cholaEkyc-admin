@@ -12,7 +12,7 @@ const ERPAXIOS = axios.create({
 const httpService = {
   getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity,
   getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, checkBoStatus, nseUccUpload, bseUccUpload, kraUpload, kraFileUpload,
-  bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush
+  bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush, generateCkyc
 }
 
 export default httpService
@@ -111,4 +111,7 @@ function sendFinalMail(payload) {
 
 function boThreadPush(query, payload) {
   return WRAPPERAXIOS.post(`Thread/pushMethods?${query}`, payload)
+}
+function generateCkyc(query) {
+  return WRAPPERAXIOS.get(`iWapp/genCKYCFiles?${query}`)
 }

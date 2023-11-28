@@ -6,10 +6,11 @@ import login from "./modules/login.js"
 import approval from "./modules/approval.js"
 import httpService from "../services/httpservices.js";
 import router from "../router/index.js";
+import bo from "./modules/bo.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '28_11_2023_14_10',
+    buildDate: '28_11_2023_20_20',
     isLogout: false,
     tempSteps: [
       {
@@ -52,6 +53,14 @@ const store = createStore({
           active: false,
           svg: "newsIcon",
         },
+        {
+          name: "Ckyc Download",
+          route: "/ckycReport",
+          icon: "Reports",
+          status: "active",
+          active: false,
+          svg: "download",
+        },
     ],
     validSteps: [],
     defaultQueries: {
@@ -60,6 +69,9 @@ const store = createStore({
       },
       kycapproval: {
         query: { tab: 0 },
+      },
+      opportunity: {
+        query: { tab: 0}
       }
     },
     queries: {
@@ -68,6 +80,9 @@ const store = createStore({
       },
       kycapproval: {
         query: { tab: 0 },
+      }, 
+      opportunity: {
+        query: { tab: 0}
       }
     },
     activeTab: 0,
@@ -158,6 +173,6 @@ const store = createStore({
   getters: {
     getIsLogoutLoader: (state) => state.isLogoutLoader
   },
-  modules: { opportunity, tabs, errorLog, login, approval },
+  modules: { opportunity, tabs, errorLog, login, approval, bo },
 });
 export default store

@@ -1,9 +1,9 @@
 <template>
-    <div class="pb-12 flex flex-wrap gap-4">
+    <div class="pb-12 flex flex-wrap gap-4" v-if="getDocuments && getDocuments.length > 0">
         <table class="bg-white w-[50%] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
-                <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class,(($route.query?.from == '/opportunity' || getUserData?.Role == 'RM') && head.name == 'Actions' ? 'hidden' : '')" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
+                <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
                     {{ head.name }}
                 </th>
                 </tr>
@@ -43,9 +43,9 @@
         <div class="col-span-6 w-[45%]">  
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <div class="my-4">
-            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow" @click="goToPreview()">Compare documents</button>
+            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData && this.documentName != 'INCOME_PROOF'"  @click="$router.push({path:'/preview', query: $route.query})">Compare documents</button>
           </div>
-            <div class="rounded-lg h-[320px]" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData">
+            <div class="rounded-lg h-[320px]" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData && this.documentName != 'INCOME_PROOF'">
                 <!-- <img class="h-full w-full cursor-pointer object-contain" :src="getDocumentData" alt="panImage"> -->
                 <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
                     :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
@@ -58,7 +58,7 @@
           
         </div>
     </div>
-   
+    <div v-else class="flex items-center justify-center min-h-[50vh]">No Documents Found</div>
     <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" :active-tab="'7'" @send-remarks="getRemarks"/>
 </template>
 
@@ -133,7 +133,6 @@ export default {
         this.remarks = data.remarks
         this.isRejectDialog = data.isOpen
         if(this.remarks){
-            // this.$store.dispatch('approval/formatJson', {tab: 7 , status: 'Rejected' , remarks: this.remarks , attachmentType: this.currentDoc})
             this.$store.dispatch('approval/formatJsonDoc', {tab: 7 , status: 'Rejected' , remarks: this.remarks , attachmentType: this.currentDoc})    
         }
       },
@@ -142,10 +141,6 @@ export default {
         this.currentDoc = item
         this.remarks = ''
         this.isRejectDialog = true
-      },
-
-      goToPreview() {
-        this.$router.push('/preview')
       },
 
       async resetDocStatus(status, docType) {
@@ -163,7 +158,13 @@ export default {
         this.previewDocument(this.documentName)
     },
     async created() {
-      await this.$store.dispatch('approval/getDocuments')
+      await this.$store.dispatch('approval/getDocuments');
+      
+      if(this.$route.query?.from == '/opportunity' || this.getUserData?.Role == 'RM'){
+        let rmHeader = this.tableHeads.filter(el => el.name != 'Actions')
+        this.tableHeads = rmHeader
+      }
+      
     }
 }
 </script>

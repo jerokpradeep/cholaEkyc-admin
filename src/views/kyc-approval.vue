@@ -240,8 +240,8 @@ export default {
     },
   },
   created() {
-    this.$store.commit('setActiveTab', this.$store.state.queries['kycapproval'].query.tab)
-    this.changeTab(this.$store.state.queries['kycapproval'].query.tab)
+    this.$store.commit('setActiveTab', this.$store.state.queries?.kycapproval ? this.$store.state.queries?.kycapproval.query.tab : 0)
+    this.changeTab(this.$store.state.queries?.kycapproval ? this.$store.state.queries?.kycapproval.query.tab : 0)
   },
 }
 </script>

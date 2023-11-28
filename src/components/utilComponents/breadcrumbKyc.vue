@@ -29,12 +29,12 @@ export default {
   methods: {
     handleClick(page) {
       if(page.isRoute) {
-        this.$router.push(`/${page.name.toLowerCase()}`).catch(() => { })
+        this.$router.push({path: page.isReplace ? '/approvepanel' :`/${page.name.toLowerCase()}`,  query: page.isReplace ? this.$route.query : {}}).catch(() => { })
       }
     }
   },
   mounted() {
-    this.pages.push({ name: `${this.$route.query.from.charAt(0).toUpperCase() + this.$route.query.from.slice(1) }`, current: false , isRoute: true})
+    this.pages.push({isReplace: this.$route.path.replace('/', '') == 'preview',name: this.$route.path.replace('/', '') == 'preview' ? 'Back' : `${this.$route.query.from.charAt(0).toUpperCase() + this.$route.query.from.slice(1) }`, current: false , isRoute: true})
     this.pages.push({ name: `${this.getCustomerData?.opportunity_data?.fsl_user_name}`, current: true, isRoute: false })
   },
 }

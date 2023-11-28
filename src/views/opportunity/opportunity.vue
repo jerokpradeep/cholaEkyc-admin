@@ -75,9 +75,10 @@ export default {
       }
     },
   },
-  mounted() {
-    this.changeTab(0)
-  }
+  created() {
+    this.$store.commit('setActiveTab', this.$store.state.queries?.opportunity ? this.$store.state.queries?.opportunity.query.tab : 0)
+    this.changeTab(this.$store.state.queries?.opportunity ? this.$store.state.queries?.opportunity.query.tab : 0)
+  },
 };
 </script>
 

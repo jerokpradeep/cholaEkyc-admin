@@ -391,7 +391,7 @@ export default {
         },
     },
     created(){
-        this.currentTab = this.$store.state.queries['approvepanel'].query.tab
+        this.currentTab = this.$store.state.queries?.approvepanel ? this.$store.state.queries?.approvepanel.query.tab : 0
         this.$store.commit('setActiveTab', this.currentTab)
     },
     mounted() {

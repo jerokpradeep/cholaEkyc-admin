@@ -21,6 +21,7 @@ const router = createRouter({
         { path: '/lead', component: () => import('../views/lead.vue') },
         { path: '/approvepanel', component: () => import('../views/approve-panel/approve-panel.vue') },
         { path: '/preview', component: () => import('../views/image-preview.vue') },
+        { path: '/ckycReport', component: () => import('../views/ckycReport.vue') },
       ],
     },
   ]

@@ -15,7 +15,8 @@ const state = {
     isMailLoader: false,
     progressPercentage: 0,
     isReject: false,
-    boStatusList: []
+    boStatusList: [], 
+    documents: []
 }
 
 const actions = {
@@ -458,7 +459,12 @@ const actions = {
     async checkBoStatus({ state, commit, dispatch, rootGetters }) {
         await httpService.checkBoStatus(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
             if(resp.status == 200 && resp.data.message == 'Success' && resp.data.result?.length){
-                commit('setBoStatusList', resp.data.result)
+                commit('setBoStatusList', [...resp.data.result , {
+                    "key": "Generate CKYC",
+                    "value": null,
+                    "reason": null,
+                    "applicationId": null
+                  }])
             } else {
                 commit('setBoStatusList', [])
             }

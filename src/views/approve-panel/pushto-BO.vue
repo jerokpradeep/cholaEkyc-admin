@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-start px-10 py-5">
+    <div class="flex justify-start px-10 py-5" >
         <button type="button"
             class="rounded-md min-w-[150px] bg-white border px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline"
             @click="this.$store.state.approval.backOfficeLoader ? '' : this.$store.dispatch('approval/callBo')">
@@ -34,6 +34,10 @@
                         {{ 'Retry' }}
                         </span>
                     </button>
+                    <button v-if="item.key == 'Generate CKYC'" @click="checkStatus()" class="inline-block p-2 border  rounded " type="button"> <span class="flex gap-1 items-center" >
+                        {{ 'Generate' }}
+                        </span>
+                    </button>
                 </td>
             </tr>
            
@@ -46,91 +50,17 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            list: [
-                {
-                    name: 'LD Back office Push',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'Client code',
-                    status: 'Failed',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'NSE',
-                    status: 'Success',
-                    remarks: 'test',
-                    Action: ''
-                },
-                {
-                    name: 'BSE',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'KRA Upload',
-                    status: 'Failed',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'Digilocker XML upload',
-                    status: 'Success',
-                    remarks: 'test',
-                    Action: ''
-                },
-                {
-                    name: 'KRA Image Upload',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'Push to BSEstarMF',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'Push to BSEstarMF Fatca',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'Push to BSEstarMF AOF',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'Push to Iwapp',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                },
-                {
-                    name: 'CKYC Data',
-                    status: 'Success',
-                    remarks: '',
-                    Action: ''
-                }
-            ],
             tableHeads: [
                 { name: "S.No", class: "text-center" },
                 { name: "Name", class: "text-left" },
                 { name: "Status", class: "text-center" },
                 { name: "Reason", class: "text-left" },
                 { name: "Action", class: "text-center" },
-            ],
+            ]
         }
     },
     computed: {
-        ...mapGetters('approval', ['getBoStatusList'])
+        ...mapGetters('approval', ['getBoStatusList', 'getStageData'])
     },
     methods: {
         async retryBo(type) {
@@ -153,10 +83,26 @@ export default {
             } else if(type == 'push to Iwapp') {
                 this.$store.dispatch('approval/pushIwapp')
             }
+        },
+        checkStatus(){
+            let clientCode = this.getBoStatusList.filter(el =>{
+               return el.key && el.key == 'Client Code' && el.value && el.value == 'Success' && el.reason
+            })
+            clientCode && clientCode.length > 0 ? this.$store.dispatch('bo/callckyc') : this.$store.dispatch('errorLog/toaster',{data: {
+                    "title": `You can't have to generate CKYC URL`,
+                    "type": "danger",
+                    "message": 'kindly try after client code generated.',
+                    "duration": 4500
+                },position: ''}, {root: true})
         }
     },
     async created() {
-        await this.$store.dispatch('approval/checkBoStatus')
+        await this.$store.dispatch('approval/checkBoStatus');
+        // if(this.$route.query?.id) {
+        //   await this.$store.dispatch('approval/getStageDetails', this.$route.query?.id).finally(()=> {
+        //     isValid
+        //   })
+        // }
     },
 }
 </script>
