@@ -4,7 +4,7 @@
           <div class="col-span-full">
             <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Address</label>
             <div class="mt-2">
-                <textarea disabled name="message" id="message" rows="4" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" v-model="address"></textarea>
+                <textarea disabled name="message" id="message" rows="5" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" v-html="address"></textarea>
             </div>
           </div>
           <div class="col-span-full">
@@ -62,7 +62,7 @@ export default {
       
 
       if(this.getCustomerData && this.getCustomerData.address_data?.fsl_is_kra == 1) {
-        this.address = `${this.getCustomerData.address_data?.fsl_kra_address_1 ? this.getCustomerData.address_data?.fsl_kra_address_1 : ''}, ${this.getCustomerData.address_data?.fsl_kra_address_2  ? this.getCustomerData.address_data?.fsl_kra_address_2 : ''}, ${this.getCustomerData.address_data?.fsl_kra_address_3 ? this.getCustomerData.address_data?.fsl_kra_address_3 : ''}`
+        this.address = `${this.getCustomerData.address_data?.fsl_kra_address_1 ? this.getCustomerData.address_data?.fsl_kra_address_1 : ''}&#013;&#010;${this.getCustomerData.address_data?.fsl_kra_address_2  ? this.getCustomerData.address_data?.fsl_kra_address_2 : ''}&#013;&#010;${this.getCustomerData.address_data?.fsl_kra_address_3 ? this.getCustomerData.address_data?.fsl_kra_address_3 : ''}&#013;&#010;${this.getCustomerData.address_data?.fsl_kra_city ? this.getCustomerData.address_data?.fsl_kra_city : ''} - ${this.getCustomerData.address_data?.fsl_kra_per_pin ? this.getCustomerData.address_data?.fsl_kra_per_pin : ''}&#013;&#010;${this.getCustomerData.address_data?.fsl_kra_per_state ? this.getCustomerData.address_data?.fsl_kra_per_state : ''}, ${this.getCustomerData.address_data?.fsl_kra_country ? this.getCustomerData.address_data?.fsl_kra_country : ''}.`
          this.aadharNo = ''
         this.source =  'KRA'
         this.getCustomerData.address_data?.fsl_kra_address_proof  ? this.kraAddressProof = this.getCustomerData.address_data?.fsl_kra_address_proof : ''

@@ -87,23 +87,13 @@
                                             disabled v-model="i.relationOfNominee" />
                                     </div>
                                 </div>
-
-                                <!-- <div class="sm:col-span-12">
-                                    <label for="panNumber"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Address</label>
-                                    <div class="mt-2 max-w-[425px]">
-                                        <textarea type="text" id="panNumber"  readonly
-                                            class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                                            disabled v-model="i.address" />
-                                    </div>
-                                </div> -->
                                 <div class="sm:col-span-3">
                                     <label for="panNumber"
                                         class="block text-sm font-medium leading-6 text-gray-900">Address</label>
                                     <div class="mt-2">
                                         <textarea type="text" id="panNumber"  readonly
                                             class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                                            disabled v-model="i.address" />
+                                            disabled v-html="i.address" rows="5" />
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +184,7 @@
                                     <div class="mt-2">
                                         <textarea type="text" id="panNumber"  readonly
                                             class="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                                            disabled v-model="i.guardian.address" />
+                                            disabled v-html="i.guardian.address" rows="5" />
                                     </div>
                                 </div>
 
@@ -307,9 +297,9 @@ export default {
 
             for (let item of this.getCustomerData.opportunity_data.fsl_nominee_table) {
 
-                this.nomineeList.push({ name: item.name, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number,
-                address: `${item?.address},${item?.address_2}`, guardian: underAgeValidate(window.formatDate(item.date_of_birth, 'D')) && !item.proof_id && !item.proof_type ? {name: item.name, dob: window.formatDate(item.guardian_dob, 'D'), emailId: item.guardian_email_id, mobNo: item.guardian_phone_no, proofId: item.guardian_proof_id, proofType: item.guardian_prooftype, relationOfNominee: item.guardian_relationship,
-                address: `${item?.guardian_address1}`} : null
+                this.nomineeList.push({ name: `${item.nominee_fname} ${item.nominee_lname}`, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number,
+                address: `${item?.address}&#013;&#010;${item?.address_2}&#013;&#010;${item?.city} - ${item?.pincode}&#013;&#010;${item?.state}`, guardian: underAgeValidate(window.formatDate(item.date_of_birth, 'D')) && !item.proof_id && !item.proof_type ? {name:  `${item.guardian_fname} ${item.guardian_lname}`, dob: window.formatDate(item.guardian_dob, 'D'), emailId: item.guardian_email_id, mobNo: item.guardian_phone_no, proofId: item.guardian_proof_id, proofType: item.guardian_prooftype, relationOfNominee: item.guardian_relationship,
+                address: `${item?.guardian_address1}&#013;&#010;${item?.guardian_address2}&#013;&#010;${item?.guardian_city} - ${item?.guardian_pincode}&#013;&#010;${item?.guardian_state}`} : null
             })
             }
             if (this.nomineeList.length > 0) {

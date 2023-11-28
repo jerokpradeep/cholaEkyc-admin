@@ -198,12 +198,11 @@ export default {
     mounted() {
       if(this.getCustomerData) {
         if(this.getCustomerData.opportunity_data){
-          
-          this.getCustomerData?.opportunity_data?.annual_revenue == 0 || this.getCustomerData?.opportunity_data?.annual_revenue  ? this.annualIncome = this.getCustomerData?.opportunity_data.annual_revenue : ''
           this.getCustomerData?.opportunity_data?.fsl_fatca  ? this.fatca = this.getCustomerData?.opportunity_data?.fsl_fatca : ''
         }
         
         if(this.getCustomerData.profile_data){
+          this.getCustomerData?.profile_data?.annual_income  ? this.annualIncome = this.getCustomerData?.profile_data.annual_income : ''
           this.getCustomerData?.profile_data.father_name  ?  this.fathersName =  this.getCustomerData?.profile_data?.father_name : ''
           this.getCustomerData?.profile_data?.marital_status  ? this.maritalStatus = this.getCustomerData?.profile_data?.marital_status : ''
           this.getCustomerData?.profile_data?.political_exposure  ? this.isPoliticalExposedPerson = this.getCustomerData?.profile_data?.political_exposure : ''

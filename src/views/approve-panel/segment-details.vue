@@ -108,10 +108,6 @@ export default {
                 value: "",
               },
               {
-                field: 'SLB - BSE',
-                value: "",
-              },
-              {
                 field: 'Currency Derivatives - NSE',
                 value: "",
               },
@@ -174,16 +170,16 @@ export default {
         this.tableData[5].value = this.getCustomerData.opportunity_data.fsl_mf_phy_or_dig
       }
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_slb')){
-        this.tableData[6].value =  this.tableData[7].value = this.getCustomerData.opportunity_data.fsl_slb == 1 ? "Yes" : 'No'
+        this.tableData[6].value = this.getCustomerData.opportunity_data.fsl_slb == 1 ? "Yes" : 'No'
       }
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_currency_derivatives')){
-        this.tableData[8].value = this.getCustomerData.opportunity_data.fsl_currency_derivatives == 1 ? "Yes" : 'No'
+        this.tableData[7].value = this.getCustomerData.opportunity_data.fsl_currency_derivatives == 1 ? "Yes" : 'No'
       }
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_currency_derivatives_type')){
-        this.tableData[9].value = this.getCustomerData.opportunity_data.fsl_currency_derivatives_type
+        this.tableData[8].value = this.getCustomerData.opportunity_data.fsl_currency_derivatives_type
       }
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_consent')){
-        this.tableData[10].value = this.getCustomerData.opportunity_data.fsl_consent == 1 ? "Yes" : 'No'
+        this.tableData[9].value = this.getCustomerData.opportunity_data.fsl_consent == 1 ? "Yes" : 'No'
       }
 
       if(this.getCustomerData && this.getCustomerData.trading_scheme && this.getCustomerData.trading_scheme.hasOwnProperty('trading_scheme')){
