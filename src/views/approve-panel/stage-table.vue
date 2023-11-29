@@ -240,11 +240,6 @@ export default {
             let d = data?.trim()
             return d && d != "null" ? d : 'Open'
         }
-    },
-    mounted() {
-        if(this.$route.query?.id) {
-            this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
-        }
     }
 }
 </script>

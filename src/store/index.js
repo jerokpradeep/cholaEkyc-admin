@@ -10,7 +10,7 @@ import bo from "./modules/bo.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '28_11_2023_21_20',
+    buildDate: '29_11_2023_19_15',
     isLogout: false,
     tempSteps: [
       {
@@ -161,8 +161,8 @@ const store = createStore({
     },
     navigateSteps({state, commit}, payload){
       if(payload == 'EKYC Employee' || payload == 'RM'){
-        let empArr = ['Approval' , 'Opportunity']
-        let rmArr = ['Approval' , 'Opportunity', 'URL Generation']
+        let empArr = ['Approval' , 'Opportunity' , 'Ckyc Download']
+        let rmArr = ['Approval' , 'Opportunity', 'Ckyc Download', 'URL Generation']
         let validArr = payload == 'EKYC Employee'? empArr : payload == 'RM' ? rmArr : []
         let approval = state.tempSteps.filter((el)=> validArr.includes(el.name))
         approval[0].active = true

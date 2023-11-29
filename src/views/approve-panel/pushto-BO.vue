@@ -1,5 +1,6 @@
 <template>
-    <div class="flex justify-start px-10 py-5" >
+    <div v-if="isShowed">
+        <div class="flex justify-start px-10 py-5" >
         <button type="button"
             class="rounded-md min-w-[150px] bg-white border px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline"
             @click="this.$store.state.approval.backOfficeLoader ? '' : this.$store.dispatch('approval/callBo')">
@@ -43,6 +44,8 @@
            
         </tbody>
     </table>
+    </div>
+    <div v-else class="flex items-center justify-center min-h-[50vh]">Stages are not approved yet</div>
 </template>
 
 <script>
@@ -56,11 +59,12 @@ export default {
                 { name: "Status", class: "text-center" },
                 { name: "Reason", class: "text-left" },
                 { name: "Action", class: "text-center" },
-            ]
+            ],
+            isShowed: false
         }
     },
     computed: {
-        ...mapGetters('approval', ['getBoStatusList', 'getStageData'])
+        ...mapGetters('approval', ['getBoStatusList', 'getStageData', 'getStageData', 'getDocuments', 'getDocumentData']),
     },
     methods: {
         async retryBo(type) {
@@ -94,15 +98,47 @@ export default {
                     "message": 'kindly try after client code generated.',
                     "duration": 4500
                 },position: ''}, {root: true})
+        },
+        async ValidateStatus(){
+            let isStage = false
+
+            if(this.getStageData){
+                let tempStage = []
+                let keys = []
+                for(let key in this.getStageData){
+                    
+                    if(key == 'nominee' && this.getStageData[key] && this.getStageData[key].length > 0){
+                        let isNominee = this.getStageData[key].every(function(nominee){
+                        return nominee.status && nominee.status == 'Approved'
+                    })
+                    keys.push(key)  
+                    isNominee ? tempStage.push(key) : ''
+                    }else {
+                        if(this.getStageData[key] && this.getStageData[key].toString().toLowerCase() == 'approved'){
+                            tempStage.push(key)
+                            keys.push(key)
+                        }
+                    }
+                    
+                }
+                isStage = keys.length == tempStage.length
+            }
+            let isDocs = false
+            if(this.getDocuments && this.getDocuments.length > 0){
+                let tepDocs = this.getDocuments.filter(el => el.status && el.status.toString().toLowerCase() == 'approved')
+                isDocs = tepDocs.length == this.getDocuments.length
+            }
+           this.isShowed = isDocs && isStage
         }
     },
     async created() {
-        await this.$store.dispatch('approval/checkBoStatus');
-        // if(this.$route.query?.id) {
-        //   await this.$store.dispatch('approval/getStageDetails', this.$route.query?.id).finally(()=> {
-        //     isValid
-        //   })
-        // }
+        await this.$store.dispatch('approval/getDocuments')
+        if(this.$route.query?.id ) {
+        await this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
+        }
+        await this.ValidateStatus().finally(() => {
+            this.isShowed ? this.$store.dispatch('approval/checkBoStatus') : ''
+        })
     },
 }
 </script>

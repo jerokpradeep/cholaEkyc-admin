@@ -12,7 +12,7 @@ const ERPAXIOS = axios.create({
 const httpService = {
   getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity,
   getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, checkBoStatus, nseUccUpload, bseUccUpload, kraUpload, kraFileUpload,
-  bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush, generateCkyc,genrateUrl
+  bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush, generateCkyc,genrateUrl, downloadCkyc
 }
 
 export default httpService
@@ -118,4 +118,8 @@ function generateCkyc(query) {
 
 function genrateUrl(query, payload) {
   return WRAPPERAXIOS.post(`referral/setReferral?${query}`, payload)
+}
+
+function downloadCkyc(query) {
+  return WRAPPERAXIOS.get(`iWapp/returnckycZIPFile?${query}`)
 }

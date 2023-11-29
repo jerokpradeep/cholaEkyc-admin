@@ -395,10 +395,13 @@ export default {
         this.$store.commit('setActiveTab', this.currentTab)
     },
     mounted() {
-        this.$store.dispatch('approval/getDocuments')
-        if(this.$route.query?.id) {
+        if(this.currentTab && this.currentTab != 10){
+            this.$store.dispatch('approval/getDocuments')
+        if(this.$route.query?.id ) {
             this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
         }
+        }
+        
     },
 }
 </script>

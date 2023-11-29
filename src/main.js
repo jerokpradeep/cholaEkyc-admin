@@ -7,6 +7,7 @@ import store from "./store";
 import './assets/tailwind/tailwind.css';
 import { default as notification } from './notification/index.js';
 import VueCropper from 'vue-cropper'; 
+import './style.css';
 // import 'vue-cropper/dist/index.css'
 
 
