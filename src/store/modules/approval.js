@@ -192,7 +192,7 @@ const actions = {
             }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
-        }).finally(() => {  commit('setBackOfficeLoader', false) dispatch('checkBoStatus') })
+        }).finally(() => {  commit('setBackOfficeLoader', false); dispatch('checkBoStatus'); })
     },
     async getDocuments({state, dispatch, commit, rootGetters}) {
         commit('setIsDocsLoader', true) 
