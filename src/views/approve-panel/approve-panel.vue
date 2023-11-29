@@ -404,7 +404,7 @@ export default {
         this.$store.commit('setActiveTab', this.currentTab)
     },
    async mounted() {
-        if(this.currentTab && this.currentTab != 10){
+        if(this.currentTab > -1 && this.currentTab != 10){
            await this.$store.dispatch('approval/getDocuments')
            await this.$store.dispatch('approval/checkBoStatus').finally(()=> {
             for(let item of this.getBoStatusList){
@@ -417,7 +417,6 @@ export default {
         if(this.$route.query?.id ) {
            await this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
         }
-        console.log('asfddvsf sfadvfb');
         
         }
         
