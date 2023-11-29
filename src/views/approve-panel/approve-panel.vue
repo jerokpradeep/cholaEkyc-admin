@@ -13,7 +13,15 @@
                     {{ getCustomerData?.opportunity_data?.fsl_user_name }}
                 </div>
                 </div>
-
+                <div>
+                <div class="text-xs mb-2 secondaryColor">
+                    Client Code
+                </div>
+                <div class="text-sm">
+                    {{ clientcode }}
+                </div>
+                </div>
+                
                 <div>
                     <div class="text-xs mb-2 secondaryColor">
                         Status
@@ -176,12 +184,13 @@ export default {
             currentTab : 0,
             remarks: '',
             isRejectDialog: false,
-            tickSvg, cancelSvg
+            tickSvg, cancelSvg,
+            clientcode: ''
         }
     },
 
     computed: {
-        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader', 'getDocuments']),
+        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader', 'getDocuments', 'getBoStatusList']),
         ...mapGetters('login', ['getUserData'])
     },
 
@@ -394,12 +403,22 @@ export default {
         this.currentTab = this.$store.state.queries?.approvepanel ? this.$store.state.queries?.approvepanel.query.tab : 0
         this.$store.commit('setActiveTab', this.currentTab)
     },
-    mounted() {
+   async mounted() {
         if(this.currentTab && this.currentTab != 10){
-            this.$store.dispatch('approval/getDocuments')
+           await this.$store.dispatch('approval/getDocuments')
+           await this.$store.dispatch('approval/checkBoStatus').finally(()=> {
+            for(let item of this.getBoStatusList){
+                if(item.key == 'Client Code'){
+                    this.clientcode = item.reason ? item.reason : ''
+                }
+            }
+            
+           })
         if(this.$route.query?.id ) {
-            this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
+           await this.$store.dispatch('approval/getStageDetails', this.$route.query?.id)
         }
+        console.log('asfddvsf sfadvfb');
+        
         }
         
     },
