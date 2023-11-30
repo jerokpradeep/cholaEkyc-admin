@@ -93,6 +93,7 @@ const actions = {
     },
 
     async getCustomerData({ commit, dispatch, rootGetters }, payload) {
+        commit('setIsLoader', true)
         let json = {
             id : payload,
             token : rootGetters['login/getUserData']['tempToken'],
@@ -107,7 +108,7 @@ const actions = {
             }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
-        }).finally(() => { commit('errorLog/setCounter', 0, { root: true }) })
+        }).finally(() => { commit('errorLog/setCounter', 0, { root: true }); commit('setIsLoader', false) })
     },
     async getStageDetails({commit, dispatch, rootGetters}, payload) {
         let json = {
@@ -482,7 +483,6 @@ const mutations = {
     }, 
     setCustomerData(state, payload) {
         state.customerData = payload
-        localStorage.setItem('customerData', JSON.stringify(payload))
     },
     setStageData(state, payload) {
         state.stageData = payload

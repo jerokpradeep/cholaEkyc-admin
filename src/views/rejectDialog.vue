@@ -45,6 +45,8 @@ select option {
       </transition>
     </div>
   </Listbox>
+  
+  <input id="reject_content" class="w-full border rounded my-2 p-2" v-if="remarks == 'Others'" v-model="otherVal" autofocus/>
                     </div>
                     
                     <div  v-else ><label for="reject_content" id="reject_content_label">Remarks</label>
@@ -86,7 +88,8 @@ export default {
   data(){
     return {
       remarks : '',
-      remarksArray:[]
+      remarksArray:[],
+      otherVal: ''
     }
   },
   props:{
@@ -108,13 +111,15 @@ export default {
   methods:{
     sentRemarks(key){
       let isOpen = false
+      this.otherVal ?  this.remarks = this.otherVal : ''
+      this.otherVal = ''
       key == 'close' ? this.remarks = '' : ''
       key == 'call' && !this.remarks ? isOpen = true : ''
       this.$emit('send-remarks', {remarks:  this.remarks, isOpen: isOpen})
     }
   },
   mounted(){
-    this.remarks = ''
+    this.otherVal = this.remarks = ''
     this.remarksArray = this.getKycApprovalTabs[this.activeTab].remarks
   }
 }

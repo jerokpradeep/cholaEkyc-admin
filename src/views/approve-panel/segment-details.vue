@@ -1,6 +1,7 @@
 <template>
     <div class="pb-12 flex gap-4">
-        <table class="bg-white w-[48%] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
+        <div class="grid gap-y-5 w-[48%]">
+          <table class="bg-white rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
                   <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
@@ -28,8 +29,7 @@
                 </tr>
             </tbody>
         </table>
-
-        <table class="bg-white w-[48%] h-[350px] rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
+        <table class="bg-white w-full  h-[350px] rounded-b mt-4 border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
                 <tr>
                   <th v-for="(head, id) in paymentTableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 text-[13px] font-medium primaryColor whitespace-nowrap" >
@@ -57,7 +57,14 @@
                 </tr>
             </tbody>
         </table>
+        </div>
+        <div class="w-[48%]">
+         
+        <iframe :src="getDocumentData" frameborder="1" class="w-full " style="height: 370px !important;"></iframe>
+        </div>
+        
     </div>
+    
 </template>
 
 <script>
@@ -154,7 +161,8 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData'])
+        ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
+        ...mapGetters("tabs", ["getKycApprovalTabs"]),
     },
     mounted(){
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_equity_cash')){
@@ -162,6 +170,13 @@ export default {
       }
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_equity_derivative')){
          this.tableData[2].value = this.getCustomerData.opportunity_data.fsl_equity_derivative == 1 ? "Yes" : "No"
+         let tabData = this.getKycApprovalTabs
+         tabData[5].docs = []
+        if( this.tableData[2].value == "Yes"){
+          this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=INCOME_PROOF&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'INCOME_PROOF' })
+          tabData[5].docs.push('INCOME_PROOF')
+        }
+          this.$store.commit('tabs/setKycApprovalTabs', tabData)
       }
       if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.hasOwnProperty('fsl_mutual_funds')){
          this.tableData[3].value = this.tableData[4].value = this.getCustomerData.opportunity_data.fsl_mutual_funds == 1 ? "Yes" : 'No'

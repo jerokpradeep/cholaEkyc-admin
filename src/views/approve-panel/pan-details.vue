@@ -44,14 +44,24 @@
               </div>
             </div>
         </div>
+        
         </div>
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
+          <div class="my-4">
+            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow"  @click="$router.push({path:'/preview', query: $route.query})">Compare documents</button>
+          </div>
           <div class="rounded-lg my-4">
             <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
                 :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
                 :outputSize="1" alt="Source Image" class="cropper" >
             </VueCropper>
+            <div class="rounded-lg my-4">
+            <VueCropper v-if="getDocumentDataClone" ref="image1" :img="getDocumentDataClone" 
+                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
+                :outputSize="1" alt="Source Image" class="cropper" >
+            </VueCropper>
+          </div>
           </div>
         </div>        
     </div>
@@ -76,14 +86,8 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
+        ...mapGetters('approval', ['getCustomerData', 'getDocumentData', 'getDocumentDataClone']),
     },
-    methods: {
-      goToPreview() {
-        this.$router.push('/preview')
-      }
-    },
-
     mounted(){
       if(this.getCustomerData && this.getCustomerData?.opportunity_data){
         this.getCustomerData.opportunity_data?.fsl_pan_no  ? this.panNumber = this.getCustomerData.opportunity_data?.fsl_pan_no : ''
@@ -97,6 +101,7 @@ export default {
         this.getCustomerData.profile_data?.trackwizz_passkey ? this.trackWiz = this.getCustomerData.profile_data?.trackwizz_passkey : ''
       }
       this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=PAN&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'PAN' })
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=SIGNATURE&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'clone' , docType : 'SIGNATURE' })
     },
 }
 </script>

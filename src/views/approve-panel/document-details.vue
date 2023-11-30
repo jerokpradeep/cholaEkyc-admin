@@ -16,17 +16,11 @@
                     <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left">
                        <div class="flex gap-2 items-center">
                             <div> {{ i['Document Type'] }}</div>
-                            <div>
-                                <span v-if="i.status == 'Approved'" class="flex items-center gap-1 text-sm text-teal-500"><span title="Approved"  v-html="tickSvg"> </span>Approved</span>
-                                <span v-if="i.status == 'Rejected'" class="flex items-center gap-1 text-sm text-orange-500"> <span :title="i.remarks"   v-html="cancelSvg"></span>Rejected</span>
-                            </div>
                        </div>
                     </td>
                     <td v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM'">
-                        <div class="flex gap-3 items-center">
-                            <a v-if="i.status != 'Approved' &&  i.status != 'Rejected'" class="underline text-sm text-teal-500" @click="$store.dispatch('approval/formatJsonDoc', {tab: 7 , status: 'Approved' , remarks: '' , attachmentType :  i['Document Type'], isDoc: true})">Approve</a>
-                            <a v-if="i.status != 'Approved' &&  i.status != 'Rejected'" class="underline text-sm text-orange-500" @click="callReject( i['Document Type'])">Reject</a>
-                            <a v-if="(i.status == 'Approved' || i.status == 'Rejected') && i.status != ''" class="underline text-sm text-blue-600" @click="resetDocStatus('Reset', i['Document Type'])">Reset</a>
+                        <div class="flex gap-3 items-center" >
+                            <a  class=" text-sm " :class="i.status == 'Approved' ? 'text-teal-500' : i.status == 'Rejected' ? 'text-orange-500' : ''"> {{ i.status ? i.status : '' }}</a>
                         </div>
                     </td>
                    
@@ -83,29 +77,9 @@ export default {
             tableHeads: [
                 { name: "S.No", class: "text-center" },
                 { name: "Document Name", class: "text-left" },
-                { name: "Actions", class: "text-left" },
+                { name: "Status", class: "text-left" },
                 { name: "Preview", class: "text-left" },
                 { name: "Download", class: "text-left" },
-            ],
-            tableData: [
-                {
-                docName: 'PAN',
-                },
-                {
-                docName: 'CANCELLED_CHEQUE_OR_STATEMENT',
-                },
-                {
-                docName: 'SIGNATURE',
-                },
-                {
-                docName: 'IPV',
-                },
-                {
-                docName: 'ESIGN_DOCUMENT',
-                },
-                {
-                docName: 'PROTECTED_ESIGN_DOCUMENT',
-                }
             ],
             documentName: 'PAN',
             isRejectDialog: false,
@@ -160,8 +134,8 @@ export default {
     async created() {
       await this.$store.dispatch('approval/getDocuments');
       
-      if(this.$route.query?.from == '/opportunity' || this.getUserData?.Role == 'RM'){
-        let rmHeader = this.tableHeads.filter(el => el.name != 'Actions')
+      if(this.$route.query?.from == 'opportunity' || this.getUserData?.Role == 'RM'){
+        let rmHeader = this.tableHeads.filter(el => el.name != 'Status')
         this.tableHeads = rmHeader
       }
       

@@ -33,8 +33,6 @@ export default router
 router.beforeEach(async (to, from, next) => {
   let userData = localStorage.getItem('userData') && localStorage.getItem('userData') != "undefined" ? JSON.parse(localStorage.getItem('userData')) : null
   store.commit('login/setUserData' , userData)
-  let customerData = localStorage.getItem('customerData') && localStorage.getItem('customerData') != "undefined" ? JSON.parse(localStorage.getItem('customerData')) : null
-  store.commit('approval/setCustomerData' , customerData)
   let steps = localStorage.getItem('steps') && localStorage.getItem('steps') != "undefined" ? JSON.parse(localStorage.getItem('steps')) : []
   store.commit('setValidSteps', steps)
   let queries = localStorage.getItem('tabQuries') && localStorage.getItem('tabQuries') != "undefined" ? JSON.parse(localStorage.getItem('tabQuries')) : store.state.defaultQueries

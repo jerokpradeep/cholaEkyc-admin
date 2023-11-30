@@ -1,5 +1,6 @@
 <template>
-    <nav class="flex p-5 py-2" aria-label="Breadcrumb">
+    <div class="flex items-center gap-2">
+      <nav class="flex p-5 py-2" aria-label="Breadcrumb">
       <ol role="list" class="flex items-center space-x-4">
         <li v-for="(page, id) in pages" :key="page.name" @click="handleClick(page)" class="cursor-pointer">
           <div class="flex items-center">
@@ -11,6 +12,8 @@
         </li>
       </ol>
     </nav>
+    <spinner v-if="getIsLoader"/>
+    </div>
 </template>
   
 <script>
@@ -24,7 +27,7 @@ export default {
     }
   },
   computed: {
-        ...mapGetters('approval', ['getCustomerData'])
+        ...mapGetters('approval', ['getCustomerData', 'getIsLoader'])
   },
   methods: {
     handleClick(page) {
@@ -33,9 +36,14 @@ export default {
       }
     }
   },
+  watch:{
+    getIsLoader: function(value){
+      !value && this.pages.length == 1 ?  this.pages.push({ name: `${this.getCustomerData?.opportunity_data?.fsl_user_name}`, current: true, isRoute: false }) : ''
+    }
+  },
   mounted() {
     this.pages.push({isReplace: this.$route.path.replace('/', '') == 'preview',name: this.$route.path.replace('/', '') == 'preview' ? 'Back' : `${this.$route.query.from.charAt(0).toUpperCase() + this.$route.query.from.slice(1) }`, current: false , isRoute: true})
-    this.pages.push({ name: `${this.getCustomerData?.opportunity_data?.fsl_user_name}`, current: true, isRoute: false })
+    this.getCustomerData && this.getCustomerData?.opportunity_data?.fsl_user_name ?  this.pages.push({ name: `${this.getCustomerData?.opportunity_data?.fsl_user_name}`, current: true, isRoute: false }) : ''
   },
 }
 </script>

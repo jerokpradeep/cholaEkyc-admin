@@ -2,7 +2,9 @@
         <div>
             <breadcrumbKyc />
         </div>
-
+        
+       
+       <div v-if="!getIsLoader">
         <div class="bg-white py-4 px-4 my-2 rounded-lg flex flex-col flex-wrap gap-4 justify-between mx-4">
             <div class="flex flex-wrap gap-4 justify-between">
                 <div>
@@ -135,6 +137,7 @@
             </div>
         </div>
         <rejectDialog v-if="isRejectDialog && currentTab != 6 && currentTab != 7" :active-tab="currentTab" :is-open="isRejectDialog" @send-remarks="getRemarks"/>
+       </div>
 </template>
 
 <script>
@@ -190,8 +193,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader', 'getDocuments', 'getBoStatusList']),
-        ...mapGetters('login', ['getUserData'])
+        ...mapGetters('approval', ['getCustomerData','getStageData', 'getIsApproveLoader', 'getIsRejectLoader', 'getIsResetLoader', 'getDocuments', 'getBoStatusList', 'getIsLoader']),
+        ...mapGetters('login', ['getUserData']),
+        ...mapGetters("tabs", ["getKycApprovalTabs"]),
     },
 
     methods: {
@@ -205,6 +209,12 @@ export default {
 
         async approveOrRejectDoc(status) {
             await this.$store.dispatch('approval/formatJson', {tab: this.currentTab , status: status , remarks: status == 'Rejected' ? this.remarks : ''})
+
+            for(let item of this.getKycApprovalTabs[this.currentTab].docs){
+                await this.$store.dispatch('approval/formatJsonDoc', {status: status , remarks: status == 'Rejected' ? this.remarks : '' , attachmentType : item})
+            }
+
+
             this.remarks = ''
         },
 
@@ -343,10 +353,11 @@ export default {
         },
 
         progress() {
-            if(this.getStageData.hasOwnProperty('nominee')) {
+            if(this.getStageData) {
+                let tabData = this.getKycApprovalTabs
                 let statusArray = ['pan status', 'profile status', 'address status', 'bank status', 'segment status', 'IPV status', 'Esign status']
                 let data = this.getStageData
-                let nomineesArray = this.getStageData.nominee
+                let nomineesArray = this.getStageData.nominee ? this.getStageData.nominee : []
                 let percentage = 0
                 let isNomineeApproved = false
                 let isRejectAll = false
@@ -358,12 +369,27 @@ export default {
                             percentage += 11.10
                         }
                     })
+                    if(property != "nominee"){
+                        tabData.forEach((el)=> {
+                        if(el.key && el.key == property){
+                            el.status = data[property] ? data[property] : 'Open'
+                        }
+                    })
+                    }
+                   
                 }
                 isRejectAll = Object.values(this.getStageData).some(function(status) {
                     return status == 'Rejected'
                 })
 
                 if(nomineesArray.length) {
+                    let apporveArr = nomineesArray.filter(el => {
+                        return el.status == 'Approved'
+                    })
+                    let openArr = nomineesArray.filter(el => {
+                        return !el.status
+                    })
+                    tabData[6].status = apporveArr.length == nomineesArray.length ? 'Approved' : openArr.length > 0 ? 'Open' : 'Rejected' 
                     let temp = nomineesArray.filter(el => {
                         return el.status == 'Approved' || el.status == 'Rejected'
                     })
@@ -393,17 +419,17 @@ export default {
                 }
 
                 this.$store.commit('approval/setIsReject', isRejectAll || isRejectNominee || isRejectDoc)
+                this.$store.commit('tabs/setKycApprovalTabs', tabData)
                 return Math.round(percentage)
             } else {
                 return 0
             }
         },
     },
-    created(){
-        this.currentTab = this.$store.state.queries?.approvepanel ? this.$store.state.queries?.approvepanel.query.tab : 0
-        this.$store.commit('setActiveTab', this.currentTab)
-    },
-   async mounted() {
+   async created(){
+    this.currentTab = this.$store.state.queries?.approvepanel ? this.$store.state.queries?.approvepanel.query.tab : 0;
+    this.$store.commit('setActiveTab', this.currentTab);
+    await this.$store.dispatch('approval/getCustomerData', this.$route.query.id).finally(async ()=>{
         if(this.currentTab > -1 && this.currentTab != 10){
            await this.$store.dispatch('approval/getDocuments')
            await this.$store.dispatch('approval/checkBoStatus').finally(()=> {
@@ -419,7 +445,8 @@ export default {
         }
         
         }
-        
+    })
+   
     },
 }
 </script>

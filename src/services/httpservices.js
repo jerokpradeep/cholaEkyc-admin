@@ -58,7 +58,7 @@ function pushToBo(payload){
 }
 
 function getDocs(payload) {
-  return WRAPPERAXIOS.get(`ekyc/getStatus?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}&assignTo=${payload.assignTo}`)
+  return WRAPPERAXIOS.get(`ekyc/getStatus?id=${payload.id}&userId=${payload.userId}&token=${payload.token}&sessId=${payload.sessId}`)
 }
 
 function approveDocs(payload) {
