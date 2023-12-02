@@ -1,5 +1,5 @@
 <template>
-    <div class="px-5 pb-4 pt-5 font-bold text-base w-full dark:text-white sticky top-0 z-10 "> Ckyc Download</div>
+    <div class="px-5 pb-4 pt-5 font-bold text-base w-full dark:text-white sticky top-0 z-10 "> CKYC Download</div>
     <div class="p-4 h-full">
         <div class="card p-4">
         <div class="mb-6 gap-2 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-6">

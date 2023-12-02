@@ -475,6 +475,34 @@ const actions = {
             
         })
     },
+    getFilteredApprovalList({ commit, dispatch, rootGetters }, payload) {
+        commit('setIsLoader', true)
+        let json = {
+            token : rootGetters['login/getUserData']['tempToken'],
+            sessId : rootGetters['login/getUserData']['sid'],
+            userId : rootGetters['login/getUserData']['user'],
+            from_date : payload.from_date,
+            to_date : payload.to_date,
+            status : payload.status,
+            pan_no : payload.pan_no,
+            mobile_no : payload.mob_no,
+            id : payload.application_id
+        }
+        httpService.getFilteredApproval(json).then(resp =>{
+            if(resp.status == 200 && resp.data?.message?.success_key == 1 && resp.data?.message?.Data?.length) {
+                console.log(resp.data.message.Data);
+                commit('setApprovalList', resp.data.message.Data)
+            } else {
+                commit('setApprovalList', [])
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+    
+        }).finally(() => { 
+            commit('setIsLoader', false)
+            commit('errorLog/setCounter', 0, { root: true }) 
+        })
+       }
 };
 
 const mutations = {

@@ -73,7 +73,7 @@ export default {
         validateRegex(val){
             let email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
             if(val){
-                return email.test(val)
+                return email.test(val.trim())
             }
             return false
         },

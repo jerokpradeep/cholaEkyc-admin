@@ -1,9 +1,9 @@
 <template>
-  <tabs class="mx-4" @activeTab="changeTab"/>
+  <tabs class="mx-4" :removeActive="true" @activeTab="changeTab"/>
   <div class="p-4">
-    <div class="flex gap-3 flex-wrap">
-      <input type="date" v-model="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8">
-      <input type="date" v-model="toDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8">
+    <form @submit.prevent="getAllApproval()" class="flex gap-3 flex-wrap mb-2">
+      <input type="date" v-model="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
+      <input type="date" v-model="toDate" :min="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
       <div>
         <Listbox v-model="statusType">
           <div class="relative">
@@ -16,7 +16,7 @@
 
             <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
               <ListboxOptions class="z-[1] absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                <ListboxOption v-slot="{ active, selected }" v-for="status in statusList" :key="status.name" :value="status" as="template">
+                <ListboxOption v-slot="{ active, selected }" v-for="status in statusList" :key="status.name" :value="status" as="template"  @click="getStatusType(status)">
                   <li :class="[ active ? 'bg-[#F0F6FD] text-[#0081B8]' : 'text-gray-900','relative cursor-pointer select-none py-2 pl-10 pr-4']">
                     <span :class="[ selected ? 'font-medium' : 'font-normal','block truncate text-xs']" >{{ status.name }}</span>
                     <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#0081B8]" >
@@ -30,9 +30,10 @@
         </Listbox>
       </div>
       <input type="text" v-model="application" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: Application">
-      <input type="text" v-model="panNo" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: PAN No.">
-      <input type="text" v-model="mobileNo" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: Mobile No.">
-    </div>
+      <input type="text" v-model="panNo" class="bg-white rounded-lg border-transparent uppercase px-2 text-xs h-8" maxlength="10" placeholder="Search: PAN No.">
+      <input type="text" v-model="mobileNo" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" maxlength="10" placeholder="Search: Mobile No.">
+      <button type="submit" :disabled="getIsLoader" class="flex justify-center items-center min-w-[100px] h-[32px] py-2 px-4 rounded-lg text-xs text-white font-bold bg-[#753ED7]">Submit</button>
+    </form>
 
   <div class="bg-white py-4 px-8 my-6 rounded-lg flex gap-2 flex-wrap justify-between" v-if="currentTab == 0">
       <div v-for="(item,id) in applicationSummary" :key="id">
@@ -236,6 +237,29 @@ export default {
         return `${minutes}m`
       }
     },
+    getAllApproval() {
+      let json = {
+        from_date : this.fromDate,
+        to_date : this.toDate,
+        status : this.status,
+        application_id: this.application,
+        pan_no : this.panNo,
+        mob_no : this.mobileNo
+      }
+      if(this.fromDate || this.toDate || this.status || this.application || this.panNo || this.mobileNo){
+        this.$store.dispatch('approval/getFilteredApprovalList', json)
+      }else{
+        this.$store.dispatch('errorLog/toaster',{data: {
+                    "title": 'Please select any field',
+                    "type": "danger",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
+      }
+    },
+    getStatusType(type){
+      this.status = type.name
+    }
   },
   created() {
     this.$store.commit('setActiveTab', this.$store.state.queries?.kycapproval ? this.$store.state.queries?.kycapproval.query.tab : 0)

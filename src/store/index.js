@@ -54,7 +54,7 @@ const store = createStore({
           svg: "newsIcon",
         },
         {
-          name: "Ckyc Download",
+          name: "CKYC Download",
           route: "/ckycReport",
           icon: "Reports",
           status: "active",
@@ -161,8 +161,8 @@ const store = createStore({
     },
     navigateSteps({state, commit}, payload){
       if(payload == 'EKYC Employee' || payload == 'RM'){
-        let empArr = ['Approval' , 'Opportunity' , 'Ckyc Download']
-        let rmArr = ['Approval' , 'Opportunity', 'Ckyc Download', 'URL Generation']
+        let empArr = ['Approval' , 'Opportunity' , 'CKYC Download']
+        let rmArr = ['Approval' , 'Opportunity', 'CKYC Download', 'URL Generation']
         let validArr = payload == 'EKYC Employee'? empArr : payload == 'RM' ? rmArr : []
         let approval = state.tempSteps.filter((el)=> validArr.includes(el.name))
         approval[0].active = true

@@ -58,7 +58,7 @@ const actions = {
         })
     },
     async callDownload({dispatch}, payload){
-     await   httpService.downloadCkyc(payload).then(el => {
+     await httpService.downloadCkyc(payload).then(resp => {
             if(resp.status == 200 && resp.data.stat == 0){
                 dispatch('errorLog/toaster',{data: {
                     "title": resp.data.message ? resp.data.message : resp.data.reason,

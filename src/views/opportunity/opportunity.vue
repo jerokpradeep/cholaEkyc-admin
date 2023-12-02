@@ -12,7 +12,7 @@
         </button>
       </li>
     </ul> -->
-    <tabs class="mx-4" @activeTab="changeTab"/>
+    <tabs class="mx-4" :removeActive="true" @activeTab="changeTab"/>
   </div>
   <div class="p-4">
     <breadcrumb v-if="getIsStageDetails"/>
@@ -66,12 +66,12 @@ export default {
       });
       this.currentTab = tab;
     },
-    changeTab(id) {
+    async changeTab(id) {
       this.currentTab = id
       this.$store.commit('setActiveTab', id)
       this.$store.commit('setQuries', { data: { tab: id }, action: 'change' })
       if(this.currentTab == 1) {
-        this.$store.dispatch('opportunity/getOpportunityList')
+        await this.$store.dispatch('opportunity/getOpportunityList')
       }
     },
   },
