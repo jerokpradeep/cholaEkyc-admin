@@ -198,8 +198,10 @@ export default {
   methods: {
     async goToApprovalPage(data) {
       if(data && data.fsl_assign_to && data.opportunity_id) {
-        this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })
+        await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
+          this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })
           this.$store.commit('setQuries', {data: {tab: 0}, action: 'change' , overRideKey : 'approvepanel'})
+        })
       }else{
         if(this.getUserData?.Role != 'RM'){
           this.currentAssigneeData = data
