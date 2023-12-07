@@ -76,7 +76,7 @@ export default {
         return 'border-b-2 text-red-600 bg-gradient-to-b from-[#ffffff]/[.35] from-[0%] to-[#B91C1C]/[.35] font-bold border-red-600';
       } else if (this.tabs.some(tab => tab.status === 'Open')) {
         return 'border-b-2 text-orange-600 bg-gradient-to-b from-[#ffffff]/[.35] from-[0%] to-[#FB923C]/[.35] font-bold border-orange-600';
-      } else if (this.tabs.some(tab => tab.status === 'Approved')) {
+      } else if (this.tabs.every(tab => tab.status === 'Approved')) {
         return 'border-b-2 text-green-600 bg-gradient-to-b from-[#ffffff]/[.35] from-[0%] to-[#15803D]/[.35] font-bold border-green-600';
       } else {
         return 'bg-white';
