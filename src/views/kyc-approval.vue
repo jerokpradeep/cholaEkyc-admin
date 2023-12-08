@@ -2,8 +2,44 @@
   <tabs class="mx-4" :removeActive="true" @activeTab="changeTab"/>
   <div class="p-4">
     <form @submit.prevent="getAllApproval()" class="flex gap-3 flex-wrap mb-2">
-      <input type="date" v-model="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
-      <input type="date" v-model="toDate" :min="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
+      <VDatePicker :max-date="currentDate" :min-date="minDateString" v-model="fromDate" mode="date" :popover="false"
+                :masks="{
+                  input: 'DD-MM-YYYY',
+                  modelValue: 'YYYY-MM-DD',
+                }">
+                <template v-slot="{ togglePopover, inputValue, inputEvents }">
+                  <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2" @click="() => togglePopover()">
+                    <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
+                      class="w-[90px] text-xs outline-none cursor-pointer" readonly />
+                    <button type="button"
+                      class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
+                      >
+                      <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </template>
+      </VDatePicker>
+      <VDatePicker :max-date="currentDate" :min-date="fromDate" v-model="toDate" mode="date" :popover="false"
+                :masks="{
+                 input: 'DD-MM-YYYY',
+                  modelValue: 'YYYY-MM-DD',
+                }">
+                <template v-slot="{ togglePopover, inputValue, inputEvents }">
+                  <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2" @click="() => togglePopover()">
+                    <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
+                      class="w-[90px] text-xs outline-none cursor-pointer" readonly />
+                    <button type="button"
+                      class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
+                      >
+                      <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </template>
+      </VDatePicker>
       <div>
         <Listbox v-model="statusType">
           <div class="relative">
@@ -67,10 +103,22 @@
             {{ i.fsl_pan_no ? i.fsl_pan_no : 'NA' }}
           </td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i['current phase'] ? i['current phase'] : 'NA' }}
+            {{ i.fsl_mobile_num ? i.fsl_mobile_num : 'NA'  }}
           </td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.fsl_mobile_num ? i.fsl_mobile_num : 'NA'  }}
+            {{ i.reference_id ? i.reference_id : 'NA'  }}
+          </td>
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            {{ i.referral_name ? i.referral_name : 'NA'  }}
+          </td>
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            {{ i.fsl_branch ? i.fsl_branch : 'NA'  }}
+          </td>
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            {{ i.designation ? i.designation : 'NA'  }}
+          </td>
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            {{ i['status'] ? i['status'] : 'NA' }}
           </td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.assigned_person_name ? i.assigned_person_name : '' }}
@@ -127,8 +175,12 @@ export default {
             { name: "Customer Name", class: "text-left" },
             { name: "Application ID", class: "text-center" },
             { name: "PAN No", class: "text-center" },
-            { name: "Status", class: "text-center" },
             { name: "Mobile No", class: "text-center" },
+            { name: "Reference ID", class: "text-center" },
+            { name: "Referal Name", class: "text-center" },
+            { name: "Branch", class: "text-center" },
+            { name: "Designation", class: "text-center" },
+            { name: "Status", class: "text-center" },
             { name: "Assigned to", class: "text-center" },
             { name: "Hours consumed", class: "text-center" },
           ],
@@ -187,13 +239,26 @@ export default {
             chevronSvg,
           currentTab : 0,
           currentAssigneeData: '',
-          imageTest: 'https://ekyc.cholasecurities.com/uat/assets/headTree-a3444e58.svg'
+          imageTest: 'https://ekyc.cholasecurities.com/uat/assets/headTree-a3444e58.svg',
+          currentDate : new Date().toISOString().split('T')[0],
+          popover:{
+            visibility: 'click',
+            placement: 'bottom',
+          }
       }
   },
   computed: {
         ...mapGetters('approval', ['getApprovalList', 'getIsLoader']),
         ...mapState('approval', ['isAssign']),
-        ...mapGetters('login', ["getUserData"])
+        ...mapGetters('login', ["getUserData"]),
+        minDate() {
+          const today = new Date();
+          today.setDate(today.getDate() - 30);
+          return today;
+        },
+        minDateString() {
+          return this.minDate.toISOString().split('T')[0];
+        }
     },
   methods: {
     async goToApprovalPage(data) {
@@ -221,7 +286,7 @@ export default {
     changeTab(id) {
       this.$store.commit('setActiveTab', id)
       this.$store.commit('setQuries', {data: {tab: id}, action: 'change'})
-      id == 1 ?  this.$store.dispatch('approval/getApprovalList') : ''
+      // id == 1 ?  this.$store.dispatch('approval/getApprovalList') : ''
       this.currentTab = id
     },
     getHours(dt2) {
@@ -241,8 +306,8 @@ export default {
     },
     getAllApproval() {
       let json = {
-        from_date : this.fromDate,
-        to_date : this.toDate,
+        from_date : this.fromDate.toISOString().split('T')[0],
+        to_date : this.toDate.toISOString().split('T')[0],
         status : this.status,
         application_id: this.application,
         pan_no : this.panNo,
@@ -261,11 +326,19 @@ export default {
     },
     getStatusType(type){
       this.status = type.name
+    },
+    async setDefaultFilter(){
+      this.fromDate = new Date(),
+      this.toDate = new Date(),
+      this.status = 'ALL'
+      this.statusType = { name: 'ALL' }
+      this.getAllApproval()
     }
   },
   created() {
     this.$store.commit('setActiveTab', this.$store.state.queries?.kycapproval ? this.$store.state.queries?.kycapproval.query.tab : 0)
     this.changeTab(this.$store.state.queries?.kycapproval ? this.$store.state.queries?.kycapproval.query.tab : 0)
+    this.setDefaultFilter()
   },
 }
 </script>

@@ -2,21 +2,57 @@
     <div class="px-5 pb-4 pt-5 font-bold text-base w-full dark:text-white sticky top-0 z-10 "> CKYC Download</div>
     <div class="p-4 h-full">
         <div class="card p-4">
-        <div class="mb-6 gap-2 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-6">
+            <div class="mb-6 gap-1 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-6">
           
-            <div>
-                <p class="primaryColor pb-1 text-sm">From Date</p><input type="date" v-model="fromDate"
-                    class="border w-full h-10 rounded focus:outline-0 px-4 text-xs cursor-pointer" :max="new Date().toISOString().slice(0, 10)">
-            </div>
-        <div>
-            <p class="primaryColor pb-1 text-sm">To Date</p><input type="date" v-model="toDate" :min="fromDate ? new Date(fromDate).toISOString().slice(0, 10) : fromDate" :max="new Date().toISOString().slice(0, 10)" 
-                class="border w-full h-10 rounded focus:outline-0 px-4 text-xs cursor-pointer">
-        </div>
-        <div class="flex items-end"><button type="button" @click="validateField()"
-                class="bg-blue-500 text-white h-10 w-[120px] cursor-pointer rounded text-xs">
-                <p>Submit</p>
-            </button></div>
-    </div>
+          <div>
+              <p class="primaryColor pb-1 text-sm">From Date</p>
+              <VDatePicker :max-date="currentDate" v-model="fromDate" mode="date" :popover="false"
+              :masks="{
+                input: 'DD-MM-YYYY',
+                modelValue: 'YYYY-MM-DD',
+              }">
+              <template v-slot="{ togglePopover, inputValue, inputEvents }">
+                <div class="flex items-center justify-between w-[75%] h-[32px]  border rounded p-2" @click="() => togglePopover()">
+                  <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
+                    class="w-[90px] text-xs outline-none cursor-pointer" readonly />
+                  <button type="button"
+                    class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
+                    >
+                    <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path>
+                    </svg>
+                  </button>
+                </div>
+              </template>
+              </VDatePicker>
+          </div>
+      <div>
+          <p class="primaryColor pb-1 text-sm">To Date</p>
+          <VDatePicker :max-date="currentDate" v-model="toDate" :min-date="fromDate" mode="date" :popover="false"
+              :masks="{
+                input: 'DD-MM-YYYY',
+                modelValue: 'YYYY-MM-DD',
+              }">
+              <template v-slot="{ togglePopover, inputValue, inputEvents }">
+                <div class="flex items-center justify-between w-[75%] h-[32px]  border rounded p-2" @click="() => togglePopover()">
+                  <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
+                    class="w-[90px] text-xs outline-none cursor-pointer" readonly />
+                  <button type="button"
+                    class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
+                    >
+                    <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path>
+                    </svg>
+                  </button>
+                </div>
+              </template>
+          </VDatePicker>
+      </div>
+      <div class="flex items-end"><button type="button" @click="validateField()"
+              class="bg-blue-500 text-white h-10 w-[120px] cursor-pointer rounded text-xs">
+              <p>Submit</p>
+          </button></div>
+  </div>
 </div>
     </div>
    
@@ -29,7 +65,8 @@ export default {
     data() {
         return {
             fromDate: '',
-            toDate: ''
+            toDate: '',
+            currentDate:new Date().toISOString().split('T')[0]
         }
     },
     computed: {

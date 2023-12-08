@@ -19,6 +19,14 @@ app.use(VueCropper)
 
 import spinner from "./components/utilComponents/spinner.vue"
 import btnLoader from "./components/utilComponents/button-loader.vue"
+
+import { setupCalendar, Calendar, DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
 app.component('spinner', spinner);
 app.component('btnLoader', btnLoader);
+// Use plugin defaults (optional)
+  app.use(setupCalendar, {})
+// Use the components
+  app.component('VCalendar', Calendar)
+  app.component('VDatePicker', DatePicker)
 app.mount('#app')

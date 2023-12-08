@@ -1,9 +1,44 @@
 <template>
   <div>
     <form @submit.prevent="getAllOppertunities()" class="flex gap-3 flex-wrap mb-2">
-      <input type="date" v-model="fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
-      <input type="date" v-model="toDate" :min="this.fromDate" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" :max="new Date().toISOString().split('T')[0]">
-      <div>
+      <VDatePicker :max-date="currentDate" :min-date="minDateString" v-model="fromDate" mode="date" :popover="popover" :persistent="true"
+                :masks="{
+                  input: 'DD-MM-YYYY',
+                  modelValue: 'YYYY-MM-DD',
+                }">
+                <template v-slot="{ togglePopover, inputValue, inputEvents }">
+                  <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2">
+                    <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
+                      class="w-[90px] text-xs outline-none cursor-pointer" readonly  />
+                    <button type="button"
+                      class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
+                      @click="() => togglePopover()">
+                      <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </template>
+      </VDatePicker>
+      <VDatePicker :max-date="currentDate" :min-date="fromDate" v-model="toDate" mode="date" :popover="popover" :persistent="true"
+                :masks="{
+                  input: 'DD-MM-YYYY',
+                  modelValue: 'YYYY-MM-DD',
+                }">
+                <template v-slot="{ togglePopover, inputValue, inputEvents }">
+                  <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2">
+                    <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
+                      class="w-[90px] text-xs outline-none cursor-pointer" readonly />
+                    <button type="button"
+                      class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
+                      @click="() => togglePopover()">
+                      <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </template>
+      </VDatePicker><div>
         <Listbox v-model="statusType">
           <div class="relative">
             <ListboxButton class="min-w-[126px] relative w-full cursor-pointer rounded-lg bg-white h-8 py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
@@ -33,7 +68,7 @@
       <input type="text" v-model="mobileNo" class="bg-white rounded-lg border-transparent px-2 text-xs h-8" placeholder="Search: Mobile No.">
       <button type="submit" :disabled="getIsLoader" class="flex justify-center items-center min-w-[100px] h-[32px] py-2 px-4 rounded-lg text-xs text-white font-bold bg-[#753ED7]">Submit</button>
     </form>
-    <table v-if="!getIsStageDetails && !getIsLoader"  class="w-full border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
+    <table v-if="!getIsStageDetails && !getIsLoader && getAllOpportunities.length > 0"  class="w-full border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
           <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class"
@@ -76,6 +111,7 @@
           </tr>
         </tbody>
     </table>
+    <div v-else-if="!getIsLoader" class="flex items-center justify-center min-h-[50vh]">No Records Found</div>
   </div>
 </template>
 
@@ -116,12 +152,25 @@ export default {
               { name: 'Completed' },
               { name: 'Rejected' }
           ],
-          statusType : {  },
+      statusType : {  },
+      currentDate : new Date().toISOString().split('T')[0],
+          popover:{
+            visibility: 'click',
+            placement: 'bottom',
+          }
     };
   },
   computed: {
     ...mapGetters('opportunity', ['getIsStageDetails', 'getAllOpportunities']),
-    ...mapGetters('approval', ['getIsLoader'])
+    ...mapGetters('approval', ['getIsLoader']),
+    minDate() {
+      const today = new Date();
+      today.setDate(today.getDate() - 30);
+      return today;
+    },
+    minDateString() {
+      return this.minDate.toISOString().split('T')[0];
+    }
   },
   methods: {
     getFormat(date){
@@ -176,8 +225,8 @@ export default {
 
     getAllOppertunities() {
       let json = {
-        from_date : this.fromDate,
-        to_date : this.toDate,
+        from_date : this.fromDate.toISOString().split('T')[0],
+        to_date : this.toDate.toISOString().split('T')[0],
         status : this.status,
         application_id: this.application,
         pan_no : this.panNo,
@@ -205,8 +254,18 @@ export default {
     },
     getStatusType(type){
       this.status = type.name
+    },
+    async setDefaultFilter(){
+      this.fromDate = new Date(),
+      this.toDate = new Date(),
+      this.status = 'ALL'
+      this.statusType = { name: 'ALL' }
+      this.getAllOppertunities()
     }
   },
+  created(){
+    this.setDefaultFilter()
+  }
 };
 </script>
 

@@ -76,7 +76,7 @@ const store = createStore({
         query: { tab: 0, sTab1: 0, sTab2: 0 },
       },
       kycapproval: {
-        query: { tab: 0 },
+        query: { tab: 1 },
       },
       opportunity: {
         query: { tab: 0}
@@ -167,7 +167,7 @@ const store = createStore({
         let approval = state.tempSteps.filter((el)=> validArr.includes(el.name))
         approval[0].active = true
         commit('setValidSteps', [...approval])
-        router.push(approval[0].route).catch(()=>{})
+        router.push(approval[1].route).catch(()=>{})
       }
     },
     changeTab({state, commit}, payload){

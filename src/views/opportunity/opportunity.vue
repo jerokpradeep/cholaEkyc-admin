@@ -70,14 +70,14 @@ export default {
       this.currentTab = id
       this.$store.commit('setActiveTab', id)
       this.$store.commit('setQuries', { data: { tab: id }, action: 'change' })
-      if(this.currentTab == 1) {
-        await this.$store.dispatch('opportunity/getOpportunityList')
-      }
+      // if(this.currentTab == 1) {
+      //   await this.$store.dispatch('opportunity/getOpportunityList')
+      // }
     },
   },
-  created() {
+  async created() {
     this.$store.commit('setActiveTab', this.$store.state.queries?.opportunity ? this.$store.state.queries?.opportunity.query.tab : 0)
-    this.changeTab(this.$store.state.queries?.opportunity ? this.$store.state.queries?.opportunity.query.tab : 0)
+    await this.changeTab(this.$store.state.queries?.opportunity ? this.$store.state.queries?.opportunity.query.tab : 0)
   },
 };
 </script>

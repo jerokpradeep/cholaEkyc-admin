@@ -37,7 +37,7 @@ const actions = {
       await  httpService.genrateUrl(payload.query, payload.json).then(async resp =>{
             if(resp.status == 200 && resp.data.stat == 0){
                 dispatch('errorLog/toaster',{data: {
-                    "title": resp.data.message ? resp.data.message : resp.data.reason,
+                    "title": resp.data.reason ? resp.data.reason : resp.data.message,
                     "type": "danger",
                     "message": '',
                     "duration": 4500

@@ -490,7 +490,6 @@ const actions = {
         }
         httpService.getFilteredApproval(json).then(resp =>{
             if(resp.status == 200 && resp.data?.message?.success_key == 1 && resp.data?.message?.Data?.length) {
-                console.log(resp.data.message.Data);
                 commit('setApprovalList', resp.data.message.Data)
             } else {
                 commit('setApprovalList', [])

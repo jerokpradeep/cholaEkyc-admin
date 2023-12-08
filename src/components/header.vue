@@ -78,7 +78,7 @@
     <div class="w-full">
       <div class="imgHeight flex items-center justify-between p-4">
         <div class="-pointer logo mr-auto flex items-center">
-            <img :src="clientLogo" class="h-6 " alt="logo" />
+            <img :src="clientLogo" class="h-full " alt="logo" />
         </div>
         <div>
           <div class="mb-1 text-sm">{{ getUserName }}</div>
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import clientLogo from "../assets/image/chola_head.png";
+import clientLogo from "../assets/image/chola_head.svg";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { mapGetters } from "vuex"
 export default {

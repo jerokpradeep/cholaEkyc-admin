@@ -55,7 +55,7 @@
     </div>
 </template>
 <script>
-import client_logo from "../assets/image/chola_head.png"
+import client_logo from "../assets/image/chola_head.svg"
 import { mapGetters } from "vuex"
 export default {
     data() {
