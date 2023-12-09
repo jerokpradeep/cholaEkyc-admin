@@ -145,12 +145,12 @@ export default {
       panNo: '',
       mobileNo: '',
       statusList: [
-              { name: 'ALL' },
-              { name: 'In-Progress' },
-              { name: 'Pending' },
-              { name: 'Approved' },
-              { name: 'Completed' },
-              { name: 'Rejected' }
+              { name: 'ALL', value: ''},
+              { name: 'In-Progress', value: 'In-Progress' },
+              { name: 'Pending', value: 'Pending' },
+              { name: 'Approved', value: 'Approved' },
+              { name: 'Completed', value: 'Completed' },
+              { name: 'Rejected', value: 'Rejected' }
           ],
       statusType : {  },
       currentDate : new Date().toISOString().split('T')[0],
@@ -253,13 +253,13 @@ export default {
       }
     },
     getStatusType(type){
-      this.status = type.name
+      this.status = type.value
     },
     async setDefaultFilter(){
       this.fromDate = new Date(),
       this.toDate = new Date(),
-      this.status = 'ALL'
-      this.statusType = { name: 'ALL' }
+      this.status = ''
+      this.statusType = { name: 'ALL', value:'' }
       this.getAllOppertunities()
     }
   },
