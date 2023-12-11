@@ -1,15 +1,15 @@
 <template>
   <div>
     <form @submit.prevent="getAllOppertunities()" class="flex gap-3 flex-wrap mb-2">
-      <VDatePicker :max-date="currentDate" :min-date="minDateString" v-model="fromDate" mode="date" :popover="popover" :persistent="true"
+      <VDatePicker :max-date="currentDate"  v-model="fromDate" mode="date" :popover="popover" :persistent="true"
                 :masks="{
                   input: 'DD-MM-YYYY',
                   modelValue: 'YYYY-MM-DD',
                 }">
                 <template v-slot="{ togglePopover, inputValue, inputEvents }">
-                  <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2">
+                  <div class="flex items-center justify-between w-[131px] h-[32px]   border rounded p-2">
                     <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
-                      class="w-[90px] text-xs outline-none cursor-pointer" readonly  />
+                      class="w-[90px] text-xs outline-none cursor-pointer !bg-[#F7F5F5]" readonly  />
                     <button type="button"
                       class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
                       @click="() => togglePopover()">
@@ -26,9 +26,9 @@
                   modelValue: 'YYYY-MM-DD',
                 }">
                 <template v-slot="{ togglePopover, inputValue, inputEvents }">
-                  <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2">
+                  <div class="flex items-center justify-between w-[131px] h-[32px]   border rounded p-2">
                     <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
-                      class="w-[90px] text-xs outline-none cursor-pointer" readonly />
+                      class="w-[90px] text-xs outline-none cursor-pointer !bg-[#F7F5F5]" readonly />
                     <button type="button"
                       class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
                       @click="() => togglePopover()">
@@ -147,10 +147,10 @@ export default {
       statusList: [
               { name: 'ALL', value: ''},
               { name: 'In-Progress', value: 'In-Progress' },
-              { name: 'Pending', value: 'Pending' },
-              { name: 'Approved', value: 'Approved' },
               { name: 'Completed', value: 'Completed' },
-              { name: 'Rejected', value: 'Rejected' }
+              { name: 'Dormant', value: 'Dormant' },
+              { name: 'In-active', value: 'Inactive' },
+              // { name: 'Pdf Generated', value: 'Pdf Generated' }
           ],
       statusType : {  },
       currentDate : new Date().toISOString().split('T')[0],
@@ -168,9 +168,6 @@ export default {
       today.setDate(today.getDate() - 30);
       return today;
     },
-    minDateString() {
-      return this.minDate.toISOString().split('T')[0];
-    }
   },
   methods: {
     getFormat(date){
@@ -256,7 +253,7 @@ export default {
       this.status = type.value
     },
     async setDefaultFilter(){
-      this.fromDate = new Date(),
+      this.fromDate = this.minDate,
       this.toDate = new Date(),
       this.status = ''
       this.statusType = { name: 'ALL', value:'' }
