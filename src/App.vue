@@ -8,10 +8,10 @@ function  formatDate(date , type){
         let format = ''
         if(date){
           if(type == 'D&T'){
-            format = `${[('0' + (new Date(date).getDate() + 1)).slice(-2), ('0' + (new Date(date).getMonth() + 1)).slice(-2), new Date(date).getFullYear()].join('-')} ${[(new Date(date).getHours()).toString().padStart(2, '0') ,(new Date(date).getMinutes()).toString().padStart(2, '0') ,(new Date(date).getSeconds()).toString().padStart(2, '0')].join(':')}`
+            format = `${[new Date(date).getDate() > 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`, new Date(date).getMonth() > 9 ? new Date(date).getMonth() : `0${new Date(date).getMonth()}`, new Date(date).getFullYear()].join('-')} ${[(new Date(date).getHours()).toString().padStart(2, '0') ,(new Date(date).getMinutes()).toString().padStart(2, '0') ,(new Date(date).getSeconds()).toString().padStart(2, '0')].join(':')}`
           }
           if(type == 'D'){
-            format = [('0' + (new Date(date).getDate() + 1)).slice(-2),  ('0' + (new Date(date).getMonth() + 1)).slice(-2), new Date(date).getFullYear()].join('-')
+            format = [new Date(date).getDate() > 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`,  new Date(date).getMonth() > 9 ? new Date(date).getMonth() : `0${new Date(date).getMonth()}`, new Date(date).getFullYear()].join('-')
           }
         }
         return format
