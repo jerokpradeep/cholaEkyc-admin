@@ -10,7 +10,7 @@ import bo from "./modules/bo.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '12_12_2023_18_25',
+    buildDate: '12_12_2023_16_35',
     isLogout: false,
     tempSteps: [
       {

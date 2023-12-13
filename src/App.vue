@@ -7,11 +7,17 @@
 function  formatDate(date , type){
         let format = ''
         if(date){
+          let tempDate = new Date(date).getDate()
+          let tempMonth = (new Date(date).getMonth() + 1)
+          let tempYear = new Date(date).getFullYear()
+          let tempHour = (new Date(date).getHours()).toString().padStart(2, '0')
+          let tempMins = (new Date(date).getMinutes()).toString().padStart(2, '0')
+          let tempSecs = (new Date(date).getSeconds()).toString().padStart(2, '0')
           if(type == 'D&T'){
-            format = `${[new Date(date).getDate() > 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`, new Date(date).getMonth() > 9 ? new Date(date).getMonth() : `0${new Date(date).getMonth()}`, new Date(date).getFullYear()].join('-')} ${[(new Date(date).getHours()).toString().padStart(2, '0') ,(new Date(date).getMinutes()).toString().padStart(2, '0') ,(new Date(date).getSeconds()).toString().padStart(2, '0')].join(':')}`
+            format = `${[tempDate > 9 ? tempDate : `0${tempDate}`, tempMonth > 9 ? tempMonth : `0${tempMonth}`, tempYear].join('-')} ${[tempHour , tempMins,tempSecs].join(':')}`
           }
           if(type == 'D'){
-            format = [new Date(date).getDate() > 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`,  new Date(date).getMonth() > 9 ? new Date(date).getMonth() : `0${new Date(date).getMonth()}`, new Date(date).getFullYear()].join('-')
+            format = [tempDate > 9 ? tempDate : `0${tempDate}`,  tempMonth > 9 ? tempMonth : `0${tempMonth}`, tempYear].join('-')
           }
         }
         return format
