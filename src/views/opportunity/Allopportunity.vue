@@ -50,7 +50,7 @@
 
             <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
               <ListboxOptions class="z-[1] absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                <ListboxOption v-slot="{ active, selected }" v-for="status in statusList" :key="status.name" :value="status" as="template">
+                <ListboxOption v-slot="{ active, selected }" v-for="status in $store.state.statusList" :key="status.name" :value="status" as="template">
                   <li :class="[ active ? 'bg-[#F0F6FD] text-[#0081B8]' : 'text-gray-900','relative cursor-pointer select-none py-2 pl-10 pr-4']" @click="getStatusType(status)">
                     <span :class="[ selected ? 'font-medium' : 'font-normal','block truncate text-xs']">{{ status.name }}</span>
                     <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#0081B8]" >
@@ -144,14 +144,6 @@ export default {
       application: '',
       panNo: '',
       mobileNo: '',
-      statusList: [
-              { name: 'ALL', value: ''},
-              { name: 'In-Progress', value: 'In-Progress' },
-              { name: 'Completed', value: 'Completed' },
-              { name: 'Dormant', value: 'Dormant' },
-              { name: 'In-active', value: 'Inactive' },
-              // { name: 'Pdf Generated', value: 'Pdf Generated' }
-          ],
       statusType : {  },
       currentDate : new Date().toISOString().split('T')[0],
           popover:{

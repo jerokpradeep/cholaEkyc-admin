@@ -122,7 +122,7 @@ function genrateUrl(query, payload) {
 }
 
 function downloadCkyc(query) {
-  return WRAPPERAXIOS.get(`iWapp/returnckycZIPFile?${query}`)
+  return WRAPPERAXIOS.get(`iWapp/returnckycZIPFile?${query}`, {responseType: 'blob'})
 }
 
 function getFilteredOpurtunity(payload) {

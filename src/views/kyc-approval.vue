@@ -52,7 +52,7 @@
 
             <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
               <ListboxOptions class="z-[1] absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                <ListboxOption v-slot="{ active, selected }" v-for="status in statusList" :key="status.name" :value="status" as="template"  @click="getStatusType(status)">
+                <ListboxOption v-slot="{ active, selected }" v-for="status in $store.state.statusList" :key="status.name" :value="status" as="template"  @click="getStatusType(status)">
                   <li :class="[ active ? 'bg-[#F0F6FD] text-[#0081B8]' : 'text-gray-900','relative cursor-pointer select-none py-2 pl-10 pr-4']">
                     <span :class="[ selected ? 'font-medium' : 'font-normal','block truncate text-xs']" >{{ status.name }}</span>
                     <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#0081B8]" >
@@ -124,6 +124,9 @@
             {{ i.assigned_person_name ? i.assigned_person_name : '' }}
           </td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            {{ i.time && i.time != " "  ? getFormat(i.time) : 'NA' }}
+          </td>
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.time && i.time != " "  ? getHours(i.time) : 'NA' }}
           </td>
         </tr>
@@ -160,14 +163,6 @@ export default {
               { type: 'Completed', count: '0' },
               { type: 'Rejected', count: '0' }
           ],
-          statusList: [
-              { name: 'ALL', value: ''},
-              { name: 'In-Progress', value: 'In-Progress' },
-              { name: 'Completed', value: 'Completed' },
-              { name: 'Dormant', value: 'Dormant' },
-              { name: 'In-active', value: 'Inactive' },
-              // { name: 'Pdf Generated', value: 'Pdf Generated' }
-          ],
           statusType : {  },
 
           tableHeads: [
@@ -182,6 +177,7 @@ export default {
             { name: "Designation", class: "text-center" },
             { name: "Status", class: "text-center" },
             { name: "Assigned to", class: "text-center" },
+            { name: "Date", class: "text-center" },
             { name: "Hours consumed", class: "text-center" },
           ],
           tableData: [
@@ -300,6 +296,9 @@ export default {
       } else {
         return `${minutes}m`
       }
+    },
+    getFormat(date){
+      return window.formatDate(date, 'D&T')
     },
     getAllApproval() {
       let json = {

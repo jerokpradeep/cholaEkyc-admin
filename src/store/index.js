@@ -10,7 +10,7 @@ import bo from "./modules/bo.js";
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '12_12_2023_16_35',
+    buildDate: '14_12_2023_12_50',
     isLogout: false,
     tempSteps: [
       {
@@ -94,7 +94,15 @@ const store = createStore({
       }
     },
     activeTab: 0,
-    isLogoutLoader: false
+    isLogoutLoader: false,
+    statusList: [
+      { name: 'ALL', value: ''},
+      { name: 'In-Progress', value: 'In-Progress' },
+      { name: 'Completed', value: 'Completed' },
+      // { name: 'Dormant', value: 'Dormant' },
+      // { name: 'In-active', value: 'Inactive' },
+      // { name: 'Pdf Generated', value: 'Pdf Generated' }
+  ],
   },
   mutations: {
     setLogout(state, payload){

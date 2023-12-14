@@ -59,6 +59,18 @@ const actions = {
     },
     async callDownload({dispatch}, payload){
      await httpService.downloadCkyc(payload).then(resp => {
+
+        if(resp.data && !resp.data.stat){
+            const url = window.URL.createObjectURL(resp.data);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+                link.setAttribute('download', 'ckyc_download');
+            
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        }
+       
             if(resp.status == 200 && resp.data.stat == 0){
                 dispatch('errorLog/toaster',{data: {
                     "title": resp.data.message ? resp.data.message : resp.data.reason,
