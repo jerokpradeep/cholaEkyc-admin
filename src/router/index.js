@@ -23,7 +23,7 @@ const router = createRouter({
         { path: '/preview', component: () => import('../views/image-preview.vue') },
         { path: '/ckycReport', component: () => import('../views/ckycReport.vue') },
         { path: '/urlgeneration', component: () => import('../views/urlGeneration.vue') },
-        { path: '/logs', component: () => import('../views/logs/logs.vue') },
+        { path: '/logs', component: () => import('../views/logs-pages/logs.vue') },
       ],
     },
   ]
