@@ -90,8 +90,7 @@ export default {
         this.startDate = window.formatDate(this.cutomerData?.opportunity_data?.creation,'D&T')
         this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified,'D&T')
         this.modeOfApplication = this.cutomerData?.opportunity_data?.fsl_mode_of_application || this.cutomerData?.opportunity_data?.fsl_modeofapplication
-        // this.branch = this.cutomerData?.opportunity_data?.fsl_branch
-        
+        // this.branch = this.cutomerData?.opportunity_data?.fsl_branch  
     },
 }
 </script>
