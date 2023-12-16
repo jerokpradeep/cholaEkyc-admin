@@ -155,6 +155,7 @@ export default {
   computed: {
     ...mapGetters('opportunity', ['getIsStageDetails', 'getAllOpportunities']),
     ...mapGetters('approval', ['getIsLoader']),
+    ...mapGetters('login', ["getUserData"]),
     minDate() {
       const today = new Date();
       today.setDate(today.getDate() - 30);
@@ -233,6 +234,7 @@ export default {
       }
     },
     async goToApprovalPage(data) {
+      if(this.getUserData?.Role == 'RM') return
       if(data && data.opportunity_id) {
         await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
           this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })

@@ -7,6 +7,7 @@ import approval from "./modules/approval.js"
 import httpService from "../services/httpservices.js";
 import router from "../router/index.js";
 import bo from "./modules/bo.js";
+import logs from "./modules/logs.js"
 const store = createStore({
   state: {
     version: "1.0.0",
@@ -68,6 +69,14 @@ const store = createStore({
           status: "active",
           active: false,
           svg: "download",
+        },
+        {
+          name: "Logs",
+          route: "/logs",
+          icon: "Reports",
+          status: "active",
+          active: false,
+          svg: "orders",
         },
     ],
     validSteps: [],
@@ -169,8 +178,8 @@ const store = createStore({
     },
     navigateSteps({state, commit}, payload){
       if(payload == 'EKYC Employee' || payload == 'RM'){
-        let empArr = ['Approval' , 'Opportunity' , 'CKYC Download']
-        let rmArr = ['Approval' , 'Opportunity', 'CKYC Download', 'URL Generation']
+        let empArr = ['Approval' , 'Opportunity' , 'CKYC Download', 'Logs']
+        let rmArr = ['Approval' , 'Opportunity', 'CKYC Download', 'URL Generation', 'Logs']
         let validArr = payload == 'EKYC Employee'? empArr : payload == 'RM' ? rmArr : []
         let approval = state.tempSteps.filter((el)=> validArr.includes(el.name))
         approval[0].active = true
@@ -192,6 +201,6 @@ const store = createStore({
   getters: {
     getIsLogoutLoader: (state) => state.isLogoutLoader
   },
-  modules: { opportunity, tabs, errorLog, login, approval, bo },
+  modules: { opportunity, tabs, errorLog, login, approval, bo, logs },
 });
 export default store

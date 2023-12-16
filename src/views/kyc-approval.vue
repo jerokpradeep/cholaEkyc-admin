@@ -79,12 +79,16 @@
           </div>
       </div>
   </div>
-  <div class="my-4" v-if="currentTab == 1 && !getIsLoader && getApprovalList.length > 0">
+  <div class="my-4" v-if="currentTab == 0 && !getIsLoader && getApprovalList.length > 0">
     <table class="w-full border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
           <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap" >
             {{ head.name }}
+            <!-- <span @click="sortTable(head)" class="flex items-center gap-1" :class="{ 'cursor-pointer' : head.isSortable, 'justify-start' : head.keyName == 'customer_name' , 'justify-center' : head.keyName != 'customer_name'}">
+              <span>{{ head.name }}</span> 
+              <span v-if="head.isSortable" v-html="sortArrow"></span>
+            </span> -->
           </th>
         </tr>
       </thead>
@@ -127,7 +131,7 @@
             {{ i.time && i.time != " "  ? getFormat(i.time) : 'NA' }}
           </td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ i.time && i.time != " "  ? getHours(i.time) : 'NA' }}
+            {{ i.time && i.time != " "  ? getHours(i, i.time) : 'NA' }}
           </td>
         </tr>
       </tbody>
@@ -146,6 +150,11 @@ import chevronSvg from "../assets/image/Chevron.svg"
 import tabs from "../components/utilComponents/tabs.vue"
 import { mapGetters,mapState } from 'vuex';
 import assigneeDialog from './approve-panel/assigneedialog.vue';
+
+const sortArrow = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+</svg>
+`
 export default {
   components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog },
   data() {
@@ -164,75 +173,23 @@ export default {
               { type: 'Rejected', count: '0' }
           ],
           statusType : {  },
-
           tableHeads: [
-            { name: "S.No", class: "text-center" },
-            { name: "Customer Name", class: "text-left" },
-            { name: "Application ID", class: "text-center" },
-            { name: "PAN No", class: "text-center" },
-            { name: "Mobile No", class: "text-center" },
-            { name: "Reference ID", class: "text-center" },
-            { name: "Referal Name", class: "text-center" },
-            { name: "Branch", class: "text-center" },
-            { name: "Designation", class: "text-center" },
-            { name: "Status", class: "text-center" },
-            { name: "Assigned to", class: "text-center" },
-            { name: "Date", class: "text-center" },
-            { name: "Hours consumed", class: "text-center" },
-          ],
-          tableData: [
-            {
-              SNO: "1",
-              applicationId: '2',
-              CustomerName: "Akash",
-              panNo: "JSJPS0302D",
-              Currentphases: "Mobile Verification",
-              Progress: "",
-              Phases: "3",
-              Hoursconsumed: "8.24 Hr ",
-              Inferredprogress: "On Track",
-              assignedTo: "Akash",
-              mobileNo: '8783423442'
-            },
-            {
-              SNO: "2",
-              applicationId: '3',
-              CustomerName: "Akash",
-              panNo: "JSJPS0302D",
-              Currentphases: "Email Verification",
-              Progress: "",
-              Phases: "3",
-              Hoursconsumed: "8.24 Hr",
-              assignedTo: "Akash",
-              mobileNo: '8783423442'
-            },
-            {
-              SNO: "3",
-              applicationId: '4',
-              CustomerName: "Akash",
-              panNo: "JSJPS0302D",
-              Currentphases: "PAN Verification",
-              Progress: "",
-              Phases: "5",
-              Hoursconsumed: "8.24 Hr",
-              assignedTo: "Akash",
-              mobileNo: '8783423442'
-            },
-            {
-              SNO: "4",
-              applicationId: '5',
-              CustomerName: "Akash",
-              panNo: "JSJPS0302D",
-              Currentphases: "Address",
-              Progress: "",
-              Phases: "8",
-              Hoursconsumed: "8.24 Hr",
-              assignedTo: "Akash",
-              mobileNo: '8783423442'
-            },
+            { name: "S.No", keyName: '', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Customer Name", keyName: 'customer_name', class: "text-left", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Application ID", keyName: 'opportunity_id', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "PAN No", keyName: 'fsl_pan_no', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Mobile No", keyName: 'fsl_mobile_num', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Reference ID", keyName: 'reference_id', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Referal Name", keyName: 'referral_name', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Branch", keyName: 'fsl_branch', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Designation", keyName: 'designation', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Status", keyName: 'status', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Assigned to", keyName: 'assigned_person_name', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "Date", keyName: 'time', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: true },
+            { name: "Hours consumed", keyName: 'time', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
           ],
           Progress,
-            chevronSvg,
+          chevronSvg,
           currentTab : 0,
           currentAssigneeData: '',
           imageTest: 'https://ekyc.cholasecurities.com/uat/assets/headTree-a3444e58.svg',
@@ -240,7 +197,8 @@ export default {
           popover:{
             visibility: 'click',
             placement: 'bottom',
-          }
+          },
+          sortArrow
       }
   },
   computed: {
@@ -255,6 +213,7 @@ export default {
     },
   methods: {
     async goToApprovalPage(data) {
+      if(this.getUserData?.Role == 'RM') return
       if(data && data.fsl_assign_to && data.opportunity_id) {
         await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(()=> {
           this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })
@@ -282,7 +241,7 @@ export default {
       // id == 1 ?  this.$store.dispatch('approval/getApprovalList') : ''
       this.currentTab = id
     },
-    getHours(dt2) {
+    getHours(data, dt2) {
       let diffTime = Math.abs(new Date().valueOf() - new Date(dt2).valueOf());
       let days = diffTime / (24*60*60*1000);
       let hours = (days % 1) * 24;
@@ -290,14 +249,18 @@ export default {
       let secs = (minutes % 1) * 60;
       [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
       if(Number(days) != 0) {
-        return `${days}d, ${hours}h : ${minutes}m`
+        data.hours = `${days}d, ${hours}h : ${minutes}m`
+        return data.hours
       } else if(Number(hours) != 0) {
-        return `${hours}h:${minutes}m`
+        data.hours = `${hours}h:${minutes}m`
+        return data.hours
       } else {
-        return `${minutes}m`
+        data.hours = `${minutes}m`
+        return data.hours
       }
     },
     getFormat(date){
+      
       return window.formatDate(date, 'D&T')
     },
     getAllApproval() {
@@ -329,11 +292,19 @@ export default {
       this.status = ''
       this.statusType = { name: 'ALL', value: '' }
       this.getAllApproval()
+    }, 
+    sortTable(data) {
+      if(data.sortType == 'neutral' || data.sortType == 'des') {
+        this.getApprovalList.sort((a,b) => (a[data.keyName] > b[data.keyName]) ? 1 : ((b[data.keyName] > a[data.keyName]) ? -1 : 0))
+      } else if(data.sortType == 'asc') {
+        this.getApprovalList.sort((a,b) => (a[data.keyName] < b[data.keyName]) ? 1 : ((b[data.keyName] < a[data.keyName]) ? -1 : 0))
+      }
+      data.sortType = data.sortType == 'neutral' || data.sortType == 'des' ? 'asc' : data.sortType == 'asc' ? 'des' : 'neutral'
     }
   },
   created() {
-    this.$store.commit('setActiveTab', this.$store.state.queries?.kycapproval ? this.$store.state.queries?.kycapproval.query.tab : 0)
-    this.changeTab(this.$store.state.queries?.kycapproval ? this.$store.state.queries?.kycapproval.query.tab : 0)
+    // this.$store.commit('setActiveTab', 0)
+    this.changeTab(0)
     this.setDefaultFilter()
   },
 }

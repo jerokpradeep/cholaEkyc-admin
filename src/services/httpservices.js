@@ -13,7 +13,7 @@ const httpService = {
   getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity,
   getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, checkBoStatus, nseUccUpload, bseUccUpload, kraUpload, kraFileUpload,
   bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush, generateCkyc,genrateUrl, downloadCkyc, getFilteredOpurtunity,
-  getFilteredApproval
+  getFilteredApproval, getMailLogData
 }
 
 export default httpService
@@ -131,4 +131,8 @@ function getFilteredOpurtunity(payload) {
 
 function getFilteredApproval(payload) {
   return WRAPPERAXIOS.get(`ekyc/getFilteredApprovalDetails?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}&from_date=${payload.from_date}&to_date=${payload.to_date}&status=${payload.status}&pan_no=${payload.pan_no}&mobile_no=${payload.mobile_no}&id=${payload.id}`)
+}
+
+function getMailLogData(payload) {
+  return WRAPPERAXIOS.post("smsEmailLog/getLog", payload);
 }

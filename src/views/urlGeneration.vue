@@ -1,7 +1,7 @@
 <template>
     <div class="px-5 pb-4 pt-5 font-bold text-base w-full dark:text-white sticky top-0 z-10 w-full flex"> 
         <div class="w-[30%]">
-            URL Generation
+            Generic Referal URL
         </div>
         <div class="w-[70%] font-normal">
             <div>Generic URL</div>

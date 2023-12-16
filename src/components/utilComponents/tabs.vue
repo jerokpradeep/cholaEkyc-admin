@@ -38,7 +38,8 @@ export default {
     ...mapGetters("tabs", [
       "getKycApprovalTabs",
       "getKycPanelTabs",
-      "getOpportunityTabs"
+      "getOpportunityTabs",
+      "getLogsTabs"
     ]),
     ...mapGetters(["getWindowWidth"]),
     ...mapGetters('approval', ['getIsLoader']),
@@ -58,6 +59,9 @@ export default {
       } else if(this.$route.path == "/opportunity") {
         this.tabs = this.getOpportunityTabs
         return this.getOpportunityTabs
+      } else if(this.$route.path == "/logs") {
+        this.tabs = this.getLogsTabs
+        return this.getLogsTabs
       }
     },
     hasNonApprovedStatusActive() {

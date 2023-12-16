@@ -73,7 +73,7 @@
                         Branch
                     </div>
                     <div class="text-sm">
-                        {{ getCustomerData?.opportunity_data?.fsl_branch }}
+                        {{ getCustomerData?.opportunity_data?.fsl_mode_of_application == "DIRECT" ? 'DIGI' :  getCustomerData?.opportunity_data?.fsl_mode_of_application }}
                     </div>
                 </div>
                 <div>

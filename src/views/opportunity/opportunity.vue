@@ -16,9 +16,10 @@
   </div>
   <div class="p-4">
     <breadcrumb v-if="getIsStageDetails"/>
-    <reports v-if="currentTab == 0" />
+    <!-- <reports v-if="currentTab == 0" />
     <Allopportunity v-if="currentTab == 1" />
-    <myOpportunity v-if="currentTab == 2"/>
+    <myOpportunity v-if="currentTab == 2"/> -->
+    <Allopportunity />
   </div>
 </template>
 
@@ -76,8 +77,8 @@ export default {
     },
   },
   async created() {
-    this.$store.commit('setActiveTab', this.$store.state.queries?.opportunity ? this.$store.state.queries?.opportunity.query.tab : 0)
-    await this.changeTab(this.$store.state.queries?.opportunity ? this.$store.state.queries?.opportunity.query.tab : 0)
+    // this.$store.commit('setActiveTab', 1)
+    // await this.changeTab(1)
   },
 };
 </script>

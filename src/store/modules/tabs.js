@@ -14,14 +14,18 @@ const state = {
         { name: 'Push to BO', id: 10, active: false, count: '0', remarks: [],  key: '',  docs:[]},
     ],
     kycPanelTabs : [
-        { name: 'Reports', id: 0, active: true, count: '0' },
-        { name: 'All Approvals', id: 1, active: false, count: '0' },
-        { name: 'My Approvals', id: 2, active: false, count: '0' },
+        // { name: 'Reports', id: 0, active: true, count: '0' },
+        { name: 'All Approvals', id: 0, active: true, count: '0' },
+        // { name: 'My Approvals', id: 2, active: false, count: '0' },
     ],
     opportunityTabs: [
-        { name: 'Reports', id: 0, active: true, count: '0' },
-        { name: 'All Opportunities', id: 1, active: false, count: '0' },
-        { name: 'My Opportunities', id: 2, active: false, count: '0' },
+        // { name: 'Reports', id: 0, active: true, count: '0' },
+        { name: 'All Opportunities', id: 0, active: true, count: '0' },
+        // { name: 'My Opportunities', id: 2, active: false, count: '0' },
+    ],
+    logsTabs: [
+        { name: 'SMS/MAIL', id: 0, active: true, count: '0' },
+        // { name: 'Logs', id: 1, active: false, count: '0' },
     ]
 }
 
@@ -34,6 +38,8 @@ const actions = {
             data = state.kycPanelTabs
         } else if(payload.path == '/opportunity') {
             data = state.opportunityTabs
+        } else if(payload.path == '/logs') {
+            data = state.logsTabs
         }
 
         if(data) {
@@ -52,6 +58,8 @@ const actions = {
             state.kycPanelTabs = data
         } else if(payload.path == '/opportunity') {
             state.opportunityTabs = data
+        } else if(payload.path == '/logs') {
+            state.logsTabs = data
         }
     },
 };
@@ -65,7 +73,8 @@ const mutations = {
 const getters = {
     getKycApprovalTabs: state => state.kycApprovalTabs,
     getKycPanelTabs: state => state.kycPanelTabs,
-    getOpportunityTabs: state => state.opportunityTabs
+    getOpportunityTabs: state => state.opportunityTabs,
+    getLogsTabs: state => state.logsTabs
 };
 
 const tabs = {
