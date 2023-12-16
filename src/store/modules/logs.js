@@ -5,6 +5,8 @@ const state = {
     loginType: "EMAIL",
     loader: false,
     isMailDial: false,
+    accessLogs:[],
+    restLogs:[]
 }
 
 const mutations = {
@@ -20,6 +22,12 @@ const mutations = {
     setIsMailDial(state, payload) {
         state.isMailDial = payload;
       },
+      setAccessLogs(state, payload){
+        state.accessLogs = payload
+      },
+      setRestLogs(state, payload){
+        state.restLogs = payload
+      }
 }
 
 const actions = {
@@ -35,6 +43,35 @@ const actions = {
             } else {
                 commit("setMailLogs", []);
                 notify({ group: "auth", type: "error", title: `${response.data.reason}`});
+            }
+        })
+        .catch((err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        })
+        .finally(() => {
+            commit("setLoader", false);
+        });
+    },
+
+    async getAccessLog({ commit, dispatch }, payload) {
+        commit("setLoader", true);
+        await httpService.getAccessLogDetails(payload).then((response) => {
+            if ( response.status == 200 && response.data.result && response.data.result.length > 0 && response.data.result != 'The OffSet Exits the data') {
+                commit('setAccessLogs', response.data.result)
+            }
+        })
+        .catch((err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        })
+        .finally(() => {
+            commit("setLoader", false);
+        });
+    },
+    async getRestLogDetails({ commit, dispatch }, payload) {
+        commit("setLoader", true);
+        await httpService.getRestLogDetails(payload).then((response) => {
+            if ( response.status == 200 && response.data.result && response.data.result.length > 0 && response.data.result != 'The OffSet Exits the data') {
+                commit('setRestLogs', response.data.result)
             }
         })
         .catch((err) => {

@@ -1,13 +1,15 @@
 <template>
     <tabs class="mx-4" :removeActive="true" @activeTab="changeTab"/>
     <smsOrMailLogs v-if="currentTab == 0" />
+    <dataLogs v-if="currentTab == 1" />
 </template>
 
 <script>
 import tabs from "../../components/utilComponents/tabs.vue"
 import smsOrMailLogs from "./sms-or-mail-logs.vue"
+import dataLogs from "./data-logs.vue"
 export default {
-    components: { tabs, smsOrMailLogs },
+    components: { tabs, smsOrMailLogs, dataLogs },
     data() {
         return {
             currentTab: 0
@@ -21,7 +23,7 @@ export default {
         },
     },
     mounted() {
-        this.changeTab(0)
+      this.changeTab(this.$store.state.queries['logs'].query.tab)
     },
 }
 </script>

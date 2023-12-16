@@ -25,7 +25,7 @@ const state = {
     ],
     logsTabs: [
         { name: 'SMS/MAIL', id: 0, active: true, count: '0' },
-        // { name: 'Logs', id: 1, active: false, count: '0' },
+        { name: 'Data Logs', id: 1, active: false, count: '0' },
     ]
 }
 

@@ -3,11 +3,17 @@
         <div class="flex flex-wrap gap-3 card p-5 border rounded bg-white shadow-sm ">
             <div>
                 <p class="primaryColor pb-1 text-sm ml-1">Log Type</p>
-                <select v-model="logType" @change="value = ''"
+                <select v-model="logType" @change="user_url = ''"
                     class="border min-w-[160px] h-10 rounded focus:outline-0 px-4 text-xs">
-                    <option value="EMAIL">EMAIL</option>
-                    <option value="SMS">SMS</option>
+                    <option value="access_log">Access Log</option>
+                    <option value="rest_log">Rest Log</option>
                 </select>
+            </div>
+            
+            <div>
+                <p class="primaryColor pb-1 text-sm">User Id</p>
+                <input type="text" placeholder="Enter User ID"
+                    v-model="user_id" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
             </div>
 
             <div>
@@ -43,14 +49,14 @@
                     </template>
                 </VDatePicker>
             </div>
-            <div>
-                <p class="primaryColor pb-1 text-sm">Search Mail/SMS</p>
-                <input type="text" :placeholder="logType == 'SMS' ? 'Search User Mobile Number' : 'Search User Email'"
-                    v-model="value" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
+            <div v-if="logType == 'access_log'">
+                <p class="primaryColor pb-1 text-sm">URL</p>
+                <input type="text" placeholder="Enter URL"
+                    v-model="user_url" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
             </div>
             <div class="flex items-end">
                 <button class="bg-blue-500 text-white h-10 w-[120px] cursor-pointer rounded text-xs" :disabled="getLoader"
-                    @click="getReports('table')">
+                    @click="getReports()">
                     <p v-if="!getLoader">Submit</p>
                     <svg v-if="getLoader" class="animate-spin h-5 w-5 text-white flex mx-auto"
                         xmlns="http://www.w3.org/2000/svg" fill="#fffff" viewBox="0 0 24 24">
@@ -65,30 +71,33 @@
     </div>
 
     <div>
-        <maillogsTable />
+        <accessLog v-if="logType == 'access_log'" />
+        <restlog  v-else/>
     </div>
 </template>
 
 <script>
 import { mapGetters} from "vuex"
-import maillogsTable from "./maillogs-table.vue"
-
+import accessLog from "./access_table.vue"
+import restlog from "./rest_table.vue"
 const dateSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5">
     </path></svg>`
 
 export default {
-    components: { maillogsTable },
+    components: { accessLog, restlog },
     data() {
         return {
             dateSvg,
-            logType: 'EMAIL',
+            logType: 'access_log',
             fromDate: new Date(),
             toDate: new Date(),
             popover: {
                 visibility: "click",
                 placement: "bottom-start",
             },
-            value: ''
+            currentTab: 0,
+            user_id: '',
+            user_url:''
         }
     },
     computed: {
@@ -103,19 +112,18 @@ export default {
         },
 
         async getReports() {
-            if ( this.fromDate && this.toDate && ((this.value && this.validateRegex(this.value)) || !this.value)) {
-                let json = {
-                    limit: 20,
-                    offset: 0,
-                    type: this.logType,
-                    fromDate: this.fromDate,
-                    toDate: this.toDate,
-                };
-                this.value ? (json.value = this.value) : "";
-                await this.$store.dispatch("logs/getMailLogData", json);
+            if ( this.fromDate && this.toDate && this.logType) {
+                let json={
+                    userId:this.user_id,
+                    uri:this.logType == 'access_log' ? this.user_url : undefined,
+                    fromDate:this.fromDate,
+                    toDate:this.toDate,
+                    pageNo:"1",
+                    pageSize:"10"
+                }
+                this.logType == 'access_log' ? this.$store.dispatch('logs/getAccessLog', json) : this.$store.dispatch('logs/getRestLogDetails', json)
             } else {
                 if (!this.fromDate || !this.toDate) {
-                    // this.$notify({ group: "auth", type: "error", title: `Select a from Date and To date` });
                     this.$store.dispatch('errorLog/toaster',{
                         data: {
                             "title": `Select a from Date and To date`,
@@ -125,41 +133,20 @@ export default {
                         }, position: ''
                     }, {root: true})
                 }
-                if(this.value && !this.validateRegex(this.value)) {
-                    // this.$notify({ group: "auth", type: "error", title: `Enter Vaild Email on Mobile Number` }) 
-                    this.$store.dispatch('errorLog/toaster',{
-                           data: {
-                               "title": `Enter Vaild Email on Mobile Number`,
-                               "type": "danger",
-                               "message": '',
-                               "duration": 4500
-                           }, position: ''
-                       }, {root: true})
-                }
             }
-        },
-
-        validateRegex(val) {
-            let email = new RegExp("^([a-z0-9_\.-]+\@[\da-z\.-]+.[a-z\.]{2,6})$");
-            let mobile = new RegExp("^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$");
-            if (val) {
-                return email.test(val) || (val.length > 6 && mobile.test(val));
-            }
-            return false;
         },
         resetFields(val) {
             this.fromDate = this.toDate = "";
-            this.logType = "EMAIL";
-            this.value = "";
-            this.$store.commit("logs/setMailLogs", []);
-
+            this.logType = "access_log";
+            this.user_id = "";
         },
     },
     created() {
         this.resetFields();
     },
     unmounted(){
-        this.resetFields();
+        this.$store.commit('logs/setRestLogs', [])
+        this.$store.commit('logs/setAccessLogs', [])
     }
 }
 </script>

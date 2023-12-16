@@ -89,6 +89,9 @@ const store = createStore({
       },
       opportunity: {
         query: { tab: 0}
+      },
+      logs: {
+        query: { tab: 0}
       }
     },
     queries: {
@@ -99,6 +102,9 @@ const store = createStore({
         query: { tab: 0 },
       }, 
       opportunity: {
+        query: { tab: 0}
+      },
+      logs: {
         query: { tab: 0}
       }
     },

@@ -13,7 +13,7 @@ const httpService = {
   getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity,
   getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, checkBoStatus, nseUccUpload, bseUccUpload, kraUpload, kraFileUpload,
   bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush, generateCkyc,genrateUrl, downloadCkyc, getFilteredOpurtunity,
-  getFilteredApproval, getMailLogData
+  getFilteredApproval, getMailLogData, getAccessLogDetails, getRestLogDetails
 }
 
 export default httpService
@@ -135,4 +135,12 @@ function getFilteredApproval(payload) {
 
 function getMailLogData(payload) {
   return WRAPPERAXIOS.post("smsEmailLog/getLog", payload);
+}
+
+function getAccessLogDetails(payload) {
+  return WRAPPERAXIOS.post("Logs/getLogdetails", payload);
+}
+
+function getRestLogDetails(payload) {
+  return WRAPPERAXIOS.post("Logs/getRestLogdetails", payload);
 }
