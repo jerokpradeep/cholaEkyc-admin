@@ -91,6 +91,7 @@ export default {
         this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified,'D&T')
         this.modeOfApplication = this.cutomerData?.opportunity_data?.fsl_mode_of_application || this.cutomerData?.opportunity_data?.fsl_modeofapplication
         // this.branch = this.cutomerData?.opportunity_data?.fsl_branch
+        
     },
 }
 </script>
