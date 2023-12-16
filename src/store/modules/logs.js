@@ -6,7 +6,8 @@ const state = {
     loader: false,
     isMailDial: false,
     accessLogs:[],
-    restLogs:[]
+    restLogs:[],
+    isShowDialog: false
 }
 
 const mutations = {
@@ -27,7 +28,10 @@ const mutations = {
       },
       setRestLogs(state, payload){
         state.restLogs = payload
-      }
+      },
+      setIsShowDialog(state, payload) {
+        state.isShowDialog = payload
+      } 
 }
 
 const actions = {
@@ -86,6 +90,7 @@ const actions = {
 const getters = {
     getLoader: (state) => state.loader,
     getMailLogs: (state) => state.mailLogs,
+    getIsShowDialog: (state) => state.isShowDialog
 };
 
 const logs = {

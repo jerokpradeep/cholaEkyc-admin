@@ -72,35 +72,35 @@
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
           <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class"
-            class="py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">
+            class="py-3.5 px-3 text-xs font-medium primaryColor whitespace-nowrap">
             {{ head.name }}
           </th>
         </tr>
       </thead>
       <tbody>
           <tr v-for="(i, id) in getAllOpportunities" :key="id" class="border-b hover:bg-gray-50 cursor-pointer" @click="goToApprovalPage(i)">
-            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
               {{ id + 1 }}
             </td>
-            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-left">
               {{ i.customer_name }}
             </td>
-            <td class="flex py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
+            <td class="flex py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
               {{ i.fsl_pan_no }}
             </td>
-            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
               {{ i['phase'] }}
             </td>
-            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative items-center justify-center">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative items-center justify-center">
               <div class="flex items-center justify-center" v-if="i?.stage">
                 <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="filledSvg" alt="greenstar" v-for="idx in getGreenStarCount(i?.stage)" :key="idx" />
                 <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="chevronSvg" alt="graystar" v-for="idx in getGrayStarCount(i?.stage, i.phase)" :key="idx" />
               </div>
             </td>
-            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
               {{ i?.time ? getHours(i.time) : i?.time }}
             </td>
-            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
               <button depressed class="tracking-[0.4px] px-3 min-h-[1.625rem] text-xs rounded min-w-[100px] cursor-default" :class="i['current phase'] == 'In-Progress'
                     ? 'blue-btn-c': i['current phase'] == 'Open'  ? 'gray-btn-c'
                     : i['current phase'] == 'Completed' || i['current phase'] == 'Approved' ? 'green-btn-c' : 'gray-btn-c'

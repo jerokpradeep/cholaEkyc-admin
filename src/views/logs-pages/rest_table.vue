@@ -23,10 +23,10 @@
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ item.method }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[400px]">
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[400px]" @click="viewJSON(item?.resBody)">
             {{ item.resBody }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[400px]">{{ item.reqBody }}</td>
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[400px]" @click="viewJSON(item?.reqBody)">{{ item.reqBody }}</td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
             {{ formatDate(new Date(item.createdOn)) }}
           </td>
@@ -36,24 +36,27 @@
     <div v-else class="min-h-[300px] flex justify-center items-center">
         No Data Found
     </div>
+    <jsonDialog :jsonValue="currentJsonValue"  />
     </div>
 </template>
   
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
+import jsonDialog from "./dialog-resp.vue"
+
 export default defineComponent({
     name: "mail-logs",
     computed: {
         ...mapState("logs", ["restLogs"]),
     },
 
-    setup() {
-        return {
-        };
+    data() {
+      return {
+        currentJsonValue: {}
+      }
     },
-    components: {
-    },
+    components: { jsonDialog },
     methods: {
         formatDate(date) {
             const day = String(date.getDate()).padStart(2, "0");
@@ -66,6 +69,18 @@ export default defineComponent({
             const minutes = String(date.getMinutes()).padStart(2, "0");
             return `${day}/${month}/${year}, ${hours}:${minutes} ${ampm}`;
         },
+        isJSON(str: any) {
+          try {
+            JSON.stringify(JSON.parse(str));
+            return true;
+          } catch (e) {
+            return false;
+          }
+        },
+        viewJSON(value: any) {
+          this.currentJsonValue = this.isJSON(value) ? JSON.parse(value) : value
+          this.$store.commit('logs/setIsShowDialog', true)
+        }
     },
 });
 </script>

@@ -83,54 +83,63 @@
     <table class="w-full border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg">
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr>
-          <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" class="py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap" >
-            {{ head.name }}
-            <!-- <span @click="sortTable(head)" class="flex items-center gap-1" :class="{ 'cursor-pointer' : head.isSortable, 'justify-start' : head.keyName == 'customer_name' , 'justify-center' : head.keyName != 'customer_name'}">
-              <span>{{ head.name }}</span> 
-              <span v-if="head.isSortable" v-html="sortArrow"></span>
-            </span> -->
+          <th v-for="(head, id) in tableHeads" :key="id" scope="col" :class="head.class" @mouseover="isHover = true;currentIdx = idx" @mouseleave="isHover = false;currentIdx = -1"
+          class="py-3.5 px-3 text-xs font-medium primaryColor whitespace-nowrap" @click="changeSort(head.value)" >
+            <span class="cursor-pointer" :class="head.alignment">
+              <span class="select-none">{{ head.name }}</span>
+              <span :class="head.alignment">
+                  <span class="whitespace-nowrap" :id="`position_th_${head.text}`">{{ head.text }}</span>
+                  <span v-if="head.sortable" class="min-w-[12px] mx-1">
+                    <!-- v-if="isHover && currentIdx == id" -->
+                      <span >
+                          <span v-if="head.isdesc" v-html="upArrow"></span>
+                          <span v-if="!head.isdesc" v-html="downArrow"> </span>
+                      </span>
+                  </span>
+              </span>
+            </span>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(i, id) in getApprovalList" :key="id" class="border-b cursor-pointer hover:bg-gray-50" @click="goToApprovalPage(i)">
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ id + 1 }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-left">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-left ">
             {{ i.customer_name ? i.customer_name : 'NA' }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.opportunity_id ? i.opportunity_id : 'NA' }}
           </td>
-          <td class="flex py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
+          <td class="flex py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center items-center justify-center">
             {{ i.fsl_pan_no ? i.fsl_pan_no : 'NA' }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.fsl_mobile_num ? i.fsl_mobile_num : 'NA'  }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.reference_id ? i.reference_id : 'NA'  }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.referral_name ? i.referral_name : 'NA'  }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.fsl_branch ? i.fsl_branch : 'NA'  }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.designation ? i.designation : 'NA'  }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i['status'] ? i['status'] : 'NA' }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.assigned_person_name ? i.assigned_person_name : '' }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.time && i.time != " "  ? getFormat(i.time) : 'NA' }}
           </td>
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
+          <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
             {{ i.time && i.time != " "  ? getHours(i, i.time) : 'NA' }}
           </td>
         </tr>
@@ -155,6 +164,15 @@ const sortArrow = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
   <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
 </svg>
 `
+
+const upArrow = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 primary-color">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+</svg>`
+
+const downArrow = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 primary-color">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+</svg>
+`
 export default {
   components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption, CheckIcon, ChevronUpDownIcon, tabs, assigneeDialog },
   data() {
@@ -174,19 +192,19 @@ export default {
           ],
           statusType : {  },
           tableHeads: [
-            { name: "S.No", keyName: '', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Customer Name", keyName: 'customer_name', class: "text-left", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Application ID", keyName: 'opportunity_id', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "PAN No", keyName: 'fsl_pan_no', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Mobile No", keyName: 'fsl_mobile_num', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Reference ID", keyName: 'reference_id', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Referal Name", keyName: 'referral_name', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Branch", keyName: 'fsl_branch', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Designation", keyName: 'designation', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Status", keyName: 'status', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Assigned to", keyName: 'assigned_person_name', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
-            { name: "Date", keyName: 'time', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: true },
-            { name: "Hours consumed", keyName: 'time', class: "text-center", svg: 'sortArrow', sortType: 'neutral', isSortable: false },
+            { name: "S.No", value: '', class: "text-center", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Name", value: 'customer_name', class: "text-left", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-start items-center' },
+            { name: "Application ID", value: 'opportunity_id', class: "text-center", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "PAN No", value: 'fsl_pan_no', class: "text-center", sortable: true, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Mobile No", value: 'fsl_mobile_num', class: "text-center", sortable: true, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Ref ID", value: 'reference_id', class: "text-center", sortable: true, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Referal Name", value: 'referral_name', class: "text-center", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Branch", value: 'fsl_branch', class: "text-center", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Designation", value: 'designation', class: "text-center", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Status", value: 'status', class: "text-center", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Assigned to", value: 'assigned_person_name', class: "text-center", sortable: false, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Date", value: 'time', class: "text-center", sortable: true, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
+            { name: "Hours consumed", value: 'time', class: "text-center", sortable: true, isSort: false, isdesc: true, alignment: 'flex justify-center items-center' },
           ],
           Progress,
           chevronSvg,
@@ -198,7 +216,14 @@ export default {
             visibility: 'click',
             placement: 'bottom',
           },
-          sortArrow
+          sortArrow,
+          pagination: {
+              sortBy: null,
+              descending: false
+          },
+          isHover:false,
+          currentIdx: -1,
+          upArrow, downArrow
       }
   },
   computed: {
@@ -292,18 +317,46 @@ export default {
       this.status = ''
       this.statusType = { name: 'ALL', value: '' }
       this.getAllApproval()
-    }, 
-    sortTable(data) {
-      if(data.sortType == 'neutral' || data.sortType == 'des') {
-        this.getApprovalList.sort((a,b) => (a[data.keyName] > b[data.keyName]) ? 1 : ((b[data.keyName] > a[data.keyName]) ? -1 : 0))
-      } else if(data.sortType == 'asc') {
-        this.getApprovalList.sort((a,b) => (a[data.keyName] < b[data.keyName]) ? 1 : ((b[data.keyName] < a[data.keyName]) ? -1 : 0))
-      }
-      data.sortType = data.sortType == 'neutral' || data.sortType == 'des' ? 'asc' : data.sortType == 'asc' ? 'des' : 'neutral'
-    }
+    },
+
+    changeSort(column) {
+            if (this.pagination.sortBy === column) {
+                this.pagination.descending = !this.pagination.descending;
+            } else {
+                this.pagination.sortBy = column;
+                this.pagination.descending = false;
+            }
+            this.getDataFromApi()
+        },
+
+        getDataFromApi() {
+            return new Promise((resolve, reject) => {
+                const { sortBy, descending } = this.pagination
+                let items = this.getApprovalList
+                if (sortBy) {
+                  items = this.getApprovalList.sort((a, b) => {
+                        const sortA = sortBy == 'fsl_pan_no' || sortBy == 'reference_id' || sortBy == 'time' ? a[sortBy] : parseFloat(a[sortBy]?.toString()?.replace(/,/g, ''))
+                        const sortB = sortBy == 'fsl_pan_no' || sortBy == 'reference_id' || sortBy == 'time' ? b[sortBy] : parseFloat(b[sortBy]?.toString()?.replace(/,/g, ''))
+                        if (descending) {
+                            if (sortA < sortB) return 1
+                            if (sortA > sortB) return -1
+                            return 0
+                        } else {
+                            if (sortA < sortB) return -1
+                            if (sortA > sortB) return 1
+                            return 0
+                        }
+                    })
+                    this.$store.commit('approval/setApprovalList', items) 
+                }
+                this.tableHeads.findIndex((idex) => {
+                    idex.value == sortBy ? (idex.isSort = true) : (idex.isSort = false);
+                    idex.value == sortBy ? (idex.isdesc = descending) : "";
+                });
+            })
+        },
   },
   created() {
-    // this.$store.commit('setActiveTab', 0)
     this.changeTab(0)
     this.setDefaultFilter()
   },

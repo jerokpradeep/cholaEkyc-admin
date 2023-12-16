@@ -1,6 +1,6 @@
 <template>
     <div class="p-4">
-        <div class="flex flex-wrap gap-3 card p-5 border rounded bg-white shadow-sm ">
+        <form class="flex flex-wrap gap-3 card p-5 border rounded bg-white shadow-sm " @submit.prevent="getReports('table')">
             <div>
                 <p class="primaryColor pb-1 text-sm ml-1">Log Type</p>
                 <select v-model="logType" @change="value = ''"
@@ -49,8 +49,7 @@
                     v-model="value" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
             </div>
             <div class="flex items-end">
-                <button class="bg-blue-500 text-white h-10 w-[120px] cursor-pointer rounded text-xs" :disabled="getLoader"
-                    @click="getReports('table')">
+                <button type="submit" class="bg-blue-500 text-white h-10 w-[120px] cursor-pointer rounded text-xs" :disabled="getLoader">
                     <p v-if="!getLoader">Submit</p>
                     <svg v-if="getLoader" class="animate-spin h-5 w-5 text-white flex mx-auto"
                         xmlns="http://www.w3.org/2000/svg" fill="#fffff" viewBox="0 0 24 24">
@@ -61,7 +60,7 @@
                     </svg>
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 
     <div>
@@ -154,9 +153,28 @@ export default {
             this.$store.commit("logs/setMailLogs", []);
 
         },
+
+        setPreviousWeekDatetime() {
+            const now = new Date();
+            now.setDate(now.getDate() - 7); // Subtract 7 days
+            const year = now.getFullYear().toString().padStart(4, "0");
+            const month = (now.getMonth() + 1).toString().padStart(2, "0");
+            const day = now.getDate().toString().padStart(2, "0");
+            this.fromDate = `${year}-${month}-${day}`;
+        },
+
+        setCurrentDatetime() {
+            const now = new Date();
+            const year = now.getFullYear().toString().padStart(4, "0");
+            const month = (now.getMonth() + 1).toString().padStart(2, "0");
+            const day = now.getDate().toString().padStart(2, "0");
+            this.toDate = `${year}-${month}-${day}`;
+        },
     },
-    created() {
+    mounted() {
         this.resetFields();
+        this.setCurrentDatetime();
+        this.setPreviousWeekDatetime();
     },
     unmounted(){
         this.resetFields();
