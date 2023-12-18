@@ -3,7 +3,7 @@
         <table class="w-full border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] bg-white rounded-lg" v-if="restLogs.length > 0" >
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr class="border-b text-[13px]">
-          <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Application Id</th>
+          <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Application ID</th>
           <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Method</th>
           <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Response Body</th>
           <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Request Body</th>

@@ -48,9 +48,8 @@
                     v-model="user_url" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
             </div>
             <div>
-                <p class="primaryColor pb-1 text-sm">User Id</p>
-                <input type="text" placeholder="Enter User ID"
-                    v-model="user_id" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
+                <p class="primaryColor pb-1 text-sm">Application ID</p>
+                <input type="text" placeholder="Enter Application ID" v-model="user_id" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
             </div>
             <div class="flex items-end">
                 <button type="submit" class="bg-blue-500 text-white h-10 w-[120px] cursor-pointer rounded text-xs" :disabled="getLoader">
@@ -71,16 +70,25 @@
         <accessLog v-if="logType == 'access_log' && !getLoader" @getReports="getReports"/>
         <restlog  v-else-if="!getLoader"/>
 
-        <div class="flex justify-end m-4" v-if="logType == 'access_log' ? accessLogs?.length != 0 : restLogs?.length != 0">
-          <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-            <a @click="goBack()" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="page == 1 ? 'cursor-not-allowed' : ''">
+        <div class="flex justify-end m-4 gap-4" v-if="(logType == 'access_log' ? accessLogs?.length != 0 : restLogs?.length != 0) && !getLoader">
+            <div class="flex items-center ">
+                <div class="primaryColor text-sm mr-2">Rows Per Page : </div>
+                <select v-model="rowsCount" class="border h-10 rounded focus:outline-0 px-4 text-xs cursor-pointer ring-1 ring-inset ring-gray-300" @change="getReports">
+                    <option :value="5">5</option>
+                    <option :value="10">10</option>
+                    <option :value="15">15</option>
+                    <option :value="20">20</option>
+                </select>
+            </div>
+          <nav class="isolate inline-flex -space-x-px rounded shadow-sm bg-white" aria-label="Pagination">
+            <a @click="goBack()" class="cursor-pointer relative inline-flex items-center rounded-l px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="page == 1 ? 'cursor-not-allowed' : ''">
               <span v-html="leftArror"></span>
             </a>
             <a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20 cursor-pointer" :class="page == cpage
                   ? 'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                   : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0'
                 " v-for="(cpage, id) in pages" :key="id" @click="changePage(cpage)" >{{ cpage }}</a>
-            <a @click="forward()" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+            <a @click="forward()" class="cursor-pointer relative inline-flex items-center rounded-r px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
               <span v-html="rightArror"></span>
             </a>
           </nav>
@@ -119,7 +127,9 @@ export default {
             user_url:'',
             page : 1,
             pages : 2,
+            rowsCount: 5
         }
+
     },
     computed: {
         ...mapGetters('logs', ['getLoader']),
@@ -142,7 +152,7 @@ export default {
                     fromDate:this.fromDate,
                     toDate:this.toDate,
                     pageNo: this.page,
-                    pageSize: "7"
+                    pageSize: this.rowsCount
                 }
                 this.logType == 'access_log' ? this.$store.dispatch('logs/getAccessLog', json) : this.$store.dispatch('logs/getRestLogDetails', json)
             } else {
