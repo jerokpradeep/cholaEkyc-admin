@@ -11,7 +11,7 @@ import logs from "./modules/logs.js"
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '14_12_2023_12_50',
+    buildDate: '18_12_2023_18_55',
     isLogout: false,
     tempSteps: [
       {
