@@ -13,7 +13,14 @@ const actions = {
             if(resp.status == 200 && resp.data.message.success_key == 1) {
                 commit('setUserName', resp.data?.full_name)
                 commit('setUserData', resp.data?.message?.data)
-                dispatch('navigateSteps', resp.data.message?.data?.Role, { root: true })
+                resp.data.message?.data?.Role ? dispatch('navigateSteps', resp.data.message?.data?.Role, { root: true }) : dispatch('errorLog/toaster', {
+                    data: {
+                        "title": "The user Doesn't have Role. Please contact Administrator.",
+                        "type": "danger",
+                        "message": '',
+                        "duration": 4500
+                    }, position: ''
+                }, { root: true })
             } else {
                 commit('setUserData', '')
                 dispatch('errorLog/toaster', {

@@ -2,7 +2,7 @@ let isLive = true
 import store from "../store";
 export function getUrl(){
     return {
-        ERPBASEURL: isLive ? 'https://erp.cholasecurities.com/' : 'https://erp.cholasecurities.com/',
+        ERPBASEURL: isLive ? 'https://console.cholasecurities.com/' : 'https://erp.cholasecurities.com/',
         // BOBASEURL: isLive ? 'https://uattrade.cholasecurities.com/uat/ekycAdmin/' : 'https://uattrade.cholasecurities.com/uat/ekycAdmin/',
         WRAPPERBASEURL: isLive ?  `https://ekyc.cholasecurities.com/adminrest/` : `https://devekyc.cholasecurities.com/uat/ekycAdmin/`
       }
