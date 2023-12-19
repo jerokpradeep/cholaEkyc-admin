@@ -43,16 +43,24 @@ const actions = {
                 commit("setLoginType", payload.type);
             } else if (response.data.result == 'The OffSet Exits the data') {
                 commit("setMailLogs", []);
-                notify({ group: "auth", type: "error", title: `${response.data.result}`});
+                dispatch('errorLog/toaster',{data: {
+                    "title": response.data.reason,
+                    "type": "danger",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
             } else {
                 commit("setMailLogs", []);
-                notify({ group: "auth", type: "error", title: `${response.data.reason}`});
+                dispatch('errorLog/toaster',{data: {
+                    "title": response.data.reason,
+                    "type": "danger",
+                    "message": '',
+                    "duration": 4500
+                },position: ''}, {root: true})
             }
-        })
-        .catch((err) => {
-            dispatch('errorLog/checkRouter', err, { root: true })
-        })
-        .finally(() => {
+        },(err)=> {
+            dispatch('errorLog/checkRouter', err, {root: true})
+        }).finally(() => {
             commit("setLoader", false);
         });
     },
@@ -63,9 +71,8 @@ const actions = {
             if ( response.status == 200 && response.data.result && response.data.result.length > 0 && response.data.result != 'The OffSet Exits the data') {
                 commit('setAccessLogs', response.data.result)
             }
-        })
-        .catch((err) => {
-            dispatch('errorLog/checkRouter', err, { root: true })
+        },(err)=> {
+            dispatch('errorLog/checkRouter', err, {root: true})
         })
         .finally(() => {
             commit("setLoader", false);
@@ -77,9 +84,8 @@ const actions = {
             if ( response.status == 200 && response.data.result && response.data.result.length > 0 && response.data.result != 'The OffSet Exits the data') {
                 commit('setRestLogs', response.data.result)
             }
-        })
-        .catch((err) => {
-            dispatch('errorLog/checkRouter', err, { root: true })
+        },(err)=> {
+            dispatch('errorLog/checkRouter', err, {root: true})
         })
         .finally(() => {
             commit("setLoader", false);

@@ -127,7 +127,7 @@ export default {
             user_url:'',
             page : 1,
             pages : 2,
-            rowsCount: 5
+            rowsCount: 20
         }
 
     },

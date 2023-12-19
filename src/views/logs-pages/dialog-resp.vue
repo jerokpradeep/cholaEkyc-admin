@@ -12,16 +12,60 @@
                         <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
                             enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
                             leave-to="opacity-0 scale-95">
-                            <DialogPanel class="w-full max-w-md transform overflow-hidden radius p-6 text-left align-middle bg-white rounded max-h-[500px] overflow-y-auto">
+                            <DialogPanel
+                                class="w-full max-w-md transform overflow-hidden radius p-6 text-left align-middle bg-white rounded max-h-[500px] overflow-y-auto">
                                 <DialogTitle as="h3" class="text-base pb-2 font-medium leading-6 primaryColor">
                                     <div>
-                                        <div class="flex border-b pb-4">
-                                            <p>JSON</p>
+                                        <!-- <div class="flex pb-4">
+                                            <div class="text-xs text-gray-500 mr-2">User ID :</div>
+                                            <div class="text-xs text-gray-900">
+                                                {{ getAccessRow?.user_id || getAccessRow?.userId }}
+                                            </div>
                                         </div>
-                                        <div class="flex justify-between mt-6">
+                                        <div class="flex flex-wrap pb-4">
+                                            <div class="text-xs text-gray-500 mr-2">URL :</div>
+                                            <div class="text-xs text-gray-900">
+                                                {{ jsonValue }}
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="flex pb-4">
+                      <div class="text-xs text-gray-500 mr-2">Method :</div>
+                      <div class="text-xs text-gray-900">
+                        {{ jsonValue?.method }}
+                      </div>
+                    </div>
+                    <div class="flex pb-4">
+                      <div class="text-xs text-gray-500 mr-2">Module :</div>
+                      <div class="text-xs text-gray-900">
+                        {{ jsonValue?.module }}
+                      </div>
+                    </div>
+                    <div class="flex pb-4 border-b">
+                      <div class="text-xs text-gray-500 mr-2">Date :</div>
+                      <div class="text-xs text-gray-900">
+                        {{
+                          jsonValue?.created_on || jsonValue?.createdOn
+                        }}
+                      </div>
+                    </div> -->
+                                        <!-- <div class="flex justify-between items-center mt-4 text-xs">
+                      <p>Request Body:</p>
+                      <button
+                        class="border px-4 h-8 rounded text-xs"
+                        @click="copyRequestBody()"
+                      >
+                        {{ copyText ? "Copy" : "Copied" }}
+                      </button>
+                    </div> -->
+                                        <!-- <JsonViewer class="!text-xs" :value="getValue('reqBody')" /> -->
+
+                                        <div class="flex justify-between items-center mt-6 text-xs">
                                             <p>Response Body:</p>
+                                            <button class="border px-4 h-8 rounded text-xs" @click="copyResponseBody()">
+                                                {{ copyTextRes ? "Copy" : "Copied" }}
+                                            </button>
                                         </div>
-                                        <JsonViewer :value="jsonValue" />
+                                        <JsonViewer class="!text-xs" :value="jsonValue" />
                                     </div>
                                 </DialogTitle>
                             </DialogPanel>
@@ -52,13 +96,31 @@ export default {
             copyTextRes: true,
         };
     },
-    props: { 
+    props: {
         jsonValue: { type: Object }
-     },
+    },
     methods: {
         closeDialog() {
             this.$store.commit("logs/setIsShowDialog", false);
         },
+
+        isJsonString(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return str;
+            }
+            return JSON.parse(str);
+        },
+        copyResponseBody() {
+      this.copyTextRes = false;
+      navigator.clipboard.writeText(JSON.stringify(this.jsonValue));
+      var textarea = document.getElementById("jsonDataRes");
+      var ok = document.execCommand("copy");
+      setInterval(() => {
+        this.copyTextRes = true; // Hide the text after 2 seconds
+      }, 2000);
+    },
     },
     computed: {
         ...mapGetters("logs", [
