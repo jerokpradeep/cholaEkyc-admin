@@ -50,7 +50,7 @@ const actions = {
     },
 
     async updateDocStatus({ state, commit, dispatch }, payload) {
-        let status = payload?.split('&')[2]
+        let status = payload.str?.split('&')[2]
         status = status?.split('=')[1]
         if(status == 'Approved') {
             commit('setIsApproveLoader', true)
@@ -59,23 +59,31 @@ const actions = {
         } else {
             commit('setIsResetLoader', true)
         }
-        await httpService.updateDocStatus(payload).then(resp => {
+        await httpService.updateDocStatus(payload.str).then(resp => {
+            
             if(resp.status == 200) {
-                if(resp.data.message.success_key == 0 && resp.data.message.message)   {
-                    dispatch('errorLog/toaster',{data: {
-                        "title": resp.data.message.message,
-                        "type": "danger",
-                        "message": '',
-                        "duration": 4500
-                    },position: ''}, {root: true})
-                } else if(resp.data?.message?.error == 'Document Not Found') {
-                    dispatch('errorLog/toaster',{data: {
-                        "title": resp.data.message.error,
-                        "type": "danger",
-                        "message": '',
-                        "duration": 4500
-                    },position: ''}, {root: true})
+                let isToaster = false
+               var toaster = {
+                    "title": '',
+                    "type": "danger",
+                    "message": '',
+                    "duration": 4500
                 }
+                if(resp.data.message.success_key == 1 && resp.data.message.message){
+                    let docsArr = payload.documentCall.attachmentType
+                    for(let item of docsArr){
+                        dispatch('formatJsonDoc', {status: payload.documentCall.status , remarks: payload.documentCall.remarks, attachmentType : item})
+                    }
+                    isToaster = true
+                    toaster.title = resp.data.message.message
+                    toaster.type = "success"
+                    resp.data.message.remarks ? toaster.message = resp.data.message.remarks : ''
+                }else if((resp.data.message.success_key == 0 && resp.data.message.message) || resp.data?.message?.error && resp.data?.message?.error == 'Document Not Found')   {
+                    isToaster = true
+                    toaster.title = resp.data?.message?.error ? resp.data?.message?.error : resp.data.message.message 
+                    toaster.type = "danger"
+                }
+                isToaster ? dispatch('errorLog/toaster',{data: toaster ,position: ''}, {root: true}) : ''
             }
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
@@ -149,7 +157,7 @@ const actions = {
         if(payload.tab == 6){
             str +=`&nominee_no=${payload.nomineeId}`
         }
-        await dispatch('updateDocStatus', str)
+        await dispatch('updateDocStatus', {str: str, documentCall:payload.documentCall})
     },
     getDocumentData({state, commit, dispatch}, payload){
         httpService.getDocument(payload.str).then(resp =>{
@@ -204,8 +212,24 @@ const actions = {
             token: rootGetters['login/getUserData'].tempToken
         }
         await httpService.getDocs(json).then(resp => {
+            let status = 'Approved'
             if(resp.status == 200 && resp.data?.message?.success_key == 1) {
                 commit('setDocuments', resp.data?.message?.data)
+                let ApporveArr = []
+                let openArr = []
+                let tabs = rootGetters['tabs/getKycApprovalTabs']
+                if(resp.data?.message?.data && resp.data?.message?.data.length > 0){
+                    ApporveArr =  resp.data?.message?.data.filter(el => {
+                      return  el.status == 'Approved'
+                    })
+                    openArr = resp.data?.message?.data.filter(el => {
+                        return  !el.status 
+                      })
+
+                      status =  ApporveArr.length == resp.data?.message?.data.length ? 'Approved' : openArr.length > 0 ? 'Open' : 'Rejected' 
+                }
+                tabs[7].status = status
+                commit('tabs/setKycApprovalTabs', tabs, {root: true})
             } else {
                 commit('setDocuments', [])  
             }

@@ -53,13 +53,11 @@
         </div>
     </div>
     <div v-else class="flex items-center justify-center min-h-[50vh]">No Documents Found</div>
-    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" :active-tab="'7'" @send-remarks="getRemarks"/>
 </template>
 
 <script>
 
 import { mapGetters } from 'vuex';
-import rejectDialog from '../rejectDialog.vue';
 import 'vue-cropper/dist/index.css'
 import { VueCropper }  from "vue-cropper";
 const tickSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-600">
@@ -82,18 +80,12 @@ export default {
                 { name: "Download", class: "text-left" },
             ],
             documentName: 'PAN',
-            isRejectDialog: false,
-            remarks: '',
-            currentDoc: '',
             tickSvg, cancelSvg
         }
     },
     computed: {
       ...mapGetters('approval', ['getCustomerData', 'getDocumentData', 'getDocuments', 'getIsDocsLoader']),
       ...mapGetters('login', ['getUserData'])
-    },
-    components:{
-        rejectDialog
     },
     methods: {
       getDocumentSource(docType , type) {
@@ -103,25 +95,6 @@ export default {
         this.documentName = docName
         this.getDocumentSource(docName, 'preview')
       },
-      getRemarks(data){
-        this.remarks = data.remarks
-        this.isRejectDialog = data.isOpen
-        if(this.remarks){
-            this.$store.dispatch('approval/formatJsonDoc', {tab: 7 , status: 'Rejected' , remarks: this.remarks , attachmentType: this.currentDoc})    
-        }
-      },
-
-      callReject(item){
-        this.currentDoc = item
-        this.remarks = ''
-        this.isRejectDialog = true
-      },
-
-      async resetDocStatus(status, docType) {
-        await this.$store.dispatch('approval/formatJsonDoc', {tab: this.currentTab , status: status , remarks: '', attachmentType: docType})
-        this.remarks = ''
-      }
-      
     },
     unmounted() {
         this.$store.commit('approval/setDocumentData', '') 

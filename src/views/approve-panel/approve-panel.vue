@@ -208,13 +208,7 @@ export default {
         },
 
         async approveOrRejectDoc(status) {
-            await this.$store.dispatch('approval/formatJson', {tab: this.currentTab , status: status , remarks: status == 'Rejected' ? this.remarks : ''})
-
-            for(let item of this.getKycApprovalTabs[this.currentTab].docs){
-                await this.$store.dispatch('approval/formatJsonDoc', {status: status , remarks: status == 'Rejected' ? this.remarks : '' , attachmentType : item})
-            }
-
-
+            await this.$store.dispatch('approval/formatJson', {tab: this.currentTab , status: status , remarks: status == 'Rejected' ? this.remarks : '', documentCall: {status: status , remarks: status == 'Rejected' ? this.remarks : '' , attachmentType : this.getKycApprovalTabs[this.currentTab].docs} })
             this.remarks = ''
         },
 
@@ -382,7 +376,7 @@ export default {
                     return status == 'Rejected'
                 })
 
-                if(nomineesArray.length) {
+                if(nomineesArray.length > 0) {
                     let apporveArr = nomineesArray.filter(el => {
                         return el.status == 'Approved'
                     })
@@ -404,6 +398,8 @@ export default {
                     isRejectNominee = nomineesArray.some(function(nominee){
                         return nominee.status == 'Rejected'
                     })
+                }else{
+                    tabData[6].status = 'Approved'
                 }
                 if(this.getDocuments && this.getDocuments.length > 0) {
                     let indivualVal = parseFloat(11.10) / this.getDocuments.length
