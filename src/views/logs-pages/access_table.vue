@@ -23,7 +23,7 @@
             <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
               {{ item.createdOn && item.createdOn != 'null' ? getFormat(item.createdOn) : 'NA' }}
             </td>
-            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">{{ item?.uri }}</td>
+            <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[300px]" @click="viewJSON(item?.uri)">{{ item?.uri }}</td>
             <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[400px]" @click="viewJSON(item?.resBody)">
               {{ item?.resBody }}
             </td>

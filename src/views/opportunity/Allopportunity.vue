@@ -97,7 +97,7 @@
                 <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="chevronSvg" alt="graystar" v-for="idx in getGrayStarCount(i?.stage, i.phase)" :key="idx" />
               </div>
             </td>
-            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center" :class="getTimeTdClass(i.time)">
               {{ i?.time ? getHours(i.time) : i?.time }}
             </td>
             <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
@@ -252,6 +252,26 @@ export default {
       this.status = ''
       this.statusType = { name: 'ALL', value:'' }
       this.getAllOppertunities()
+    },
+    getTimeTdClass(time) {
+      let _class = 'bg-white'
+      let _hours = this.getHoursOnly(time)
+      if(time && time != " ") {
+        if(_hours <= 1) return 'bg-[#79b38e] !text-[#384f40]'
+        else if(_hours <= 24) return 'bg-[#f1e3ad] !text-[#6c654b]'
+        else if(_hours >= 24) return 'bg-[#d98383] !text-[#6a3d3d]'
+      } else {
+        return _class
+      }
+    },
+    getHoursOnly(time) {
+      var date1 = new Date(time);
+      var date2 = new Date();
+      var timestamp1 = date1.getTime();
+      var timestamp2 = date2.getTime();
+      var timeDiff = Math.abs(timestamp2 - timestamp1);
+      var hoursDiff = timeDiff / (1000 * 3600);
+      return Math.round(hoursDiff)
     }
   },
   created(){

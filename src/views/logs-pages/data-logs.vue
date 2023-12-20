@@ -42,7 +42,7 @@
                     </template>
                 </VDatePicker>
             </div>
-            <div v-if="logType == 'access_log'">
+            <div>
                 <p class="primaryColor pb-1 text-sm">URL</p>
                 <input type="text" placeholder="Enter URL"
                     v-model="user_url" class="border w-full h-10 rounded focus:outline-0 px-4 text-xs" />
@@ -74,10 +74,9 @@
             <div class="flex items-center ">
                 <div class="primaryColor text-sm mr-2">Rows Per Page : </div>
                 <select v-model="rowsCount" class="border h-10 rounded focus:outline-0 px-4 text-xs cursor-pointer ring-1 ring-inset ring-gray-300" @change="getReports">
-                    <option :value="5">5</option>
                     <option :value="10">10</option>
-                    <option :value="15">15</option>
                     <option :value="20">20</option>
+                    <option :value="50">50</option>
                 </select>
             </div>
           <nav class="isolate inline-flex -space-x-px rounded shadow-sm bg-white" aria-label="Pagination">
@@ -148,7 +147,7 @@ export default {
             if ( this.fromDate && this.toDate && this.logType) {
                 let json = {
                     userId: this.user_id,
-                    uri:this.logType == 'access_log' ? this.user_url : undefined,
+                    uri: this.user_url,
                     fromDate:this.fromDate,
                     toDate:this.toDate,
                     pageNo: this.page,

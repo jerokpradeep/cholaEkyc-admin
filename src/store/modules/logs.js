@@ -70,6 +70,8 @@ const actions = {
         await httpService.getAccessLogDetails(payload).then((response) => {
             if ( response.status == 200 && response.data.result && response.data.result.length > 0 && response.data.result != 'The OffSet Exits the data') {
                 commit('setAccessLogs', response.data.result)
+            } else {
+                commit('setAccessLogs', [])
             }
         },(err)=> {
             dispatch('errorLog/checkRouter', err, {root: true})
@@ -83,6 +85,8 @@ const actions = {
         await httpService.getRestLogDetails(payload).then((response) => {
             if ( response.status == 200 && response.data.result && response.data.result.length > 0 && response.data.result != 'The OffSet Exits the data') {
                 commit('setRestLogs', response.data.result)
+            } else {
+                commit('setRestLogs', [])
             }
         },(err)=> {
             dispatch('errorLog/checkRouter', err, {root: true})

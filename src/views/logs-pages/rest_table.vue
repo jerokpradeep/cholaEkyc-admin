@@ -4,7 +4,7 @@
       <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
         <tr class="border-b text-[13px]">
           <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Application ID</th>
-          <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Method</th>
+          <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">URL</th>
           <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Response Body</th>
           <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Request Body</th>
           <th class="text-center py-3.5 px-3 text-[13px] font-medium primaryColor whitespace-nowrap">Created On</th>
@@ -20,8 +20,8 @@
             {{ item.applicationId }}
           </td>
 
-          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center">
-            {{ item.method }}
+          <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[400px]" @click="viewJSON(item?.uri)">
+            {{ item.uri }}
           </td>
           <td class="py-4 px-3 text-sm primary-color dark:text-[#94A3B8] relative text-center truncate max-w-[400px]" @click="viewJSON(item?.resBody)">
             {{ item.resBody }}

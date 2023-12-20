@@ -65,6 +65,29 @@
 
     <div>
         <maillogsTable />
+
+        <div class="flex justify-end m-4 gap-4" v-if="getMailLogs?.length != 0 && !getLoader">
+            <div class="flex items-center ">
+                <div class="primaryColor text-sm mr-2">Rows Per Page : </div>
+                <select v-model="rowsCount" class="border h-10 rounded focus:outline-0 px-4 text-xs cursor-pointer ring-1 ring-inset ring-gray-300" @change="getReports">
+                    <option :value="10">10</option>
+                    <option :value="20">20</option>
+                    <option :value="50">50</option>
+                </select>
+            </div>
+          <nav class="isolate inline-flex -space-x-px rounded shadow-sm bg-white" aria-label="Pagination">
+            <a @click="goBack()" class="cursor-pointer relative inline-flex items-center rounded-l px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="page == 1 ? 'cursor-not-allowed' : ''">
+              <span v-html="leftArror"></span>
+            </a>
+            <a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20 cursor-pointer" :class="page == cpage
+                  ? 'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                  : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0'
+                " v-for="(cpage, id) in pages" :key="id" @click="changePage(cpage)" >{{ cpage }}</a>
+            <a @click="forward()" class="cursor-pointer relative inline-flex items-center rounded-r px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+              <span v-html="rightArror"></span>
+            </a>
+          </nav>
+      </div>
     </div>
 </template>
 
@@ -75,11 +98,19 @@ import maillogsTable from "./maillogs-table.vue"
 const dateSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5">
     </path></svg>`
 
+const leftArror = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+</svg>
+`
+const rightArror = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+</svg>
+`
 export default {
     components: { maillogsTable },
     data() {
         return {
-            dateSvg,
+            dateSvg,leftArror,rightArror,
             logType: 'EMAIL',
             fromDate: new Date(),
             toDate: new Date(),
@@ -87,11 +118,14 @@ export default {
                 visibility: "click",
                 placement: "bottom-start",
             },
-            value: ''
+            value: '',
+            page : 1,
+            pages : 2,
+            rowsCount: 20
         }
     },
     computed: {
-        ...mapGetters('logs', ['getLoader'])
+        ...mapGetters('logs', ['getLoader','getMailLogs'])
     },
     methods: {
         getMinDate() {
@@ -101,11 +135,12 @@ export default {
             return date.toISOString().slice(0, 10);
         },
 
-        async getReports() {
+        async getReports(from) {
+            if (from != "paginate") this.resetPagination();
             if ( this.fromDate && this.toDate && ((this.value && this.validateRegex(this.value)) || !this.value)) {
                 let json = {
-                    limit: 20,
-                    offset: 0,
+                    limit: this.rowsCount,
+                    offset: this.page,
                     type: this.logType,
                     fromDate: this.fromDate,
                     toDate: this.toDate,
@@ -169,6 +204,33 @@ export default {
             const month = (now.getMonth() + 1).toString().padStart(2, "0");
             const day = now.getDate().toString().padStart(2, "0");
             this.toDate = `${year}-${month}-${day}`;
+        },
+
+        resetPagination() {
+            this.page = 1;
+            this.pages = 2;
+        },
+
+        goBack() {
+            if (this.page == 1) return;
+            this.page -= 1;
+            this.getReports("paginate");
+        },
+
+        forward() {
+            if (this.page == this.pages) {
+                this.pages += 1;
+            }
+            this.page += 1;
+            this.getReports("paginate");
+        },
+
+        changePage(cpage) {
+            if (cpage == this.pages) {
+                this.pages += 1;
+            }
+            this.page = cpage;
+            this.getReports("paginate");
         },
     },
     mounted() {

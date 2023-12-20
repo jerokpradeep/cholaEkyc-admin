@@ -97,7 +97,7 @@ export default {
         };
     },
     props: {
-        jsonValue: { type: Object }
+        jsonValue: { required: true }
     },
     methods: {
         closeDialog() {

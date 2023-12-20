@@ -158,7 +158,7 @@
             <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
               {{ i.time && i.time != " " ? getFormat(i.time) : 'NA' }}
             </td>
-            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center time" :class="getTimeTdClass(i.time)">
               {{ i.time && i.time != " " ? getHours(i, i.time) : 'NA' }}
             </td>
           </tr>
@@ -297,22 +297,26 @@ export default {
       // id == 1 ?  this.$store.dispatch('approval/getApprovalList') : ''
       this.currentTab = id
     },
-    getHours(data, dt2) {
+    getHours(data, dt2, type) {
       let diffTime = Math.abs(new Date().valueOf() - new Date(dt2).valueOf());
       let days = diffTime / (24 * 60 * 60 * 1000);
       let hours = (days % 1) * 24;
       let minutes = (hours % 1) * 60;
       let secs = (minutes % 1) * 60;
       [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
-      if (Number(days) != 0) {
-        data.hours = `${days}d, ${hours}h : ${minutes}m`
-        return data.hours
-      } else if (Number(hours) != 0) {
-        data.hours = `${hours}h:${minutes}m`
-        return data.hours
+      if(type != 'hours') {
+        if (Number(days) != 0) {
+          data.hours = `${days}d, ${hours}h : ${minutes}m`
+          return data.hours
+        } else if (Number(hours) != 0) {
+          data.hours = `${hours}h:${minutes}m`
+          return data.hours
+        } else {
+          data.hours = `${minutes}m`
+          return data.hours
+        }
       } else {
-        data.hours = `${minutes}m`
-        return data.hours
+        return Number(diffTime)
       }
     },
     getFormat(date) {
@@ -388,6 +392,27 @@ export default {
         });
       })
     },
+
+    getTimeTdClass(time) {
+      let _class = 'bg-white'
+      let _hours = this.getHoursOnly(time)
+      if(time && time != " ") {
+        if(_hours < 1) return 'bg-[#79b38e] !text-[#384f40]'
+        else if(_hours < 24) return 'bg-[#f1e3ad] !text-[#6c654b]'
+        else if(_hours > 24) return 'bg-[#d98383] !text-[#6a3d3d]'
+      } else {
+        return _class
+      }
+    },
+    getHoursOnly(time) {
+      var date1 = new Date(time);
+      var date2 = new Date();
+      var timestamp1 = date1.getTime();
+      var timestamp2 = date2.getTime();
+      var timeDiff = Math.abs(timestamp2 - timestamp1);
+      var hoursDiff = timeDiff / (1000 * 3600);
+      return Math.round(hoursDiff)
+    }
   },
   created() {
     this.changeTab(0)
