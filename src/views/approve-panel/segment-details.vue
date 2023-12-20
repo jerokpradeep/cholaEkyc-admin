@@ -59,7 +59,7 @@
         </table>
         </div>
         <div class="w-[48%]">
-          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false"/>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false" :preFerence="docType"/>
         </div>
         
     </div>
@@ -156,7 +156,8 @@ export default {
                 value: "",
               },
             ],
-            tickSvg, cancelSvg
+            tickSvg, cancelSvg,
+            docType: 'INCOME_PROOF'
         }
     },
     computed:{
@@ -172,8 +173,8 @@ export default {
          let tabData = this.getKycApprovalTabs
          tabData[5].docs = []
         if( this.tableData[2].value == "Yes"){
-          this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=INCOME_PROOF&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'INCOME_PROOF' })
-          tabData[5].docs.push('INCOME_PROOF')
+          this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${this.docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : this.docType })
+          tabData[5].docs.push(this.docType)
         }
           this.$store.commit('tabs/setKycApprovalTabs', tabData)
       }

@@ -137,10 +137,6 @@ export default {
     },
   },
 
-  unmounted() {
-    localStorage.setItem('setCurrentImage', JSON.stringify(this.getDocumentData))
-  },
-
   async created() {
     if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.name){
       await this.$store.dispatch('approval/getDocuments')
@@ -150,7 +146,7 @@ export default {
     getDocuments: function(){
       this.documentList = this.getDocuments
     if (this.documentList.length) {
-      this.select1 = this.documentList[0]['Document Type']
+      this.select1 = this.$route.query.prefer ? this.$route.query.prefer : this.documentList[0]['Document Type']
       this.select2 = this.documentList.length > 1 ? this.documentList[1]['Document Type'] : this.documentList[0]['Document Type']
       this.previewDocument(this.select1, 'preview')
       this.previewDocument(this.select2, 'clone')

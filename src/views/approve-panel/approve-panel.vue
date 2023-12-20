@@ -73,7 +73,7 @@
                         Branch
                     </div>
                     <div class="text-sm">
-                        {{ getCustomerData?.opportunity_data?.fsl_mode_of_application == "DIRECT" ? 'DIGI' :  getCustomerData?.opportunity_data?.fsl_mode_of_application }}
+                        {{ getCustomerData?.opportunity_data?.fsl_mode_of_application == "DIRECT" ? 'DIGI' :  selectedData?.branch  ? selectedData?.branch : '' }}
                     </div>
                 </div>
                 <div>
@@ -188,7 +188,8 @@ export default {
             remarks: '',
             isRejectDialog: false,
             tickSvg, cancelSvg,
-            clientcode: ''
+            clientcode: '',
+            selectedData: ''
         }
     },
 
@@ -423,6 +424,10 @@ export default {
         },
     },
    async created(){
+    if(localStorage.getItem('selecteditem') && localStorage.getItem('selecteditem') != "undefined"){
+        this.selectedData = JSON.parse(localStorage.getItem('selecteditem'))
+    }
+    
     this.currentTab = this.$store.state.queries?.approvepanel ? this.$store.state.queries?.approvepanel.query.tab : 0;
     this.$store.commit('setActiveTab', this.currentTab);
     await this.$store.dispatch('approval/getCustomerData', this.$route.query.id).finally(async ()=>{

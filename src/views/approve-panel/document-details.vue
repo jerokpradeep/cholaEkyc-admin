@@ -35,7 +35,7 @@
         </table>
 
         <div class="col-span-6 w-[45%]">  
-          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true"/>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true" :preFerence="documentName"/>
           
         </div>
     </div>

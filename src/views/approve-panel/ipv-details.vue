@@ -33,7 +33,7 @@
         
         <div class="col-span-6">  
           <div class="rounded-lg my-4 h-[320px]">
-            <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true"/>
+            <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true" :preFerence="docType"/>
           </div>
         </div>
     </div>
@@ -47,6 +47,7 @@ export default {
             capturedDate: '',
             latitude: '',
             longitude: '',
+            docType: 'IPV'
         }
     },
     computed: {
@@ -77,7 +78,7 @@ export default {
       }
         
       } 
-      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=IPV&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'IPV' })
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${this.docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'IPV' })
     },
 }
 </script>

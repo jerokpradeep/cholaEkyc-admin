@@ -1,7 +1,7 @@
 <template>
      <h2 class="text-base font-semibold leading-7 text-gray-900" v-if="isPreBtn">Preview</h2>
           <div class="my-4" v-if="isPreBtn">
-            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow"  @click="$router.push({path:'/preview', query: $route.query})">Compare documents</button>
+            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow"  @click="navigatePage()">Compare documents</button>
           </div>
 <div class="rounded-lg my-4" v-if="previewType && previewData">
     
@@ -36,6 +36,18 @@ export default {
             type: Boolean,
             required: true,
             default: false 
+        },
+        preFerence: {
+            type: String,
+            required: false,
+            default: ''
+        }
+    },
+    methods:{
+        navigatePage(){
+            let query = this.$route.query
+            this.preFerence ? query.prefer = this.preFerence : ''
+            this.$router.push({path:'/preview', query: query })
         }
     }
 }

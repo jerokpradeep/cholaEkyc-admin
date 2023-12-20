@@ -37,12 +37,12 @@
             </div>
           </div>
 
-          <!-- <div class="sm:col-span-3">
-            <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Branch</label>
+          <div class="sm:col-span-3" v-if="referrer">
+            <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Referrer</label>
             <div class="mt-2">
-              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="branch"/>
+              <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="referrer"/>
             </div>
-          </div> -->
+          </div>
       </div>
       <div class="my-6" v-if="getIsReject">
         <button @click="sendMail()" class="flex justify-center items-center min-w-[130px] h-[36px] py-2 px-4 rounded-lg text-xs text-white font-bold bg-[#753ED7]">
@@ -70,7 +70,8 @@ export default {
             startDate: '',
             updatedOn: '',
             modeOfApplication: '',
-            branch: 'NotMatch'
+            referrer: '',
+            selectedData: ''
         }
     },
     props: {
@@ -85,12 +86,16 @@ export default {
       }
     },
     mounted() {
+      if(localStorage.getItem('selecteditem') && localStorage.getItem('selecteditem') != "undefined"){
+        this.selectedData = JSON.parse(localStorage.getItem('selecteditem'))
+        this.referrer = this.selectedData.referral_name 
+    }
         this.mobileNo = this.cutomerData?.opportunity_data?.fsl_mobile_num
         this.emailId = this.cutomerData?.opportunity_data?.fsl_email_id
         this.startDate = window.formatDate(this.cutomerData?.opportunity_data?.creation,'D&T')
         this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified,'D&T')
         this.modeOfApplication = this.cutomerData?.opportunity_data?.fsl_mode_of_application || this.cutomerData?.opportunity_data?.fsl_modeofapplication
-        // this.branch = this.cutomerData?.opportunity_data?.fsl_branch  
+        
     },
 }
 </script>

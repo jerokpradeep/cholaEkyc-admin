@@ -47,12 +47,8 @@
         
         </div>
         <div class="col-span-6">
-          <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="my-4">
-            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow"  @click="$router.push({path:'/preview', query: $route.query})">Compare documents</button>
-          </div>
-          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false"/>
-          <preview_file :previewType="getDocumentDataClone.type" :previewData="getDocumentDataClone.data" :isPreBtn="false"/>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true" :preFerence="docType1"/>
+          <preview_file :previewType="getDocumentDataClone.type" :previewData="getDocumentDataClone.data" :isPreBtn="false" :preFerence="docType1"/>
         </div>        
     </div>
 </template>
@@ -69,7 +65,9 @@ export default {
             nameAsAadhar: '',
             panStatusCode: '',
             kraRespDate: '',
-            trackWiz: ''
+            trackWiz: '',
+            docType1: 'PAN',
+            docType2: 'SIGNATURE'
         }
     },
     computed:{
@@ -87,8 +85,8 @@ export default {
       if(this.getCustomerData && this.getCustomerData?.profile_data){
         this.getCustomerData.profile_data?.trackwizz_passkey ? this.trackWiz = this.getCustomerData.profile_data?.trackwizz_passkey : ''
       }
-      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=PAN&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'PAN' })
-      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=SIGNATURE&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'clone' , docType : 'SIGNATURE' })
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${this.docType1}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : this.docType1 })
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${this.docType2}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'clone' , docType : this.docType2 })
     },
 }
 </script>

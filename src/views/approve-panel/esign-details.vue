@@ -12,7 +12,7 @@
         </div>
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false"/>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false" :preFerence="docType"/>
         </div>        
     </div>
 </template>
@@ -22,7 +22,8 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            nameAsEsign: ''
+            nameAsEsign: '',
+            docType : 'ESIGN_DOCUMENT'
         }
     },
     computed: {
@@ -38,9 +39,8 @@ export default {
       }
     },
     mounted() {
-        let docType = 'ESIGN_DOCUMENT'
         let type = 'preview'
-        this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: type , docType : docType })
+        this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${this.docType}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: type , docType : this.docType })
         this.nameAsEsign = this.getCustomerData?.opportunity_data?.fsl_esiged_name
     },
 }

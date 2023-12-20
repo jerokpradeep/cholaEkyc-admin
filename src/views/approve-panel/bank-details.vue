@@ -62,7 +62,7 @@
       </div>
       <div class="col-span-6">  
           <div class="rounded-lg my-4 h-[320px]">
-            <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true"/>
+            <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true" :preFerence="attachmentName"/>
           </div>
         </div>
     </div>
@@ -80,7 +80,8 @@ export default {
             acHolderName: '',
             acNo: '',
             pennyVerifyStatus: '',
-            address: ''
+            address: '',
+            attachmentName: 'CANCELLED_CHEQUE_OR_STATEMENT'
         }
     },
     computed:{
@@ -97,7 +98,7 @@ export default {
         this.getCustomerData.opportunity_data.hasOwnProperty('fsl_penny_confirm') ? this.pennyVerifyStatus  = this.getCustomerData.opportunity_data.fsl_penny_confirm == 1 ? 'Success' : 'Failed'  : ''
         this.getCustomerData.opportunity_data.fsl_bank_address ? this.address  = this.getCustomerData.opportunity_data.fsl_bank_address  : ''
       }
-      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=CANCELLED_CHEQUE_OR_STATEMENT&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'CANCELLED_CHEQUE_OR_STATEMENT' })
+      this.$store.dispatch('approval/getDocumentData' , {str: `applicationId=${this.getCustomerData?.opportunity_data?.name}&documentType=${this.attachmentName}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}` , type: 'preview' , docType : 'CANCELLED_CHEQUE_OR_STATEMENT' })
     }
 }
 </script>
