@@ -61,15 +61,8 @@
         </div>
       </div>
       <div class="col-span-6">  
-          <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="my-4">
-            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow"  @click="$router.push({path:'/preview', query: $route.query})">Compare documents</button>
-          </div>
           <div class="rounded-lg my-4 h-[320px]">
-            <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
-                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
-                :outputSize="1" alt="Source Image" class="cropper" >
-            </VueCropper>
+            <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true"/>
           </div>
         </div>
     </div>
@@ -77,10 +70,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import 'vue-cropper/dist/index.css'
-import { VueCropper }  from "vue-cropper";
 export default {
-  components: { VueCropper },
     data() {
         return {
             bankName: '',

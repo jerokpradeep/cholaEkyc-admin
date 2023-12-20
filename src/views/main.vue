@@ -55,9 +55,14 @@ export default {
       return imgUrl;
     },
   },
-  created(){
+ async created(){
     let item = this.$store.state.validSteps.filter((el)=> el.route == this.$router.currentRoute.value.path)
     item.length > 0 ? this.$store.dispatch('changeTab', item[0]) : ''
+    if(this.$route.path == '/preview'){
+      await this.$store.dispatch('approval/getCustomerData', this.$route.query.id).finally(()=>{
+        this.$store.dispatch('approval/getDocuments')
+      })
+    }
     
   }
 };

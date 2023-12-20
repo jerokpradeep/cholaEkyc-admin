@@ -40,10 +40,8 @@
             </div>
           </Listbox>
         </div>
-        <div class="flex bg-white p-5">
-          <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" :info="true" :canMove="true"
-            :autoCrop="false" :outputSize="1" alt="Source Image" class="cropper !w-full">
-          </VueCropper>
+        <div class="bg-white p-5">
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false"/>
         </div>
       </div>
       <div class="grid gap-y-4 w-[50%]">
@@ -81,10 +79,8 @@
             </div>
           </Listbox>
         </div>
-        <div class="flex bg-white p-5">
-          <VueCropper v-if="getDocumentDataClone" ref="image2" :img="getDocumentDataClone" :info="true" :canMove="true"
-            :autoCrop="false" :outputSize="1" alt="Source Image" class="cropper !w-full">
-          </VueCropper>
+        <div class="bg-white p-5">
+          <preview_file :previewType="getDocumentDataClone.type" :previewData="getDocumentDataClone.data" :isPreBtn="false"/>
         </div>
       </div>
     </div>
@@ -94,8 +90,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import 'vue-cropper/dist/index.css'
-import { VueCropper } from "vue-cropper";
 import breadcrumbKyc from '../components/utilComponents/breadcrumbKyc.vue'
 const rotateSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
@@ -104,7 +98,7 @@ const rotateSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon, } from '@heroicons/vue/20/solid'
 export default {
-  components: { VueCropper, breadcrumbKyc, CheckIcon, ChevronUpDownIcon, Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions },
+  components: { breadcrumbKyc, CheckIcon, ChevronUpDownIcon, Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions },
   data() {
     return {
       imageTest1: '',
@@ -148,14 +142,19 @@ export default {
   },
 
   async created() {
-    await this.$store.dispatch('approval/getDocuments')
-
-    this.documentList = this.getDocuments.filter(el => el['Document Type'] != 'ESIGN_DOCUMENT' && el['Document Type'] != 'INCOME_PROOF')
+    if(this.getCustomerData && this.getCustomerData.opportunity_data && this.getCustomerData.opportunity_data.name){
+      await this.$store.dispatch('approval/getDocuments')
+    }
+  },
+  watch:{
+    getDocuments: function(){
+      this.documentList = this.getDocuments
     if (this.documentList.length) {
       this.select1 = this.documentList[0]['Document Type']
       this.select2 = this.documentList.length > 1 ? this.documentList[1]['Document Type'] : this.documentList[0]['Document Type']
       this.previewDocument(this.select1, 'preview')
       this.previewDocument(this.select2, 'clone')
+    }
     }
   }
 }

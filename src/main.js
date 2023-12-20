@@ -7,6 +7,7 @@ import store from "./store";
 import './assets/tailwind/tailwind.css';
 import { default as notification } from './notification/index.js';
 import VueCropper from 'vue-cropper'; 
+import 'vue-cropper/dist/index.css'
 import './style.css';
 // import 'vue-cropper/dist/index.css'
 
@@ -19,7 +20,7 @@ app.use(VueCropper)
 
 import spinner from "./components/utilComponents/spinner.vue"
 import btnLoader from "./components/utilComponents/button-loader.vue"
-
+import preview_file from './views/preview_file.vue'
 import { setupCalendar, Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 app.component('spinner', spinner);
@@ -29,4 +30,5 @@ app.component('btnLoader', btnLoader);
 // Use the components
   app.component('VCalendar', Calendar)
   app.component('VDatePicker', DatePicker)
+  app.component('preview_file', preview_file)
 app.mount('#app')

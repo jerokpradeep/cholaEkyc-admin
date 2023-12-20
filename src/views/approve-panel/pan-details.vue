@@ -51,18 +51,8 @@
           <div class="my-4">
             <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow"  @click="$router.push({path:'/preview', query: $route.query})">Compare documents</button>
           </div>
-          <div class="rounded-lg my-4">
-            <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
-                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
-                :outputSize="1" alt="Source Image" class="cropper" >
-            </VueCropper>
-            <div class="rounded-lg my-4">
-            <VueCropper v-if="getDocumentDataClone" ref="image1" :img="getDocumentDataClone" 
-                :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
-                :outputSize="1" alt="Source Image" class="cropper" >
-            </VueCropper>
-          </div>
-          </div>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false"/>
+          <preview_file :previewType="getDocumentDataClone.type" :previewData="getDocumentDataClone.data" :isPreBtn="false"/>
         </div>        
     </div>
 </template>
@@ -70,10 +60,7 @@
 <script>
 import {mapGetters} from "vuex"
 import commonJs from "../../mixins/common"
-import 'vue-cropper/dist/index.css'
-import { VueCropper }  from "vue-cropper";
 export default {
-  components: { VueCropper },
   mixins: [commonJs],
     data() {
         return {

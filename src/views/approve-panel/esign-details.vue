@@ -12,9 +12,7 @@
         </div>
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="rounded-lg my-4">
-            <iframe :src="getDocumentData" frameborder="1" class="w-full" style="height: 370px !important;"></iframe>
-          </div>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false"/>
         </div>        
     </div>
 </template>

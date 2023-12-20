@@ -35,20 +35,7 @@
         </table>
 
         <div class="col-span-6 w-[45%]">  
-          <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
-          <div class="my-4">
-            <button class="bg-[#2490EF] font-semibold text-white text-xs px-4 h-8 rounded-lg shadow" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData && this.documentName != 'INCOME_PROOF'"  @click="$router.push({path:'/preview', query: $route.query})">Compare documents</button>
-          </div>
-            <div class="rounded-lg h-[320px]" v-if="this.documentName != 'ESIGN_DOCUMENT' && this.documentName != 'PROTECTED_ESIGN_DOCUMENT' && getDocumentData && this.documentName != 'INCOME_PROOF'">
-                <!-- <img class="h-full w-full cursor-pointer object-contain" :src="getDocumentData" alt="panImage"> -->
-                <VueCropper v-if="getDocumentData" ref="image1" :img="getDocumentData" 
-                    :info="true" :canMove="true" :canScale="true" :autoCrop="false" 
-                    :outputSize="1" alt="Source Image" class="cropper" >
-                </VueCropper>
-            </div>
-          <div v-else>
-            <iframe :src="getDocumentData" frameborder="1" class="w-full" style="height: 370px !important;"></iframe>
-          </div>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true"/>
           
         </div>
     </div>
@@ -58,8 +45,6 @@
 <script>
 
 import { mapGetters } from 'vuex';
-import 'vue-cropper/dist/index.css'
-import { VueCropper }  from "vue-cropper";
 const tickSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-600">
   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
@@ -69,7 +54,6 @@ const cancelSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
 </svg>
 `
 export default {
-  components: { VueCropper },
     data() {
         return {
             tableHeads: [

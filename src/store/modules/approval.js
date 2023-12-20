@@ -162,10 +162,10 @@ const actions = {
     getDocumentData({state, commit, dispatch}, payload){
         httpService.getDocument(payload.str).then(resp =>{
             if(payload.type == 'preview'){
-                commit('setDocumentData',  window.URL.createObjectURL(resp.data))
+                commit('setDocumentData',  {data:window.URL.createObjectURL(resp.data), type:resp.data.type})
 
             } else if(payload.type == 'clone') {
-                commit('setDocumentDataClone',  window.URL.createObjectURL(resp.data))
+                commit('setDocumentDataClone',  {data:window.URL.createObjectURL(resp.data), type:resp.data.type})
             } else {
                     const url = window.URL.createObjectURL(resp.data);
                     const link = document.createElement('a');
@@ -537,7 +537,6 @@ const mutations = {
     },
     setStageData(state, payload) {
         state.stageData = payload
-        localStorage.setItem('stageData', JSON.stringify(payload))
     },
     setIsAssign(state, payload){
         state.isAssign = payload
@@ -556,7 +555,6 @@ const mutations = {
     },
     setDocumentData(state, payload){
         state.documentData = payload
-        localStorage.setItem('setCurrentImage', JSON.stringify(payload))
     },
     setDocumentDataClone(state, payload){
         state.documentDataClone = payload

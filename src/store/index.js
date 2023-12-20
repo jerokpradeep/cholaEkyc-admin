@@ -11,7 +11,7 @@ import logs from "./modules/logs.js"
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '20_12_2023_14_20',
+    buildDate: '20_12_2023_17_55',
     isLogout: false,
     tempSteps: [
       {
@@ -158,7 +158,7 @@ const store = createStore({
         }
       }
       state.queries = tempQuries;
-      localStorage.setItem('tabQuries', JSON.stringify(tempQuries));
+      localStorage.setItem('ekycAdminQuries', JSON.stringify(tempQuries));
     },
     setActiveTab(state, payload){
       state.activeTab = payload

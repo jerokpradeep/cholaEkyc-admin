@@ -59,8 +59,7 @@
         </table>
         </div>
         <div class="w-[48%]">
-         
-        <iframe :src="getDocumentData" frameborder="1" class="w-full " style="height: 370px !important;"></iframe>
+          <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false"/>
         </div>
         
     </div>
