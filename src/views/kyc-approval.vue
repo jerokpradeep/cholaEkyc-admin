@@ -144,7 +144,7 @@
               {{ i.referral_name ? i.referral_name : 'NA' }}
             </td>
             <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
-              {{ i.fsl_branch ? i.fsl_branch : 'NA' }}
+              {{ i.branch ? i.branch : 'NA' }}
             </td>
             <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
               {{ i.designation ? i.designation : 'NA' }}
@@ -271,10 +271,9 @@ export default {
     async goToApprovalPage(data) {
       if (this.getUserData?.Role == 'RM') return
       if (data && data.fsl_assign_to && data.opportunity_id) {
-        await this.$store.dispatch('approval/getCustomerData', data?.opportunity_id).finally(() => {
-          this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })
+        this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })
           this.$store.commit('setQuries', { data: { tab: 0 }, action: 'change', overRideKey: 'approvepanel' })
-        })
+          localStorage.setItem('selecteditem', JSON.stringify(data))
       } else {
         if (this.getUserData?.Role != 'RM') {
           this.currentAssigneeData = data
