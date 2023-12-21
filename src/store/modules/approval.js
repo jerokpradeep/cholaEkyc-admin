@@ -489,10 +489,12 @@ const actions = {
                     "value": null,
                     "reason": null,
                     "applicationId": null
-                  }])
+                }])
+                
             } else {
                 commit('setBoStatusList', [])
             }
+            dispatch('setTabStatus', resp.data.result)
         }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
         }).finally(() => {  
@@ -525,6 +527,26 @@ const actions = {
             commit('setIsLoader', false)
             commit('errorLog/setCounter', 0, { root: true }) 
         })
+       },
+       async setTabStatus({ state, commit, dispatch, rootGetters }, payload) {
+           let tabsData = rootGetters['tabs/getKycApprovalTabs']
+           let boStatusList = payload
+           let status = 'Open'
+           if (boStatusList.length) {
+               let isSuccess = boStatusList.every(function (el) {
+                   return el.value == 'Success'
+               })
+               let openArr = boStatusList.filter(el => {
+                   return (el.value && el.value != 'Success' && el.value != 'Failed') || !el.value
+               })
+               status = isSuccess ? 'Approved' : openArr.length > 0 ? 'Open' : 'Rejected'
+           }
+           tabsData.forEach(el => {
+               if (el.name == 'Push to BO') {
+                   el.status = status
+               }
+           });
+           commit('tabs/setKycApprovalTabs', tabsData, { root: true })
        }
 };
 

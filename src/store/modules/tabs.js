@@ -11,7 +11,7 @@ const state = {
         { name: 'Document', id: 7, active: false, count: '0', remarks: ['PAN image uploaded is not legible, please upload clear PAN image','Bank image uploaded is not legible, please upload clear bank image','Address proof image uploaded is not legible, please upload clear address proof image','Please upload clear signature image with white background','Please crop only signature and upload the signature image','Name mismatch in bank proof and PAN','Name mismatch in address proof and PAN','Name mismatch between AADHAR and PAN', 'Others'], status: '',  key: '',  docs:[]},
         { name: 'IPV', id: 8, active: false, count: '0', remarks: ['OTP in Video is not audible, Please do IPV again','Picture in Video/photo is not matching with Client Picture in id proof','IPV live photo captured is not proper, please recapture with clear full face with dress','IPV live photo full face is not captured, please recapture the live photo with clear full face', 'Others'],status: '',  key: 'IPV status', docs:['IPV']},
         { name: 'ESign', id: 9, active: false, count: '0', remarks: ['Client name mismatch between Aadhar esign and name as per Pan', 'Others'], status: '',  key: 'Esign status',  docs:['ESIGN_DOCUMENT']},
-        { name: 'Push to BO', id: 10, active: false, count: '0', remarks: [],  key: '',  docs:[]},
+        { name: 'Push to BO', id: 10, active: false, count: '0', remarks: [],  key: '',  docs:[], status: ''},
     ],
     kycPanelTabs : [
         // { name: 'Reports', id: 0, active: true, count: '0' },
