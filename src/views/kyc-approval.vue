@@ -2,15 +2,15 @@
   <tabs class="mx-4" :removeActive="true" @activeTab="changeTab" />
   <div class="p-4">
     <form @submit.prevent="getAllApproval()" class="flex gap-3 flex-wrap mb-2">
-      <VDatePicker :max-date="currentDate" v-model="fromDate" mode="date" :popover="false" :masks="{
+      <VDatePicker class="bg-white" :max-date="currentDate" v-model="fromDate" mode="date" :popover="false" :masks="{
         input: 'DD-MM-YYYY',
         modelValue: 'YYYY-MM-DD',
       }">
         <template v-slot="{ togglePopover, inputValue, inputEvents }">
-          <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2 "
+          <div class="flex items-center justify-between w-[131px] h-[32px] border-transparent rounded-md p-2 bg-white"
             @click="() => togglePopover()">
             <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
-              class="w-[90px] text-xs outline-none cursor-pointer !bg-[#F7F5F5]" readonly />
+              class="w-[90px] text-xs outline-none cursor-pointer bg-white" readonly />
             <button type="button"
               class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700">
               <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24"
@@ -28,10 +28,10 @@
         modelValue: 'YYYY-MM-DD',
       }">
         <template v-slot="{ togglePopover, inputValue, inputEvents }">
-          <div class="flex items-center justify-between w-[131px] h-[32px]  border rounded p-2 "
+          <div class="flex items-center justify-between w-[131px] h-[32px] border-transparent rounded-md p-2 bg-white"
             @click="() => togglePopover()">
             <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
-              class="w-[90px] text-xs outline-none cursor-pointer !bg-[#F7F5F5]" readonly />
+              class="w-[90px] text-xs outline-none cursor-pointer bg-white" readonly />
             <button type="button"
               class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700">
               <svg fill="none" stroke="currentColor" class="w-4" stroke-width="1.5" viewBox="0 0 24 24"
@@ -166,7 +166,7 @@
       </table>
     </div>
     <div v-else-if="!getIsLoader" class="flex items-center justify-center min-h-[50vh]">No Records Found</div>
-    <assigneeDialog v-if="isAssign" :assigneeData="currentAssigneeData" />
+    <assigneeDialog v-if="isAssign" :assigneeData="currentAssigneeData" @afterAsigned="getAllApproval()" />
   </div>
 </template>
 
@@ -261,8 +261,11 @@ export default {
       let count = 0
       if(this.getApprovalList && this.getApprovalList.length > 0){
       let statusArr = this.getApprovalList.filter(el => {
+        if(el.status){
         el.status = el.status.toString().toLowerCase()
-        return el.status.includes(status.toString().toLowerCase())
+         return el.status.includes(status.toString().toLowerCase())
+        }
+        
       })
       count = statusArr.length
       }
@@ -411,7 +414,7 @@ export default {
       var timeDiff = Math.abs(timestamp2 - timestamp1);
       var hoursDiff = timeDiff / (1000 * 3600);
       return Math.round(hoursDiff)
-    }
+    },
   },
   created() {
     this.changeTab(0)

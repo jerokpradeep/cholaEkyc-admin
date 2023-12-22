@@ -7,9 +7,9 @@
                   modelValue: 'YYYY-MM-DD',
                 }">
                 <template v-slot="{ togglePopover, inputValue, inputEvents }">
-                  <div class="flex items-center justify-between w-[131px] h-[32px]   border rounded p-2">
+                  <div class="flex items-center justify-between w-[131px] h-[32px] border-transparent rounded-md p-2 bg-white">
                     <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
-                      class="w-[90px] text-xs outline-none cursor-pointer !bg-[#F7F5F5]" readonly  />
+                      class="w-[90px] text-xs outline-none cursor-pointer bg-white" readonly  />
                     <button type="button"
                       class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
                       @click="() => togglePopover()">
@@ -26,9 +26,9 @@
                   modelValue: 'YYYY-MM-DD',
                 }">
                 <template v-slot="{ togglePopover, inputValue, inputEvents }">
-                  <div class="flex items-center justify-between w-[131px] h-[32px]   border rounded p-2">
+                  <div class="flex items-center justify-between w-[131px] h-[32px] border-transparent rounded-md p-2 bg-white">
                     <input :value="inputValue" placeholder="DD/MM/YYYY" v-on="inputEvents" id="vtd_inp"
-                      class="w-[90px] text-xs outline-none cursor-pointer !bg-[#F7F5F5]" readonly />
+                      class="w-[90px] text-xs outline-none cursor-pointer bg-white" readonly />
                     <button type="button"
                       class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700"
                       @click="() => togglePopover()">

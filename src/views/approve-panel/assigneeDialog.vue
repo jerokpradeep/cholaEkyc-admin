@@ -38,14 +38,17 @@ export default {
       Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot
   },
   props:{
-    assigneeData: Object
+    assigneeData: { required: true }
   },
   methods:{
     close(){
       this.$store.commit('approval/setIsAssign',  false)
     },
     callService(){
-      this.$store.dispatch('approval/callAssignee', {id: this.assigneeData.opportunity_id,userId: this.$store.state.login.userData.user,sessId: this.$store.state.login.userData.sid, token: this.$store.state.login.userData.tempToken, assignTo:this.$store.state.login.userData.user})
+      this.$store.dispatch('approval/callAssignee', {id: this.assigneeData.opportunity_id,userId: this.$store.state.login.userData.user,sessId: this.$store.state.login.userData.sid, token: this.$store.state.login.userData.tempToken, assignTo:this.$store.state.login.userData.user}).finally(()=> {
+        this.$store.commit('approval/setIsAssign', false)
+        this.$emit('afterAsigned', 'true')
+      })
     }
   }
 }

@@ -86,16 +86,16 @@ export default {
       }
     },
     mounted() {
-      if(localStorage.getItem('selecteditem') && localStorage.getItem('selecteditem') != "undefined"){
-        this.selectedData = JSON.parse(localStorage.getItem('selecteditem'))
-        this.referrer = this.selectedData.referral_name 
+    if (localStorage.getItem('selecteditem') && localStorage.getItem('selecteditem') != "undefined") {
+      this.selectedData = JSON.parse(localStorage.getItem('selecteditem'))
+      this.referrer = this.selectedData.referral_name
     }
-        this.mobileNo = this.cutomerData?.opportunity_data?.fsl_mobile_num
-        this.emailId = this.cutomerData?.opportunity_data?.fsl_email_id
-        this.startDate = window.formatDate(this.cutomerData?.opportunity_data?.creation,'D&T')
-        this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified,'D&T')
-        this.modeOfApplication = this.cutomerData?.opportunity_data?.fsl_mode_of_application || this.cutomerData?.opportunity_data?.fsl_modeofapplication
-        
-    },
+    this.mobileNo = this.cutomerData?.opportunity_data?.fsl_mobile_num
+    this.emailId = this.cutomerData?.opportunity_data?.fsl_email_id
+    this.startDate = window.formatDate(this.cutomerData?.opportunity_data?.creation, 'D&T')
+    this.updatedOn = window.formatDate(this.cutomerData?.opportunity_data?.modified, 'D&T')
+    this.modeOfApplication = this.cutomerData?.opportunity_data?.fsl_mode_of_application || this.cutomerData?.opportunity_data?.fsl_modeofapplication
+
+  },
 }
 </script>

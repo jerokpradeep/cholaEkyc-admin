@@ -179,7 +179,7 @@ export default {
             this.pages = 2;
         },
 
-      goBack() {
+        goBack() {
             if (this.page == 1) return;
             this.page -= 1;
             this.getReports("paginate");

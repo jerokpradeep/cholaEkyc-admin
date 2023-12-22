@@ -138,8 +138,6 @@ const actions = {
     async callAssignee({commit, dispatch, rootGetters}, payload){
         await httpService.assignOpportunity(payload).then(resp =>{
             if(resp.status == 200 && resp.data){
-                commit('setIsAssign', false)
-                dispatch('getApprovalList')
             }
        }, (err) => {
             dispatch('errorLog/checkRouter', err, { root: true })
@@ -532,7 +530,7 @@ const actions = {
            let tabsData = rootGetters['tabs/getKycApprovalTabs']
            let boStatusList = payload
            let status = 'Open'
-           if (boStatusList.length) {
+           if (boStatusList?.length) {
                let isSuccess = boStatusList.every(function (el) {
                    return el.value == 'Success'
                })
