@@ -21,6 +21,7 @@ app.use(VueCropper)
 import spinner from "./components/utilComponents/spinner.vue"
 import btnLoader from "./components/utilComponents/button-loader.vue"
 import preview_file from './views/preview_file.vue'
+import rejectReason from './components/rejectReason.vue'
 import { setupCalendar, Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 app.component('spinner', spinner);
@@ -31,4 +32,5 @@ app.component('btnLoader', btnLoader);
   app.component('VCalendar', Calendar)
   app.component('VDatePicker', DatePicker)
   app.component('preview_file', preview_file)
+  app.component('rejectReason', rejectReason)
 app.mount('#app')

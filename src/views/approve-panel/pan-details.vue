@@ -44,6 +44,7 @@
               </div>
             </div>
         </div>
+        <rejectReason v-if="getStageData['pan status'] == 'Rejected' && getStageData['Pan remarks'] != ''" :reason="getStageData['Pan remarks']"/>
         
         </div>
         <div class="col-span-6">
@@ -71,7 +72,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData', 'getDocumentData', 'getDocumentDataClone']),
+        ...mapGetters('approval', ['getCustomerData', 'getDocumentData', 'getDocumentDataClone', 'getStageData']),
     },
     mounted(){
       if(this.getCustomerData && this.getCustomerData?.opportunity_data){

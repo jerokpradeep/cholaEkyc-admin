@@ -30,8 +30,19 @@ const router = createRouter({
 });
 
 export default router
-
+let isValid = true
 router.beforeEach(async (to, from, next) => {
+  checkValidToken()
+  if(!checkValidToken() && isValid && to.path != '/' && from.path != '/') {
+    isValid = false
+    store.dispatch('errorLog/toaster',{data: {
+      "title": 'Your Session has been Invalid, kindly re-login',
+      "type": "danger",
+      "message": '',
+      "duration": 4500
+  },position: ''}, {root: true})
+    next({ path: '/' })
+  }
   let userData = localStorage.getItem('userData') && localStorage.getItem('userData') != "undefined" ? JSON.parse(localStorage.getItem('userData')) : null
   store.commit('login/setUserData' , userData)
   let steps = localStorage.getItem('steps') && localStorage.getItem('steps') != "undefined" ? JSON.parse(localStorage.getItem('steps')) : []
@@ -52,9 +63,18 @@ router.beforeEach(async (to, from, next) => {
     store.commit('approval/setDocumentData', data)
   }
   
-  if(to.path != '/'){
-    let item = store.state.validSteps.filter((el)=> el.route == to.path)
+  if (to.path != '/') {
+    let item = store.state.validSteps.filter((el) => el.route == to.path)
     item.length > 0 ? store.dispatch('changeTab', item[0]) : ''
   }
   next()
 })
+
+function checkValidToken() {
+  if(localStorage.getItem('userData')) {
+    let userData = JSON.parse(localStorage.getItem('userData'))
+    return userData != null && userData.hasOwnProperty('tempToken') && userData?.tempToken != ''
+  } else {
+    return false
+  }
+}

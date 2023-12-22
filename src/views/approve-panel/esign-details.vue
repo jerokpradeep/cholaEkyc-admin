@@ -9,11 +9,12 @@
               </div>
             </div>
         </div>
+        <rejectReason v-if="getStageData['Esign status'] == 'Rejected' && getStageData['Esign remarks'] != ''" :reason="getStageData['Esign remarks']"/>  
         </div>
         <div class="col-span-6">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Preview</h2>
           <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="false" :preFerence="docType"/>
-        </div>        
+        </div>      
     </div>
 </template>
 
@@ -27,7 +28,7 @@ export default {
         }
     },
     computed: {
-      ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
+      ...mapGetters('approval', ['getCustomerData', 'getDocumentData','getStageData']),
     },
     methods: {
       goToPreview(type) {

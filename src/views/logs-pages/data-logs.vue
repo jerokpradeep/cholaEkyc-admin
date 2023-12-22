@@ -12,13 +12,13 @@
             <div>
                 <label class="primaryColor pb-1 text-sm">From Date</label>
                 <VDatePicker :type="'date'" :max-date="new Date().toISOString().slice(0, 10)"
-                    :min-date="getMinDate()" v-model.string="fromDate" is-required :popover="popover" :masks="{
-                        input: 'DD-MM-YYYY',
-                        modelValue: 'YYYY-MM-DD',
-                    }" mode="date" :dateFormat="'YYYY-MM-DD'">
+                    :min-date="getMinDate()" v-model="fromDate" is-required :popover="popover" :masks="{
+                        input: 'DD-MM-YYYY HH:MM',
+                        modelValue: 'YYYY-MM-DD HH:MM:SS',
+                    }" mode="dateTime" is24hr :dateFormat="'YYYY-MM-DD HH:MM'">
                     <template v-slot="{ togglePopover, inputValue, inputEvents }">
                         <div class="flex items-center justify-between w-[160px] h-10 cursor-pointer border rounded p-2">
-                            <input :value="inputValue" placeholder="DD-MM-YYYY" v-on="inputEvents"
+                            <input :value="inputValue" placeholder="DD-MM-YYYY HH:MM" v-on="inputEvents"
                                 class="min-w-[100px] text-xs outline-none cursor-pointer" readonly />
                             <button type="button" class="flex justify-center items-center bg-accent-100 hover:bg-accent-200 text-accent-700" @click="() => togglePopover()" v-html="dateSvg"></button>
                         </div>
@@ -27,11 +27,11 @@
             </div>
             <div>
                 <label class="primaryColor pb-1 text-sm">To Date</label>
-                <VDatePicker :type="'date'" :max-date="new Date().toISOString().slice(0, 10)" v-model.string="toDate"
+                <VDatePicker :type="'date'" :max-date="new Date().toISOString().slice(0, 10)" v-model="toDate"
                     is-required :popover="popover" :masks="{
-                        input: 'DD-MM-YYYY',
-                        modelValue: 'YYYY-MM-DD',
-                    }" mode="date" :dateFormat="'YYYY-MM-DD'">
+                        input: 'DD-MM-YYYY HH:MM',
+                        modelValue: 'YYYY-MM-DD HH:MM:SS',
+                    }" mode="dateTime" is24hr :dateFormat="'YYYY-MM-DD HH:MM'">
                     <template v-slot="{ togglePopover, inputValue, inputEvents }">
                         <div class="flex items-center justify-between w-[160px] h-10 cursor-pointer border rounded p-2">
                             <input :value="inputValue" placeholder="DD-MM-YYYY" v-on="inputEvents" class="min-w-[100px] text-xs outline-none cursor-pointer" readonly />
@@ -148,8 +148,8 @@ export default {
                 let json = {
                     userId: this.user_id,
                     uri: this.user_url,
-                    fromDate:this.fromDate,
-                    toDate:this.toDate,
+                    fromDate: this.dateFormatter(this.fromDate),
+                    toDate: this.dateFormatter(this.toDate),
                     pageNo: this.page,
                     pageSize: this.rowsCount
                 }
@@ -203,11 +203,12 @@ export default {
 
         setPreviousWeekDatetime() {
             const now = new Date();
-            now.setDate(now.getDate() - 7); // Subtract 7 days
+            // now.setDate(now.getDate() - 7); // Subtract 7 days
             const year = now.getFullYear().toString().padStart(4, "0");
             const month = (now.getMonth() + 1).toString().padStart(2, "0");
             const day = now.getDate().toString().padStart(2, "0");
-            this.fromDate = `${year}-${month}-${day}`;
+            const hours = now.getHours();
+            this.fromDate = new Date(`${year}-${month}-${day} ${hours}:00:00`) ;
         },
 
         setCurrentDatetime() {
@@ -215,7 +216,22 @@ export default {
             const year = now.getFullYear().toString().padStart(4, "0");
             const month = (now.getMonth() + 1).toString().padStart(2, "0");
             const day = now.getDate().toString().padStart(2, "0");
-            this.toDate = `${year}-${month}-${day}`;
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            this.toDate = new Date(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
+        },
+        dateFormatter(date) {
+            if (!date) return null;
+
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, "0");
+            const day = date.getDate().toString().padStart(2, "0");
+            const hours = date.getHours().toString().padStart(2, "0");
+            const minutes = date.getMinutes().toString().padStart(2, "0");
+
+            return `${year}-${month}-${day} ${hours}:${minutes}:00`;
+            // return `${year}-${month}-${day}`;
         },
     },
     mounted() {

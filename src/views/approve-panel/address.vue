@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-gray-900/10 pb-12 md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-gray-900/10 md:grid-cols-3">
         <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
           <div class="col-span-full">
             <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">Address</label>
@@ -25,27 +25,40 @@
 
           <div class="w-[48%]">
             <label for="panNumber" class="block text-sm font-medium leading-6 text-gray-900">KRA Proof Id Number</label>
-            <div class="mt-2">
-              <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="kraAddressProofId"/>
+            <div class="flex gap-3">
+              <div class="mt-2">
+                <input type="text" id="panNumber" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="kraAddressProofId"/>
+              </div>
+              <div v-if="source == 'KRA'" class="flex items-end w-[24px] cursor-pointer" v-html="infoSvg" @click="getKraDetails()"></div>
             </div>
           </div>
+          
           </div>
-
+          
           <div v-else class="sm:col-span-3">
             <label for="nameAsPan" class="block text-sm font-medium leading-6 text-gray-900">Aadhar Number</label>
             <div class="mt-2">
               <input type="text" id="nameAsPan" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6" disabled v-model="aadharNo"/>
             </div>
           </div>
+          
+
           </div>
         </div>
     </div>
-
+    <rejectReason v-if="getStageData['address status'] == 'Rejected' && getStageData['address remarks'] != ''" :reason="getStageData['address remarks']"/>
+    <kraDetails :xmlValue="getXmlValue" v-if="getIsShowKradetails"/>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
+const infoSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>`
+import kraDetails from "./kraDetailsXMl.vue"
 export default {
+    components: { kraDetails },
     data() {
         return {
             address: '',
@@ -53,10 +66,18 @@ export default {
             source: '',
             kraAddressProof: '',
             kraAddressProofId: '',
+            infoSvg
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData'])
+        ...mapGetters('approval', ['getCustomerData', 'getStageData','getIsShowKradetails', 'getXmlValue'])
+    },
+    methods: {
+      getKraDetails() {
+        this.$store.dispatch('approval/getKraDetails' ,`applicationId=${this.getCustomerData?.opportunity_data?.name}&userId=${this.$store.state.login?.userData?.user}&sessId=${this.$store.state?.login?.userData?.sid}&token=${this.$store.state?.login?.userData?.tempToken}`).finally(()=> {
+          this.$store.commit('approval/setIsShowKradetails', true)
+        })
+      }
     },
     mounted() {
       

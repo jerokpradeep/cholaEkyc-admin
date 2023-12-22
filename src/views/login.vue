@@ -83,6 +83,7 @@ export default {
                     emailId: this.emailId,
                     password: this.password
                 }
+            //   let query = `email=${this.emailId}&password=${this.password}`
               this.getIsLoading ? '' :  this.$store.dispatch('login/getUserSession', json)
             }else{
                 this.$store.dispatch('errorLog/toaster' ,{data: {

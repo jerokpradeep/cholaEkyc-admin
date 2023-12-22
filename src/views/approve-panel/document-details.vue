@@ -19,8 +19,9 @@
                        </div>
                     </td>
                     <td v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM'">
-                        <div class="flex gap-3 items-center" >
+                        <div class="flex gap-2 items-center" >
                             <a  class=" text-sm " :class="i.status == 'Approved' ? 'text-teal-500' : i.status == 'Rejected' ? 'text-orange-500' : ''"> {{ i.status ? i.status : '' }}</a>
+                            <span v-if="i.status == 'Rejected'" v-html="infoSvg" :title="i.remarks" @click="showDialog(i)"></span>
                         </div>
                     </td>
                    
@@ -36,10 +37,10 @@
 
         <div class="col-span-6 w-[45%]">  
           <preview_file :previewType="getDocumentData.type" :previewData="getDocumentData.data" :isPreBtn="true" :preFerence="documentName"/>
-          
         </div>
     </div>
     <div v-else class="flex items-center justify-center min-h-[50vh]">No Documents Found</div>
+    <reasonViewDialog v-if="getIsDocRejReasonDialog" :rejectReason="getDocRejReason"/>
 </template>
 
 <script>
@@ -53,7 +54,13 @@ const cancelSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
   <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
 `
+const infoSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+</svg>
+`
+import reasonViewDialog from './docRejReasonDialog.vue'
 export default {
+    components: { reasonViewDialog },
     data() {
         return {
             tableHeads: [
@@ -64,11 +71,11 @@ export default {
                 { name: "Download", class: "text-left" },
             ],
             documentName: 'PAN',
-            tickSvg, cancelSvg
+            tickSvg, cancelSvg, infoSvg
         }
     },
     computed: {
-      ...mapGetters('approval', ['getCustomerData', 'getDocumentData', 'getDocuments', 'getIsDocsLoader']),
+      ...mapGetters('approval', ['getCustomerData', 'getDocumentData', 'getDocuments', 'getIsDocsLoader','getIsDocRejReasonDialog','getDocRejReason']),
       ...mapGetters('login', ['getUserData'])
     },
     methods: {
@@ -79,6 +86,10 @@ export default {
         this.documentName = docName
         this.getDocumentSource(docName, 'preview')
       },
+      showDialog(data) {
+        this.$store.commit('approval/setIsDocRejReasonDialog', true) 
+        this.$store.commit('approval/setDocRejReason', data.remarks) 
+      }
     },
     unmounted() {
         this.$store.commit('approval/setDocumentData', '') 

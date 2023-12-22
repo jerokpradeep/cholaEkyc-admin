@@ -37,6 +37,7 @@
           </div>
         </div>
     </div>
+    <rejectReason v-if="getStageData['IPV status'] == 'Rejected' && getStageData['IPV remarks'] != ''" :reason="getStageData['IPV remarks']"/>
 </template>
 
 <script>
@@ -51,7 +52,7 @@ export default {
         }
     },
     computed: {
-      ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
+      ...mapGetters('approval', ['getCustomerData', 'getDocumentData','getStageData']),
     },
     methods: {
       openMap() {

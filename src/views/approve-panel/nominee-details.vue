@@ -187,9 +187,8 @@
                                             disabled v-html="i.guardian.address" rows="5" />
                                     </div>
                                 </div>
-
                             </div>
-                        </div>
+                        </div>    
                         </div>
                         
                         <div class="w-full flex justify-end" v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM'">
@@ -215,11 +214,9 @@
                             <button type="button" class="min-w-[120px] h-[36px] flex items-center justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" @click="remarks ? callServiceApporve_Reject('Rejected') : isRejectDialog = true"><span class="flex items-center justify-center gap-1"><div v-html="cancelSvg"></div>Reject </span></button>
                         </div>
                         </div>
+                        <rejectReason class="bg-[#F7F5F5]" v-if="i['nominee_status'] == 'Rejected' && i['nominee_remarks'] != ''" :reason="i['nominee_remarks']"/>
                     </div>
-
-
                 </div>
-
             </div>
             <div v-else class="flex items-center justify-center min-h-[50vh]">No Nominees Found</div>
         </div>
@@ -269,6 +266,11 @@ export default {
     methods: {
         callServiceApporve_Reject(status) {
             this.$store.dispatch('approval/formatJson', { tab: 6, status: status, remarks: status == 'Rejected' ? this.remarks : '', nomineeId: this.currectSelectData.nomineeId })
+            if(this.getCustomerData && this.getCustomerData?.opportunity_data && this.getCustomerData?.opportunity_data?.name) {
+                setTimeout(() => {
+                    this.$store.dispatch('approval/getCustomerData', this.getCustomerData?.opportunity_data.name)
+                }, 500);
+            }
         },
         expandNominee(id) {
             this.remarks = ''
@@ -284,7 +286,7 @@ export default {
             }
         },
         getStatusForPage(id) {
-            let selectedArray = this.getStageData.nominee.filter((el) => el.nominee_number == id)
+            let selectedArray = this.getStageData.nominee?.filter((el) => el.nominee_number == id)
             let status = ''
             if (selectedArray && selectedArray.length > 0 && selectedArray[0].status) {
                 status = selectedArray[0].status
@@ -299,7 +301,7 @@ export default {
 
                 this.nomineeList.push({ name: `${item.nominee_fname} ${item.nominee_lname}`, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number,
                 address: `${item?.address}&#013;&#010;${item?.address_2}&#013;&#010;${item?.city} - ${item?.pincode}&#013;&#010;${item?.state}`, guardian: underAgeValidate(window.formatDate(item.date_of_birth, 'D')) && !item.proof_id && !item.proof_type ? {name:  `${item.guardian_fname} ${item.guardian_lname}`, dob: window.formatDate(item.guardian_dob, 'D'), emailId: item.guardian_email_id, mobNo: item.guardian_phone_no, proofId: item.guardian_proof_id, proofType: item.guardian_prooftype, relationOfNominee: item.guardian_relationship,
-                address: `${item?.guardian_address1}&#013;&#010;${item?.guardian_address2}&#013;&#010;${item?.guardian_city} - ${item?.guardian_pincode}&#013;&#010;${item?.guardian_state}`} : null
+                address: `${item?.guardian_address1}&#013;&#010;${item?.guardian_address2}&#013;&#010;${item?.guardian_city} - ${item?.guardian_pincode}&#013;&#010;${item?.guardian_state}`} : null, nominee_status: item.nominee_status, nominee_remarks: item.nominee_remarks
             })
             }
             if (this.nomineeList.length > 0) {

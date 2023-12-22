@@ -96,7 +96,8 @@
                    </div>
                 </div>
 
-            </div>
+    </div>
+    <rejectReason v-if="getStageData['profile status'] == 'Rejected' && getStageData['Profile remarks'] != ''" :reason="getStageData['Profile remarks']"/>
 </template>
 
 <script>
@@ -193,7 +194,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData'])
+        ...mapGetters('approval', ['getCustomerData','getStageData'])
     },
     mounted() {
       if(this.getCustomerData) {

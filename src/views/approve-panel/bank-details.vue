@@ -66,6 +66,7 @@
           </div>
         </div>
     </div>
+    <rejectReason v-if="getStageData['bank status'] == 'Rejected' && getStageData['bank remarks'] != ''" :reason="getStageData['bank remarks']"/>
 </template>
 
 <script>
@@ -85,7 +86,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData', 'getDocumentData'])
+        ...mapGetters('approval', ['getCustomerData', 'getDocumentData','getStageData'])
     },
     mounted(){
       if(this.getCustomerData && this.getCustomerData.opportunity_data){

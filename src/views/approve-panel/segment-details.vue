@@ -1,5 +1,5 @@
 <template>
-    <div class="pb-12 flex gap-4">
+    <div class="flex gap-4">
         <div class="grid gap-y-5 w-[48%]">
           <table class="bg-white rounded-b border-t border-[#ededed] dark:border-[#232325] relative mt-[1px] rounded-lg">
             <thead class="border-b dark:border-[#232325] dark:bg-[#181818]">
@@ -63,6 +63,8 @@
         </div>
         
     </div>
+
+    <rejectReason v-if="getStageData['segment status'] == 'Rejected' && getStageData['segment remarks'] != ''" :reason="getStageData['segment remarks']"/>
     
 </template>
 
@@ -161,7 +163,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('approval', ['getCustomerData', 'getDocumentData']),
+        ...mapGetters('approval', ['getCustomerData', 'getDocumentData', 'getStageData']),
         ...mapGetters("tabs", ["getKycApprovalTabs"]),
     },
     mounted(){

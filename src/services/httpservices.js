@@ -13,7 +13,7 @@ const httpService = {
   getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity,
   getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, checkBoStatus, nseUccUpload, bseUccUpload, kraUpload, kraFileUpload,
   bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush, generateCkyc,genrateUrl, downloadCkyc, getFilteredOpurtunity,
-  getFilteredApproval, getMailLogData, getAccessLogDetails, getRestLogDetails
+  getFilteredApproval, getMailLogData, getAccessLogDetails, getRestLogDetails, getKraDetails
 }
 
 export default httpService
@@ -25,6 +25,10 @@ function getOpportunityList(payload) {
 function login(payload) {
   return ERPAXIOS.get(`api/method/cs_bo.custom_api.ekyc_login.login?email=${payload.emailId}&password=${payload.password}`)
 }
+
+// function login(query) {
+//   return WRAPPERAXIOS.get(`ekyc/erpLogin?${query}`)
+// }
 
 function getApprovalList(payload) {
   return WRAPPERAXIOS.get(`ekyc/get_approve_oppr_details?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`)
@@ -143,4 +147,8 @@ function getAccessLogDetails(payload) {
 
 function getRestLogDetails(payload) {
   return WRAPPERAXIOS.post("Logs/getRestLogdetails", payload);
+}
+
+function getKraDetails(query) {
+  return WRAPPERAXIOS.get(`Download/getKraFileDetails?${query}`);
 }

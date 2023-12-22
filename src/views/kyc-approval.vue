@@ -400,8 +400,8 @@ export default {
       let _hours = this.getHoursOnly(time)
       if(time && time != " ") {
         if(_hours < 1) return 'bg-[#79b38e] !text-[#384f40]'
-        else if(_hours < 24) return 'bg-[#f1e3ad] !text-[#6c654b]'
-        else if(_hours > 24) return 'bg-[#d98383] !text-[#6a3d3d]'
+        else if(_hours <= 24) return 'bg-[#f1e3ad] !text-[#6c654b]'
+        else if(_hours >= 24) return 'bg-[#d98383] !text-[#6a3d3d]'
       } else {
         return _class
       }

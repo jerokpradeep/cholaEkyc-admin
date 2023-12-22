@@ -16,7 +16,11 @@ const state = {
     progressPercentage: 0,
     isReject: false,
     boStatusList: [], 
-    documents: []
+    documents: [],
+    isShowKradetails: false,
+    xmlValue: '',
+    docRejReason: '',
+    isDocRejReasonDialog: false
 }
 
 const actions = {
@@ -70,9 +74,11 @@ const actions = {
                     "duration": 4500
                 }
                 if(resp.data.message.success_key == 1 && resp.data.message.message){
-                    let docsArr = payload.documentCall.attachmentType
-                    for(let item of docsArr){
-                        dispatch('formatJsonDoc', {status: payload.documentCall.status , remarks: payload.documentCall.remarks, attachmentType : item})
+                    let docsArr = payload?.documentCall?.attachmentType
+                    if(docsArr && docsArr.length) {
+                        for(let item of docsArr){
+                            dispatch('formatJsonDoc', {status: payload.documentCall.status , remarks: payload.documentCall.remarks, attachmentType : item})
+                        }
                     }
                     isToaster = true
                     toaster.title = resp.data.message.message
@@ -96,6 +102,7 @@ const actions = {
                 commit('setIsResetLoader', false)
             }
             commit('errorLog/setCounter', 0, { root: true })
+            dispatch('getStageDetails', state.customerData?.opportunity_data?.name)
             dispatch('getStageDetails', state.customerData?.opportunity_data?.name)
          })
     },
@@ -545,7 +552,18 @@ const actions = {
                }
            });
            commit('tabs/setKycApprovalTabs', tabsData, { root: true })
-       }
+       },
+       async getKraDetails({state, commit, dispatch}, payload){
+        httpService.getKraDetails(payload).then(resp =>{
+            if(resp.status == 200 && resp.data.message == 'Success'){
+                commit('setXmlValue', resp.data.result)
+            } else {
+                commit('setXmlValue', '')
+            }
+        }, (err) => {
+            dispatch('errorLog/checkRouter', err, { root: true })
+        }).finally(() => {  })
+    },
 };
 
 const mutations = {
@@ -599,6 +617,18 @@ const mutations = {
     },
     setBoStatusList(state, payload) {
         state.boStatusList = payload
+    },
+    setIsShowKradetails(state, payload) {
+        state.isShowKradetails = payload
+    },
+    setXmlValue(state, payload) {
+        state.xmlValue = payload
+    },
+    setDocRejReason(state, payload) {
+        state.docRejReason = payload
+    },
+    setIsDocRejReasonDialog(state, payload) {
+        state.isDocRejReasonDialog = payload
     }
 };
 
@@ -617,7 +647,11 @@ const getters = {
     getIsMailLoader: state => state.isMailLoader,
     getProgressPercentage: state => state.progressPercentage,
     getIsReject: state => state.isReject,
-    getBoStatusList: state => state.boStatusList
+    getBoStatusList: state => state.boStatusList,
+    getIsShowKradetails: state => state.isShowKradetails,
+    getXmlValue: state => state.xmlValue,
+    getDocRejReason: state => state.docRejReason,
+    getIsDocRejReasonDialog : state => state.isDocRejReasonDialog,
 };
 
 const approval = {
