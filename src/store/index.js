@@ -8,6 +8,7 @@ import httpService from "../services/httpservices.js";
 import router from "../router/index.js";
 import bo from "./modules/bo.js";
 import logs from "./modules/logs.js"
+
 const store = createStore({
   state: {
     version: "1.0.0",
