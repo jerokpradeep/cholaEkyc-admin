@@ -45,5 +45,8 @@ export default {
     this.pages.push({isReplace: this.$route.path.replace('/', '') == 'preview',name: this.$route.path.replace('/', '') == 'preview' ? 'Back' : `${this.$route.query.from.charAt(0).toUpperCase() + this.$route.query.from.slice(1) }`, current: false , isRoute: true})
     this.getCustomerData && this.getCustomerData?.opportunity_data?.fsl_user_name ?  this.pages.push({ name: `${this.getCustomerData?.opportunity_data?.fsl_user_name}`, current: true, isRoute: false }) : ''
   },
+  unmounted(){
+    this.$store.commit('approval/setCustomerData', [])
+  }
 }
 </script>
