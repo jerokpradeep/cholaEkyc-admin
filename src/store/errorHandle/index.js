@@ -2,7 +2,8 @@ import notification from '../../notification'
 import router from '../../router'
 const state = {
     toasterPalce: 'top-right',
-    counter: 0
+    counter: 0,
+    localItems:['steps', 'ekycAdminQuries', 'userData', 'userName', 'selecteditem']
 }
 
 const mutations = {
@@ -52,8 +53,9 @@ const actions = {
         dispatch('toaster' ,{data:tempToaster, position: ''}) 
     },
 
-    resetLocal({dispatch, commit,rootGetters}, payload){
-        localStorage.clear()
+    resetLocal({state,dispatch, commit,rootGetters}, payload){
+        state.localItems.forEach((element) => {
+            !!localStorage.getItem(element) ? localStorage.removeItem(element) : "";})
         router.push('/').catch(() =>{})
     },
     checkRouter({ dispatch} , payload){
