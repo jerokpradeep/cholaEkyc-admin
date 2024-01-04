@@ -20,7 +20,8 @@ const state = {
     isShowKradetails: false,
     xmlValue: '',
     docRejReason: '',
-    isDocRejReasonDialog: false
+    isDocRejReasonDialog: false,
+    clientCode: ''
 }
 
 const actions = {
@@ -487,9 +488,9 @@ const actions = {
     },
 
     async checkBoStatus({ state, commit, dispatch, rootGetters }) {
-        await httpService.checkBoStatus(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(resp =>{
+        await httpService.checkBoStatus(`applicationId=${state.customerData?.opportunity_data?.name}&userId=${rootGetters['login/getUserData']['user']}&token=${rootGetters['login/getUserData']['tempToken']}&sessId=${rootGetters['login/getUserData']['sid']}`).then(async resp =>{
             if(resp.status == 200 && resp.data.message == 'Success' && resp.data.result?.length){
-                commit('setBoStatusList', [...resp.data.result , {
+              await  commit('setBoStatusList', [...resp.data.result , {
                     "key": "Generate CKYC",
                     "value": null,
                     "reason": null,
@@ -497,7 +498,7 @@ const actions = {
                 }])
                 
             } else {
-                commit('setBoStatusList', [])
+               await commit('setBoStatusList', [])
             }
             dispatch('setTabStatus', resp.data.result)
         }, (err) => {
@@ -534,6 +535,7 @@ const actions = {
         })
        },
        async setTabStatus({ state, commit, dispatch, rootGetters }, payload) {
+        commit('setClientCode', '')
            let tabsData = rootGetters['tabs/getKycApprovalTabs']
            let boStatusList = payload
            let status = 'Open'
@@ -542,6 +544,10 @@ const actions = {
                    return el.value == 'Success'
                })
                let openArr = boStatusList.filter(el => {
+                if(el.key == 'Client Code'){
+                    commit('setClientCode', el.reason)
+                }
+                
                    return (el.value && el.value != 'Success' && el.value != 'Failed') || !el.value
                })
                status = isSuccess ? 'Approved' : openArr.length > 0 ? 'Open' : 'Rejected'
@@ -567,6 +573,9 @@ const actions = {
 };
 
 const mutations = {
+    setClientCode(state, payload){
+        state.clientCode = payload
+    },
     setApprovalList(state, payload) {
         state.approvalList = payload
     }, 

@@ -11,7 +11,7 @@ import logs from "./modules/logs.js"
 const store = createStore({
   state: {
     version: "1.0.0",
-    buildDate: '27_12_2023_20_10',
+    buildDate: '04_01_2024_21_00',
     isLogout: false,
     tempSteps: [
       {
@@ -185,12 +185,13 @@ const store = createStore({
     navigateSteps({state, commit}, payload){
       if(payload == 'EKYC Employee' || payload == 'RM'){
         let empArr = ['Approval' , 'Opportunity' , 'CKYC Download', 'Logs']
-        let rmArr = ['Approval' , 'Opportunity', 'CKYC Download', 'URL Generation', 'Logs']
-        let validArr = payload == 'EKYC Employee'? empArr : payload == 'RM' ? rmArr : []
+        let allArr = ['Approval' , 'Opportunity', 'CKYC Download', 'URL Generation', 'Logs']
+        let rmArr = ['Opportunity']
+        let validArr = payload == 'EKYC Employee'? empArr : payload == 'RM' ? rmArr : allArr
         let approval = state.tempSteps.filter((el)=> validArr.includes(el.name))
         approval[0].active = true
         commit('setValidSteps', [...approval])
-        router.push(approval[1].route).catch(()=>{})
+        router.push(approval[payload == 'RM' ? 0 : 1].route).catch(()=>{})
       }
     },
     changeTab({state, commit}, payload){

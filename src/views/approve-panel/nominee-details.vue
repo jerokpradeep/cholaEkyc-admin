@@ -96,6 +96,16 @@
                                             disabled v-html="i.address" rows="5" />
                                     </div>
                                 </div>
+                                <div class="sm:col-span-3">
+                                    <label for="panNumber"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Nominee Allocation
+                                        </label>
+                                    <div class="mt-2">
+                                        <input type="text" id="panNumber"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                            disabled v-model="i.percentage_allocation" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div v-if="i.guardian">
@@ -301,8 +311,7 @@ export default {
 
                 this.nomineeList.push({ name: `${item.nominee_fname} ${item.nominee_lname}`, dob: window.formatDate(item.date_of_birth, 'D'), emailId: item.email_id, mobNo: item.mobile_number, proofId: item.proof_id, proofType: item.proof_type, relationOfNominee: item.relationship, nomineeId: item.nominee_number,
                 address: `${item?.address}&#013;&#010;${item?.address_2}&#013;&#010;${item?.city} - ${item?.pincode}&#013;&#010;${item?.state}`, guardian: underAgeValidate(window.formatDate(item.date_of_birth, 'D')) && !item.proof_id && !item.proof_type ? {name:  `${item.guardian_fname} ${item.guardian_lname}`, dob: window.formatDate(item.guardian_dob, 'D'), emailId: item.guardian_email_id, mobNo: item.guardian_phone_no, proofId: item.guardian_proof_id, proofType: item.guardian_prooftype, relationOfNominee: item.guardian_relationship,
-                address: `${item?.guardian_address1}&#013;&#010;${item?.guardian_address2}&#013;&#010;${item?.guardian_city} - ${item?.guardian_pincode}&#013;&#010;${item?.guardian_state}`} : null, nominee_status: item.nominee_status, nominee_remarks: item.nominee_remarks
-            })
+                address: `${item?.guardian_address1}&#013;&#010;${item?.guardian_address2}&#013;&#010;${item?.guardian_city} - ${item?.guardian_pincode}&#013;&#010;${item?.guardian_state}`} : null, nominee_status: item.nominee_status, nominee_remarks: item.nominee_remarks, percentage_allocation: item.percentage_allocation})
             }
             if (this.nomineeList.length > 0) {
                 this.expandNominee(0)

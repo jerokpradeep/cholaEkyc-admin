@@ -39,7 +39,7 @@ const actions = {
         mobile_no : payload.mob_no,
         id : payload.application_id
     }
-    httpService.getFilteredOpurtunity(json).then(resp =>{
+    httpService[rootGetters['login/getUserData'] && rootGetters['login/getUserData'].Role == 'RM' ? 'getRMOpptuity' : 'getFilteredOpurtunity'](json).then(resp =>{
         if(resp.status == 200 && resp.data?.message?.Data) {
             commit('setAllOpportunities', resp.data?.message?.Data)
         } else {
