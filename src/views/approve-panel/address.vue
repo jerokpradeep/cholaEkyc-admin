@@ -95,7 +95,7 @@ export default {
         this.getCustomerData  ? this.kraAddressProof = this.getCustomerData : ''
         this.getCustomerData  ? this.kraAddressProofId = this.getCustomerData : ''
 
-        this.getCustomerData.opportunity_data.fsl_aadhar_no  ? this.aadharNo = this.getCustomerData.opportunity_data.fsl_aadhar_no : ''
+        this.getCustomerData.address_data.fsl_aadhaar_no  ? this.aadharNo = this.getCustomerData.address_data.fsl_aadhaar_no : ''
       }
     }
 }

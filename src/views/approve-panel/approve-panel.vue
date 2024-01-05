@@ -19,7 +19,7 @@
                         Client Code
                     </div>
                     <div class="text-sm">
-                        {{ clientcode }}
+                        {{ $store.state.approval.clientCode }}
                     </div>
                 </div>
 
@@ -455,7 +455,8 @@ export default {
                 await this.$store.dispatch('approval/getDocuments')
                 await this.$store.dispatch('approval/checkBoStatus').finally(() => {
                     for (let item of this.getBoStatusList) {
-                        if (item.key == 'Client Code') {
+
+                        if (item.key == 'Client Code' && !this.clientcode) {
                             this.clientcode = item.reason ? item.reason : ''
                         }
                     }

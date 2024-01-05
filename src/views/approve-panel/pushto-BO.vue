@@ -27,7 +27,12 @@
                     {{ item.value }}
                 </td>
                 <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-left max-w-[250px]">
-                    {{ item.reason }}
+                    <button v-if="item.reason" @click="isOpen = true;reasonData={title: item.key , reason: item.reason}" class="inline-block p-2 border  rounded " type="button"> <span class="flex gap-1 items-center" >
+                        
+                        {{ 'Reason' }}
+                        </span>
+                    </button>
+                    <!-- {{ item.reason }} -->
                 </td>
                 <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative flex justify-center ]">
                     <button v-if="item.value == 'Failed'" @click="retryBo(item.key)" class="inline-block p-2 border  rounded " type="button"> <span class="flex gap-1 items-center" >
@@ -46,10 +51,12 @@
     </table>
     </div>
     <div v-else class="flex items-center justify-center min-h-[50vh]">Stages are not approved yet</div>
+    <push_to_bo_reason_dialog :is-open="isOpen" :reasonData="reasonData" @push_evt="isOpen = false"/>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import push_to_bo_reason_dialog from './push_to_bo_reason_dialog.vue';
 export default {
     data() {
         return {
@@ -60,9 +67,12 @@ export default {
                 { name: "Reason", class: "text-left" },
                 { name: "Action", class: "text-center" },
             ],
-            isShowed: false
+            isShowed: false,
+            isOpen: false,
+            reasonData: '',
         }
     },
+    components:{push_to_bo_reason_dialog},
     computed: {
         ...mapGetters('approval', ['getBoStatusList', 'getStageData', 'getStageData', 'getDocuments', 'getDocumentData']),
     },
@@ -74,9 +84,7 @@ export default {
                 this.$store.dispatch('approval/bseUccUpload')
             } else if(type == 'KRA UPLOAD') {
                 this.$store.dispatch('approval/kraUpload')
-            } else if(type == 'DIGILOCKER XML UPLOAD') {
-                // this.$store.dispatch('approval/bseUccUpload')
-            } else if(type == 'KRA IMAGE UPLOAD') {
+            } else if(type == 'KRA IMAGE UPLOAD' || type == 'DIGILOCKER XML UPLOAD') {
                 this.$store.dispatch('approval/kraFileUpload')
             } else if(type == 'BSE STAR UCC') {
                 this.$store.dispatch('approval/bseMfUccUpload')
@@ -84,7 +92,7 @@ export default {
                 this.$store.dispatch('approval/bseFatcaUpload')
             } else if(type == 'BSE STAR AOF') {
                 this.$store.dispatch('approval/bseStarAOF')
-            } else if(type == 'push to Iwapp') {
+            } else if(type == 'Push to IWAPP') {
                 this.$store.dispatch('approval/pushIwapp')
             }
         },

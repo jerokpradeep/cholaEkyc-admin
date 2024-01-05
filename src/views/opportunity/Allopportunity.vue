@@ -91,6 +91,10 @@
             <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
               {{ i['phase'] }}
             </td>
+            <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative text-center">
+              {{ i['fsl_assign_to'] }}
+            </td>
+            
             <td class="py-4 px-3 text-[13px] primary-color dark:text-[#94A3B8] relative items-center justify-center">
               <div class="flex items-center justify-center" v-if="i?.stage">
                 <img class="w-3 text-right h-5" :class="{ 'color-green-500': i.Phases }" :src="filledSvg" alt="greenstar" v-for="idx in getGreenStarCount(i?.stage)" :key="idx" />
@@ -134,9 +138,11 @@ export default {
         { name: "Customer Name", class: "text-left" },
         { name: "PAN", class: "text-center" },
         { name: "Current phases", class: "text-center" },
+        { name: "Assigned to", class: "text-center" },
         { name: "Phases", class: "text-center" },
         { name: "Hours consumed", class: "text-center" },
         { name: "Progress State", class: "text-center" },
+        
       ],
       fromDate: '',
       toDate: '',
