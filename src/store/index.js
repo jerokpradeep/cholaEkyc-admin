@@ -187,7 +187,7 @@ const store = createStore({
       if(payload == 'EKYC Employee' || payload == 'RM'){
         let empArr = ['Approval' , 'Opportunity' , 'CKYC Download', 'Logs']
         let allArr = ['Approval' , 'Opportunity', 'CKYC Download', 'URL Generation', 'Logs']
-        let rmArr = ['Opportunity']
+        let rmArr = ['Opportunity', 'URL Generation']
         let validArr = payload == 'EKYC Employee'? empArr : payload == 'RM' ? rmArr : allArr
         let approval = state.tempSteps.filter((el)=> validArr.includes(el.name))
         approval[0].active = true

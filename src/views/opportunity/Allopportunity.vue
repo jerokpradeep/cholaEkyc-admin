@@ -189,6 +189,7 @@ export default {
     },
 
     getGrayStarCount(stars, name) {
+      if(isNaN(Number(stars))) return []
       if(stars == 13) {
         return []
       }
@@ -207,6 +208,7 @@ export default {
     },
 
     getGreenStarCount(stars) {
+      if(isNaN(Number(stars))) return []
       let s = Math.round(Number(stars))
       let arr = []
       if(stars && s) {
