@@ -14,7 +14,7 @@ const httpService = {
   getOpportunityList, login, getApprovalList, updateDocStatus, getCustomerData, callLogout, getStageDetails, assignOpportunity,
   getDocument, pushToBo, getDocs, approveDocs, sendRejectionMail, checkBoStatus, nseUccUpload, bseUccUpload, kraUpload, kraFileUpload,
   bseMfUccUpload, bseFatcaUpload, bseStarAOF, pushIwapp, sendFinalMail, boThreadPush, generateCkyc,genrateUrl, downloadCkyc, getFilteredOpurtunity,
-  getFilteredApproval, getMailLogData, getAccessLogDetails, getRestLogDetails, getKraDetails,getRMOpptuity
+  getFilteredApproval, getMailLogData, getAccessLogDetails, getRestLogDetails, getKraDetails,getRMOpptuity, getRMApproval
 }
 
 export default httpService
@@ -156,4 +156,8 @@ function getKraDetails(query) {
 
 function getRMOpptuity(payload){
   return WRAPPERAXIOS.get(`ekyc/getRmOppDetails??token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}&from_date=${payload.from_date}&to_date=${payload.to_date}&status=${payload.status}&pan_no=${payload.pan_no}&mobile_no=${payload.mobile_no}&id=${payload.id}`)
+}
+
+function getRMApproval(payload){
+  return WRAPPERAXIOS.get(`ekyc/getRmAppDetails?token=${payload.token}&sessId=${payload.sessId}&userId=${payload.userId}`)
 }

@@ -272,7 +272,7 @@ export default {
       return count
     },
     async goToApprovalPage(data) {
-      if (this.getUserData?.Role == 'RM') return
+      // if (this.getUserData?.Role == 'RM') return
       if (data && data.fsl_assign_to && data.opportunity_id) {
         this.$router.push(`/approvepanel?id=${data?.opportunity_id}&from=${this.$route.fullPath.toString().replace('/', '')}`).catch(() => { })
           this.$store.commit('setQuries', { data: { tab: 0 }, action: 'change', overRideKey: 'approvepanel' })

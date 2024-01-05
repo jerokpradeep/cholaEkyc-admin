@@ -520,19 +520,35 @@ const actions = {
             mobile_no : payload.mob_no,
             id : payload.application_id
         }
-        httpService.getFilteredApproval(json).then(resp =>{
-            if(resp.status == 200 && resp.data?.message?.success_key == 1 && resp.data?.message?.Data?.length) {
-                commit('setApprovalList', resp.data.message.Data)
-            } else {
-                commit('setApprovalList', [])
-            }
-        }, (err) => {
-            dispatch('errorLog/checkRouter', err, { root: true })
-    
-        }).finally(() => { 
-            commit('setIsLoader', false)
-            commit('errorLog/setCounter', 0, { root: true }) 
-        })
+        if(rootGetters['login/getUserData'] && rootGetters['login/getUserData'].Role == 'RM') {
+            httpService.getRMApproval(json).then(resp =>{
+                if(resp.status == 200 && resp.data?.message?.Success == 1 && resp.data?.message?.data?.length) {
+                    commit('setApprovalList', resp.data.message.data)
+                } else {
+                    commit('setApprovalList', [])
+                }
+            }, (err) => {
+                dispatch('errorLog/checkRouter', err, { root: true })
+        
+            }).finally(() => { 
+                commit('setIsLoader', false)
+                commit('errorLog/setCounter', 0, { root: true }) 
+            }) 
+        } else {
+            httpService.getFilteredApproval(json).then(resp =>{
+                if(resp.status == 200 && resp.data?.message?.success_key == 1 && resp.data?.message?.Data?.length) {
+                    commit('setApprovalList', resp.data.message.Data)
+                } else {
+                    commit('setApprovalList', [])
+                }
+            }, (err) => {
+                dispatch('errorLog/checkRouter', err, { root: true })
+        
+            }).finally(() => { 
+                commit('setIsLoader', false)
+                commit('errorLog/setCounter', 0, { root: true }) 
+            })
+        }
        },
        async setTabStatus({ state, commit, dispatch, rootGetters }, payload) {
         commit('setClientCode', '')
