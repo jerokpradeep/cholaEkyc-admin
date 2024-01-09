@@ -18,6 +18,13 @@
                             <div> {{ i['Document Type'] }}</div>
                        </div>
                     </td>
+                    <td class="py-4 text-sm primary-color dark:text-[#94A3B8] relative text-center" v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM' && tableHeads && tableHeads[2].name == 'Action'">
+                      <div class="grid" v-if="i['Document Type'] == 'ADDITIONAL_DOCUMENT'">
+                        <div class="flex gap-2 " v-if="!i.status"><a class="underline text-sm text-teal-500"  @click="approveOrRejectDoc('Approved', i['Document Type'])">Approve</a>
+                      <a class="underline text-sm text-orange-500"  @click="approveOrRejectDoc('Rejected', i['Document Type'])">Reject</a></div>
+                      <a v-else class="underline text-sm text-blue-500" @click="approveOrRejectDoc('Reset', i['Document Type'])">Reset</a>
+                      </div>
+                    </td>
                     <td v-if="$route.query?.from != 'opportunity' && getUserData?.Role != 'RM'">
                         <div class="flex gap-2 items-center" >
                             <a  class=" text-sm " :class="i.status == 'Approved' ? 'text-teal-500' : i.status == 'Rejected' ? 'text-orange-500' : ''"> {{ i.status ? i.status : '' }}</a>
@@ -41,6 +48,7 @@
     </div>
     <div v-else class="flex items-center justify-center min-h-[50vh]">No Documents Found</div>
     <reasonViewDialog v-if="getIsDocRejReasonDialog" :rejectReason="getDocRejReason"/>
+    <rejectDialog v-if="isRejectDialog" :is-open="isRejectDialog" :active-tab="'7'" @send-remarks="getRemarks" />
 </template>
 
 <script>
@@ -59,8 +67,9 @@ const infoSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 
 </svg>
 `
 import reasonViewDialog from './docRejReasonDialog.vue'
+import rejectDialog from '../rejectDialog.vue'
 export default {
-    components: { reasonViewDialog },
+    components: { reasonViewDialog,rejectDialog },
     data() {
         return {
             tableHeads: [
@@ -71,7 +80,10 @@ export default {
                 { name: "Download", class: "text-left" },
             ],
             documentName: 'PAN',
-            tickSvg, cancelSvg, infoSvg
+            tickSvg, cancelSvg, infoSvg,
+            isRejectDialog: false,
+            remarks: '',
+            selectedDoc: ''
         }
     },
     computed: {
@@ -89,7 +101,22 @@ export default {
       showDialog(data) {
         this.$store.commit('approval/setIsDocRejReasonDialog', true) 
         this.$store.commit('approval/setDocRejReason', data.remarks) 
-      }
+      },
+      getRemarks(data) {
+            this.remarks = data.remarks
+            this.isRejectDialog = data.isOpen
+            if (this.remarks) {
+                this.approveOrRejectDoc('Rejected', this.selectedDoc)
+            }
+      },
+      async approveOrRejectDoc(status, attachmentType) {
+        this.selectedDoc = attachmentType
+        status == 'Rejected' && !this.remarks  ? this.isRejectDialog = true : this.isRejectDialog = false
+        if(status == 'Rejected' && this.remarks || status == 'Approved' || status == 'Reset'){
+          await this.$store.dispatch('approval/formatJsonDoc', { status: status, remarks: status == 'Rejected' ? this.remarks : '', attachmentType: this.selectedDoc  })
+            this.remarks = ''
+        }
+      },
     },
     unmounted() {
         this.$store.commit('approval/setDocumentData', '') 
@@ -101,7 +128,16 @@ export default {
     },
     async created() {
       await this.$store.dispatch('approval/getDocuments');
-      
+      if(this.getDocuments && this.$route.query?.from != 'opportunity' && this.getUserData?.Role != 'RM'){
+       let additional = this.getDocuments.filter(el =>{
+        return el['Document Type'] == 'ADDITIONAL_DOCUMENT'
+       })
+
+       if(additional && additional.length > 0){
+        let temp = { name: "Action", class: "text-center" }
+        this.tableHeads = [...this.tableHeads.slice(0,2), temp, ...this.tableHeads.slice(2,this.tableHeads.length)]
+       }
+      }
       if(this.$route.query?.from == 'opportunity' || this.getUserData?.Role == 'RM'){
         let rmHeader = this.tableHeads.filter(el => el.name != 'Status')
         this.tableHeads = rmHeader
